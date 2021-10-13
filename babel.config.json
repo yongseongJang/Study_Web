@@ -1,14 +1,14 @@
 {
-    "presets":[
-        [
-            "@babel/preset-env",
-            {
-                "useBuiltIns": "usage",
-                "corejs": 3
-            }
-        ],
-        ["@babel/preset-typescript"],
-        ["@babel/prest-react"]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": 3
+      }
     ],
-    "sourceType": "unambiguous"
+    ["@babel/preset-typescript"],
+    ["@babel/preset-react"]
+  ],
+  "sourceType": "unambiguous"
 }

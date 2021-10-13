@@ -1,18 +1,18 @@
-const webpack = require("webpack");
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
   entry: "./src/client/index.tsx",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "build/client"),
     filename: "[name].js",
     publicPath: "/",
   },
   devtool: "inline-source-map",
   resolve: {
-    extension: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   module: {
     rules: [
@@ -31,10 +31,26 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    host: "127.0.0.1",
+    port: 9000,
+    open: true,
+    hot: true,
+    proxy: {
+      "/api": {
+        target: "http://127.0.0.1:9001",
+        changeOrigin: true,
+      },
+    },
+    historyApiFallback: true,
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: "[name].css",
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: "./src/public/views/index.html",
+      filename: "./index.html",
+    }),
   ],
 };
