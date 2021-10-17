@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 import * as express from "express";
 import Loader from "./loaders";
+import logger from "./utils/logger";
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ const fork = () => {
   loader.config();
 
   app.listen(port, () => {
-    console.log("Express server listening on port " + port);
+    logger.log("info", "Express server listening on port " + port);
   });
 };
 

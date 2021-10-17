@@ -7,10 +7,15 @@ import {
 } from "express";
 import { join } from "path";
 import { json, urlencoded } from "body-parser";
+import ErrorHandler from "../utils/error";
+
+import * as morgan from "morgan";
+import logger from "../utils/logger";
 
 class ExpressLoader {
   private static instance: ExpressLoader;
   private app!: Application;
+  private errorHandler = new ErrorHandler();
 
   private constructor() {}
 
@@ -30,12 +35,42 @@ class ExpressLoader {
     this.app.use(json());
     this.app.use(urlencoded({ extended: true }));
 
+    this.app.use(
+      morgan("common", {
+        skip: (req: Request, res: Response): boolean => {
+          return res.statusCode >= 400;
+        },
+        stream: process.stdout,
+      }),
+    );
+    this.app.use(
+      morgan("common", {
+        skip: (req: Request, res: Response): boolean => {
+          return res.statusCode < 400;
+        },
+        stream: process.stderr,
+      }),
+    );
+
     this.app.get("*", (req: Request, res: Response) => {
       res.sendFile(join(__dirname, "../../client/index.html"));
     });
+
     this.app.use(
-      (err: Error, req: Request, res: Response, next: NextFunction) => {
-        console.log(err);
+      (
+        err: Error | ErrorHandler,
+        req: Request,
+        res: Response,
+        next: NextFunction,
+      ) => {
+        logger.error(err);
+        next(err);
+      },
+    );
+
+    this.app.use(
+      (err: ErrorHandler, req: Request, res: Response, next: NextFunction) => {
+        this.errorHandler.handleError(err, res);
       },
     );
   }

@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 import * as mongoose from "mongoose";
+import logger from "../utils/logger";
 
 dotenv.config();
 
@@ -22,11 +23,11 @@ class MongooseLoader {
         useUnifiedTopology: true,
         keepAlive: true,
       } as mongoose.ConnectOptions)
-      .then(() => console.log("Successfully connected to mongodb"))
-      .catch((e: Error) => console.log(e));
+      .then(() => logger.log("info", "Successfully connected to mongodb"))
+      .catch((e: Error) => logger.error(e));
 
     mongoose.connection.on("error", (err) => {
-      console.log("err");
+      logger.error(err);
     });
   }
 }
