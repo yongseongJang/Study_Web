@@ -1,4 +1,3 @@
-import * as express from "express";
 import {
   Application,
   Request,
@@ -27,12 +26,12 @@ class ExpressLoader {
   public init(app: Application) {
     this.app = app;
 
-    this.app.use(expressStatic(join(__dirname, "./public")));
+    this.app.use(expressStatic(join(__dirname, "../../client")));
     this.app.use(json());
     this.app.use(urlencoded({ extended: true }));
 
     this.app.get("*", (req: Request, res: Response) => {
-      res.sendFile(join(__dirname, "../index.html"));
+      res.sendFile(join(__dirname, "../../client/index.html"));
     });
     this.app.use(
       (err: Error, req: Request, res: Response, next: NextFunction) => {

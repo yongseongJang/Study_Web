@@ -1,5 +1,6 @@
 import { Application } from "express";
 import ExpressLoader from "./express";
+import MongooseLoader from "./mongoose";
 
 class Loader {
   private app: Application;
@@ -8,7 +9,8 @@ class Loader {
     this.app = app;
   }
 
-  public config() {
+  public async config() {
+    await MongooseLoader.getInstance().init();
     ExpressLoader.getInstance().init(this.app);
   }
 }
