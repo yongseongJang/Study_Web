@@ -12,6 +12,8 @@ import ErrorHandler from "../utils/error";
 import * as morgan from "morgan";
 import logger from "../utils/logger";
 
+import ApiRouter from "../routes/index";
+
 class ExpressLoader {
   private static instance: ExpressLoader;
   private app!: Application;
@@ -28,7 +30,7 @@ class ExpressLoader {
     return this.instance;
   }
 
-  public init(app: Application) {
+  public init(app: Application): void {
     this.app = app;
 
     this.app.use(expressStatic(join(__dirname, "../../client")));
@@ -51,6 +53,8 @@ class ExpressLoader {
         stream: process.stderr,
       }),
     );
+
+    ApiRouter.getInstance().init(this.app);
 
     this.app.get("*", (req: Request, res: Response) => {
       res.sendFile(join(__dirname, "../../client/index.html"));

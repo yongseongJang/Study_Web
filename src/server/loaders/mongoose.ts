@@ -6,9 +6,10 @@ dotenv.config();
 
 class MongooseLoader {
   private static instance: MongooseLoader;
+
   private constructor() {}
 
-  public static getInstance() {
+  public static getInstance(): MongooseLoader {
     if (!this.instance) {
       this.instance = new MongooseLoader();
     }

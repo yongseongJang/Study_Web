@@ -10,8 +10,7 @@ const port = process.env.PORT;
 const fork = () => {
   const app: express.Application = express();
 
-  const loader = new Loader(app);
-  loader.config();
+  new Loader(app).config();
 
   app.listen(port, () => {
     logger.log("info", "Express server listening on port " + port);
