@@ -1,11 +1,14 @@
 import { Router } from "express";
-import UserControllers from "../../controllers/users/users.controller";
+import UserController from "../../controllers/users/users.controller";
 
 class UserRouter {
   private static instance: UserRouter;
-  private router!: Router;
+  private router: Router;
+  private userController: UserController;
 
   private constructor() {
+    this.router = Router();
+    this.userController = new UserController();
     this.initializeRoutes();
   }
 
@@ -18,7 +21,7 @@ class UserRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.post("/", UserControllers.registerUserInfo);
+    this.router.post("/", this.userController.registerUserInfo);
   }
 
   public getRouter(): Router {

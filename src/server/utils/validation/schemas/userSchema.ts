@@ -6,7 +6,7 @@ export const userRegistrationSchema = Joi.object({
   pw: Joi.string().required(),
   name: Joi.string().required(),
   email: Joi.string()
-    .email({ tlds: { allow: ["com", "net"] } })
+    .email({ tlds: { allow: ["com", "kr"] } })
     .required(),
   phoneNumber: Joi.string().required(),
 });

@@ -16,7 +16,7 @@ class UserService {
 
   public async registerUserInfo(userInfo: IUser) {
     try {
-      const validatedUserInfo = await validateUserRegistrationInfo(userInfo);
+      const validatedUserInfo = validateUserRegistrationInfo(userInfo);
 
       const hash = await this.stringPasswordToHash(validatedUserInfo.pw);
 
@@ -30,7 +30,9 @@ class UserService {
     }
   }
 
-  private stringPasswordToHash = (password: string): Promise<string> => {
+  private stringPasswordToHash = (
+    password: string,
+  ): Promise<string | object> => {
     return new Promise((resolve, reject) => {
       bcrypt
         .hash(password, 10)

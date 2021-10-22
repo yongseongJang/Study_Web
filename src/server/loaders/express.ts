@@ -6,6 +6,7 @@ import {
   static as expressStatic,
 } from "express";
 import { join } from "path";
+import { createWriteStream } from "fs";
 import { json, urlencoded } from "body-parser";
 import ErrorHandler from "../utils/error";
 
@@ -37,12 +38,24 @@ class ExpressLoader {
     this.app.use(json());
     this.app.use(urlencoded({ extended: true }));
 
+    const accessLogStream = createWriteStream(
+      join(__dirname, "../../access.log"),
+      {
+        flags: "a",
+      },
+    );
+    const errorLogStream = createWriteStream(
+      join(__dirname, "../../error.log"),
+      {
+        flags: "a",
+      },
+    );
     this.app.use(
       morgan("common", {
         skip: (req: Request, res: Response): boolean => {
           return res.statusCode >= 400;
         },
-        stream: process.stdout,
+        stream: accessLogStream,
       }),
     );
     this.app.use(
@@ -50,7 +63,7 @@ class ExpressLoader {
         skip: (req: Request, res: Response): boolean => {
           return res.statusCode < 400;
         },
-        stream: process.stderr,
+        stream: errorLogStream,
       }),
     );
 

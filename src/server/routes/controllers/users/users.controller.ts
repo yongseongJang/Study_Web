@@ -10,7 +10,7 @@ class UserController {
   }
 
   public registerUserInfo: RequestHandler = asyncHandler(
-    async (req: Request, res: Response, next: Nextfunction) => {
+    async (req: Request, res: Response, next: NextFunction) => {
       const userInfo = req.body.userInfo;
 
       await this.userService.registerUserInfo(userInfo);
