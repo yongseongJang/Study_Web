@@ -21,6 +21,7 @@ class UserRouter {
   }
 
   private initializeRoutes(): void {
+    this.router.post("/login", this.userController.login);
     this.router.post("/", this.userController.registerUserInfo);
   }
 

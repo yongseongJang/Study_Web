@@ -1,17 +1,58 @@
 import UserRepository from "../models/repositories/user.repository";
 import createValidator from "../utils/validation/createValidator";
-import { userRegistrationSchema } from "../utils/validation/schemas/userSchema";
-import { User as IUser } from "../interfaces";
+import {
+  userRegistrationSchema,
+  emailSchema,
+} from "../utils/validation/schemas/userSchema";
+import { User as IUser, LoginInfo } from "../interfaces";
 import Errorhandler from "../utils/error";
 import * as bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
+import ErrorHandler from "../utils/error";
 
 const validateUserRegistrationInfo = createValidator(userRegistrationSchema);
+const validateEmail = createValidator(emailSchema);
+
+const authExpirationTime = "3600000"; //3600000ms == 1h
 
 class UserService {
   private userRepository: UserRepository;
 
   constructor() {
     this.userRepository = new UserRepository();
+  }
+
+  public async login(email: string, password: string): Promise<LoginInfo> {
+    try {
+      const validatedEmail = validateEmail(email);
+
+      const hash: Pick<IUser, "pw"> | null =
+        await this.userRepository.readPasswordByUserEmail(validatedEmail);
+
+      await this.comparePasswordToHash(password, hash);
+
+      const token = await this.getToken(validatedEmail);
+
+      const userName = await this.userRepository.readUserNameByUserEmail(
+        validatedEmail,
+      );
+
+      if (userName) {
+        return {
+          token,
+          authExpirationTime: Number(authExpirationTime),
+          userName,
+        };
+      } else {
+        throw new Errorhandler(
+          500,
+          "Internal Server Error",
+          "Internal Server Error",
+        );
+      }
+    } catch (err) {
+      throw err;
+    }
   }
 
   public async registerUserInfo(userInfo: IUser) {
@@ -30,18 +71,59 @@ class UserService {
     }
   }
 
-  private stringPasswordToHash = (
+  private stringPasswordToHash = (password: string): string | object => {
+    return bcrypt
+      .hash(password, 10)
+      .then((hash: string) => {
+        return hash;
+      })
+      .catch((err: Error) => {
+        return new Errorhandler(500, err.name, err.message);
+      });
+  };
+
+  private comparePasswordToHash = (
     password: string,
-  ): Promise<string | object> => {
+    hash: Pick<IUser, "pw"> | null,
+  ) => {
     return new Promise((resolve, reject) => {
-      bcrypt
-        .hash(password, 10)
-        .then((hash: string) => {
-          resolve(hash);
-        })
-        .catch((err: Error) => {
-          reject(new Errorhandler(500, err.name, err.message));
-        });
+      if (hash !== null) {
+        bcrypt
+          .compare(password, hash.pw)
+          .then((res: boolean) => {
+            if (!res) {
+              reject(
+                new Errorhandler(401, "ValidationError", "Invalid Password"),
+              );
+            } else {
+              resolve(res);
+            }
+          })
+          .catch((err: Error) => {
+            reject(new Errorhandler(500, err.name, err.message));
+          });
+      } else {
+        reject(new Errorhandler(401, "ValidationError", "Invalid Email"));
+      }
+    });
+  };
+
+  private getToken = (email: string): Promise<string | undefined> => {
+    return new Promise((resolve, reject) => {
+      jwt.sign(
+        { email },
+        process.env.PRIVATEKEY!,
+        {
+          expiresIn: authExpirationTime,
+        },
+        (err: null | Error, token: string | undefined) => {
+          if (err) {
+            reject(new ErrorHandler(500, err.name, err.message));
+          } else {
+            resolve(token);
+          }
+        },
+      );
     });
   };
 }

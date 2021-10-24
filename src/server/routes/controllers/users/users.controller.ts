@@ -9,6 +9,16 @@ class UserController {
     this.userService = new UserService();
   }
 
+  public login: RequestHandler = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { email, password } = req.body;
+
+      const result = await this.userService.login(email, password);
+
+      res.status(200).send(result);
+    },
+  );
+
   public registerUserInfo: RequestHandler = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const userInfo = req.body.userInfo;

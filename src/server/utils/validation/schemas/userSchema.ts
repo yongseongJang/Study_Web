@@ -10,3 +10,7 @@ export const userRegistrationSchema = Joi.object({
     .required(),
   phoneNumber: Joi.string().required(),
 });
+
+export const emailSchema = Joi.string()
+  .email({ tlds: { allow: ["com", "net"] } })
+  .required();
