@@ -1,11 +1,12 @@
 import * as React from "react";
-import lena from "../public/img/lena.jpg";
+import { Switch, Route } from "react-router-dom";
+import { SignUp } from "./pages";
 
 function App() {
   return (
-    <div>
-      <img src={lena} />
-    </div>
+    <Switch>
+      <Route exact path="/signup" component={SignUp} />
+    </Switch>
   );
 }
 export default App;
