@@ -1,4 +1,6 @@
-export default {
+import { IFields } from "../../utils/fields/types";
+
+const signUpField: { [key: string]: IFields } = {
   id: {
     elementLabel: "아이디",
     inputType: "text",
@@ -6,6 +8,9 @@ export default {
     validation: {
       required: true,
       id: true,
+      pw: false,
+      email: false,
+      phoneNumber: false,
     },
     valid: false,
     errorMessage: null,
@@ -17,6 +22,9 @@ export default {
     validation: {
       required: true,
       pw: true,
+      id: false,
+      email: false,
+      phoneNumber: false,
     },
     valid: false,
     errorMessage: null,
@@ -27,7 +35,10 @@ export default {
     value: "",
     validation: {
       required: true,
-      pwCheck: true,
+      id: false,
+      pw: false,
+      email: false,
+      phoneNumber: false,
     },
     valid: false,
     errorMessage: null,
@@ -38,6 +49,10 @@ export default {
     value: "",
     validation: {
       required: true,
+      id: false,
+      pw: false,
+      email: false,
+      phoneNumber: false,
     },
     valid: false,
     errorMessage: null,
@@ -49,6 +64,9 @@ export default {
     validation: {
       required: true,
       phoneNumber: true,
+      id: false,
+      pw: false,
+      email: false,
     },
     valid: false,
     errorMessage: null,
@@ -60,8 +78,13 @@ export default {
     validation: {
       required: true,
       email: true,
+      id: false,
+      pw: false,
+      phoneNumber: false,
     },
     valid: false,
     errorMessage: null,
   },
 };
+
+export default signUpField;

@@ -11,7 +11,6 @@ export interface IValidation {
   required: boolean;
   id: boolean;
   pw: boolean;
-  pwCheck: boolean;
   email: boolean;
   phoneNumber: boolean;
 }

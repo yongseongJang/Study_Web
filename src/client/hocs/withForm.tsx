@@ -6,7 +6,7 @@ import { IFields } from "../utils/fields/types";
 
 const withForm =
   (formInitialData: { [key: string]: IFields }) =>
-  (WrappedComponent: Function) => {
+  (WrappedComponent: (props: any) => JSX.Element) => {
     return (props: any) => {
       const dispatch = useDispatch();
       const [formState, setFormState] = useState<{ [key: string]: IFields }>({
@@ -39,7 +39,7 @@ const withForm =
       const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
         const key = e.target.id;
-        const validation = validate(inputValue, formState[key].validation, {});
+        const validation = validate(inputValue, formState[key].validation);
         const formData = {
           ...formState,
           [key]: {
@@ -61,10 +61,11 @@ const withForm =
         return formValues;
       };
 
-      const submit = (action: Function) => () => {
-        const formValues = getFormValues();
-        dispatch(action(formValues));
-      };
+      const submit =
+        (action: (payload: any) => { type: string; payload: any }) => () => {
+          const formValues = getFormValues();
+          dispatch(action(formValues));
+        };
 
       return (
         <WrappedComponent

@@ -3,7 +3,6 @@ import { IValidation } from "./fields/types";
 export const validate = (
   value: string,
   rules: IValidation,
-  options: { pw: string },
 ): { isValid: boolean; error: string | null } => {
   let isValid = true;
   let error = null;
@@ -42,17 +41,9 @@ export const validate = (
       isValid = false;
     }
 
-    isValid = value === options["pw"];
-
     if (!isValid) {
       error =
         "대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자 / 입력 가능 특수문자 `~!@#$%^&*()-_={}[]|;:<>,.?/";
-    }
-  } else if (rules.pwCheck) {
-    isValid = value === options["pw"];
-
-    if (!isValid) {
-      error = "비밀번호가 일치하지 않습니다.";
     }
   } else if (rules.email) {
     const regExp =
