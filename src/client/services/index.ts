@@ -1,1 +1,1 @@
-export { signupServices } from "./signupServices";
+export { signUpServices } from "./signUpService";

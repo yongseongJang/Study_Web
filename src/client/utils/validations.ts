@@ -1,6 +1,7 @@
 import { IValidation } from "./fields/types";
 
 export const validate = (
+  elementLabel: string,
   value: string,
   rules: IValidation,
 ): { isValid: boolean; error: string | null } => {
@@ -14,30 +15,35 @@ export const validate = (
   if (rules.required) {
     isValid = value.trim() !== "";
     if (!isValid) {
-      error = "this field is required";
+      error = elementLabel + "을 입력해주세요.";
       return { isValid, error };
     }
   }
 
   if (rules.id) {
-    if (value.match(/{1,3}/)) {
+    if (value.match(/^[a-zA-Z0-9]{1,3}$/)) {
       isValid = false;
       error = "아이디는 영문소문자 또는 숫자 4~16자로 입력해 주세요.";
     } else if (
       value.match(/^[0-9]/) ||
-      value.match(/[0-9]/) ||
-      value.search(/\s/) == -1 ||
-      value.match(/[`~!@#$%^&*()-_=+|?;:'",.<>{}[\]\\/]/)
+      value.search(/\s/) !== -1 ||
+      value.match(/[`~!@#$%^&*()\-_=+|?;:'",.<>{}[\]\\/]/)
     ) {
       isValid = false;
       error =
         "공백/특수문자가 포함되었거나, 숫자로 시작 또는 숫자로만 이루어진 아이디는 사용할 수 없습니다.";
     }
   } else if (rules.pw) {
-    const regExp =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[`~!@#$%^&*()-_={}[\]|;:<>,.?//])[A-Za-z\d`~!@#$%^&*()-_={}[\]|;:<>,.?//]{10.16}$/;
+    const regExp1 =
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d`~!@#$%^&*()\-_={}[\]|;:<>,.?//]{10,16}$/;
 
-    if (regExp.test(value)) {
+    const regExp2 =
+      /^(?=.*[A-Za-z])(?=.*[`~!@#$%^&*()\-_={}[\]|;:<>,.?//])[A-Za-z\d`~!@#$%^&*()\-_={}[\]|;:<>,.?//]{10,16}$/;
+
+    const regExp3 =
+      /^(?=.*\d)(?=.*[`~!@#$%^&*()\-_={}[\]|;:<>,.?//])[A-Za-z\d`~!@#$%^&*()\-_={}[\]|;:<>,.?//]{10,16}$/;
+
+    if (!regExp1.test(value) && !regExp2.test(value) && !regExp3.test(value)) {
       isValid = false;
     }
 

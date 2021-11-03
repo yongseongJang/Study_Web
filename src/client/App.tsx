@@ -5,7 +5,7 @@ import { SignUp } from "./pages";
 function App() {
   return (
     <Switch>
-      <Route exact path="/signup" component={SignUp} />
+      <Route path="/signup" component={SignUp} />
     </Switch>
   );
 }

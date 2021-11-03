@@ -2,13 +2,18 @@ import * as React from "react";
 import withForm from "../hocs/withForm";
 import signUpField from "../utils/fields/signUpField";
 import { Input } from "../components";
+import { signUpActions } from "../actions";
+
 import { IFields } from "../utils/fields/types";
+import { IUserInfo } from "../interfaces";
 
 interface SignUpProps {
   renderElements: () => [];
   isValidForm: boolean;
   onChange: () => void;
-  submit: () => () => void;
+  submit: (
+    action: (userInfo: IUserInfo) => { type: string; userInfo: IUserInfo },
+  ) => () => void;
 }
 
 function SignUpForm(props: SignUpProps) {
@@ -31,7 +36,15 @@ function SignUpForm(props: SignUpProps) {
               </div>
             );
           })}
-        <button className="SignUpForm__Button">BACK</button>
+        <button
+          className="SignUpForm__Button"
+          disabled={!props.isValidForm}
+          color="primary"
+          type="button"
+          onClick={props.submit(signUpActions.signUp)}
+        >
+          BACK
+        </button>
         <button className="SignUpForm__Button">JOIN</button>
       </form>
     </div>

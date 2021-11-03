@@ -39,7 +39,14 @@ const withForm =
       const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
         const key = e.target.id;
-        const validation = validate(inputValue, formState[key].validation);
+        const elementLabel = formState[key].elementLabel;
+
+        const validation = validate(
+          elementLabel,
+          inputValue,
+          formState[key].validation,
+        );
+
         const formData = {
           ...formState,
           [key]: {
@@ -49,6 +56,7 @@ const withForm =
             errorMessage: validation.error,
           },
         };
+
         setFormState(formData);
         setFormValidation(isFormValid(formData));
       };

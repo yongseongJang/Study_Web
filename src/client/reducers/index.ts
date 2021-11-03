@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { signupReducer } from "./signupReducer";
+import { signUpReducer } from "./signUpReducer";
 
-const rootReducer = combineReducers({ signupReducer });
+const rootReducer = combineReducers({ signUpReducer });
 
 export default rootReducer;
