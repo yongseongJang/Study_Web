@@ -11,9 +11,9 @@ class UserController {
 
   public login: RequestHandler = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { email, password } = req.body;
+      const { id, password } = req.body;
 
-      const result = await this.userService.login(email, password);
+      const result = await this.userService.login(id, password);
 
       res.status(200).send(result);
     },

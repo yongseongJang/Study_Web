@@ -22,20 +22,16 @@ class UserService {
     this.userRepository = new UserRepository();
   }
 
-  public async login(email: string, password: string): Promise<LoginInfo> {
+  public async login(id: string, password: string): Promise<LoginInfo> {
     try {
-      const validatedEmail = validateEmail(email);
-
       const hash: Pick<IUser, "pw"> | null =
-        await this.userRepository.readPasswordByUserEmail(validatedEmail);
+        await this.userRepository.readPasswordById(id);
 
       await this.comparePasswordToHash(password, hash);
 
-      const token = await this.getToken(validatedEmail);
+      const token = await this.getToken(id);
 
-      const userName = await this.userRepository.readUserNameByUserEmail(
-        validatedEmail,
-      );
+      const userName = await this.userRepository.readUserNameById(id);
 
       if (userName) {
         return {
@@ -103,15 +99,15 @@ class UserService {
             reject(new Errorhandler(500, err.name, err.message));
           });
       } else {
-        reject(new Errorhandler(401, "ValidationError", "Invalid Email"));
+        reject(new Errorhandler(401, "ValidationError", "Invalid Id"));
       }
     });
   };
 
-  private getToken = (email: string): Promise<string | undefined> => {
+  private getToken = (id: string): Promise<string | undefined> => {
     return new Promise((resolve, reject) => {
       jwt.sign(
-        { email },
+        { id },
         process.env.PRIVATEKEY!,
         {
           expiresIn: authExpirationTime,

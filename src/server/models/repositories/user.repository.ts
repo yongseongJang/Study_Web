@@ -10,10 +10,8 @@ class UserRepository {
     });
   }
 
-  public readPasswordByUserEmail(
-    validatedEmail: string,
-  ): Promise<Pick<IUser, "pw"> | null> {
-    return User.findOne({ email: validatedEmail })
+  public readPasswordById(id: string): Promise<Pick<IUser, "pw"> | null> {
+    return User.findOne({ id })
       .select({ pw: 1 })
       .lean()
       .then((doc) => {
@@ -24,10 +22,8 @@ class UserRepository {
       });
   }
 
-  public readUserNameByUserEmail(
-    validatedEmail: string,
-  ): Promise<null | string> {
-    return User.findOne({ email: validatedEmail })
+  public readUserNameById(id: string): Promise<null | string> {
+    return User.findOne({ id })
       .select({ name: 1 })
       .lean()
       .then((doc) => {
