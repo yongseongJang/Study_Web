@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useMemo } from "react";
 import withForm from "../hocs/withForm";
 import signUpField from "../utils/fields/signUpField";
 import { Input } from "../components";
@@ -17,12 +18,26 @@ interface SignUpProps {
 }
 
 function SignUpForm(props: SignUpProps) {
+  let errorMessage = "";
+
+  const handleSubmitClick = () => {
+    if (errorMessage) {
+      alert(errorMessage);
+    } else {
+      props.submit(signUpActions.signUp);
+    }
+  };
+
   return (
     <div className="SignUpForm">
       <form>
         {props
           .renderElements()
           .map((formElement: { id: string; config: IFields }) => {
+            if (formElement.config.errorMessage) {
+              errorMessage = formElement.config.errorMessage;
+            }
+
             return (
               <div key={formElement.id} className="SignUpForm__Input__Wrapper">
                 <Input
@@ -36,16 +51,15 @@ function SignUpForm(props: SignUpProps) {
               </div>
             );
           })}
+        <button>BACK</button>
         <button
           className="SignUpForm__Button"
-          disabled={!props.isValidForm}
           color="primary"
           type="button"
-          onClick={props.submit(signUpActions.signUp)}
+          onClick={handleSubmitClick}
         >
-          BACK
+          JOIN
         </button>
-        <button className="SignUpForm__Button">JOIN</button>
       </form>
     </div>
   );

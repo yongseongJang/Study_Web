@@ -22,9 +22,6 @@ function Input(props: InputProps) {
         value={props.value}
         onChange={props.onChange}
       />
-      {props.errorMessage && (
-        <p className="Input__Error">{props.errorMessage}</p>
-      )}
     </div>
   );
 }

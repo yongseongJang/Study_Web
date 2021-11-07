@@ -13,6 +13,8 @@ import ErrorHandler from "../utils/error";
 import * as morgan from "morgan";
 import logger from "../utils/logger";
 
+import * as cors from "cors";
+
 import ApiRouter from "../routes/index";
 
 class ExpressLoader {
@@ -66,6 +68,8 @@ class ExpressLoader {
         stream: errorLogStream,
       }),
     );
+
+    this.app.use(cors());
 
     ApiRouter.getInstance().init(this.app);
 

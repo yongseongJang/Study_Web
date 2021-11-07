@@ -15,7 +15,7 @@ export const validate = (
   if (rules.required) {
     isValid = value.trim() !== "";
     if (!isValid) {
-      error = elementLabel + "을 입력해주세요.";
+      error = elementLabel + " 항목은 필수 입력값입니다.";
       return { isValid, error };
     }
   }
@@ -49,7 +49,7 @@ export const validate = (
 
     if (!isValid) {
       error =
-        "대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자 / 입력 가능 특수문자 `~!@#$%^&*()-_={}[]|;:<>,.?/";
+        "비밀번호 입력 조건을 다시 한번 확인해주세요.\n\n비밀번호 입력조건\n-대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자\n-입력 가능 특수문자\n  `~!@#$%^&*()-_={}[]|;:<>,.?/";
     }
   } else if (rules.email) {
     const regExp =

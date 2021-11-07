@@ -36,7 +36,7 @@ const withForm =
         return isValid;
       };
 
-      const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
         const key = e.target.id;
         const elementLabel = formState[key].elementLabel;
@@ -58,7 +58,7 @@ const withForm =
         };
 
         setFormState(formData);
-        setFormValidation(isFormValid(formData));
+        // setFormValidation(isFormValid(formData));
       };
 
       const getFormValues = (): object => {
@@ -80,7 +80,7 @@ const withForm =
           {...props}
           renderElements={renderElements}
           isValidForm={formValidation}
-          onChange={onChange}
+          onChange={handleChange}
           submit={submit}
         />
       );
