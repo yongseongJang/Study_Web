@@ -6,22 +6,20 @@ interface InputProps {
   type: any;
   value: string;
   onChange: () => void;
-  errorMessage: string | null;
 }
 
 function Input(props: InputProps) {
   return (
     <div className="Input">
       <label htmlFor={props.id} className="Input__Label">
-        {props.label}
+        <span>{props.label}</span>
+        <input
+          id={props.id}
+          type={props.type}
+          value={props.value}
+          onChange={props.onChange}
+        />
       </label>
-      <input
-        className="Input__Form"
-        id={props.id}
-        type={props.type}
-        value={props.value}
-        onChange={props.onChange}
-      />
     </div>
   );
 }

@@ -58,7 +58,7 @@ const withForm =
         };
 
         setFormState(formData);
-        // setFormValidation(isFormValid(formData));
+        setFormValidation(isFormValid(formData));
       };
 
       const getFormValues = (): object => {

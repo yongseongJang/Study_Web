@@ -8,12 +8,9 @@ const signUpField: { [key: string]: IFields } = {
     validation: {
       required: true,
       id: true,
-      pw: false,
-      email: false,
-      phoneNumber: false,
     },
     valid: false,
-    errorMessage: null,
+    errorMessage: "아이디 항목은 필수 입력값입니다.",
   },
   pw: {
     elementLabel: "비밀번호",
@@ -22,12 +19,9 @@ const signUpField: { [key: string]: IFields } = {
     validation: {
       required: true,
       pw: true,
-      id: false,
-      email: false,
-      phoneNumber: false,
     },
     valid: false,
-    errorMessage: null,
+    errorMessage: "비밀번호 항목은 필수 입력값입니다.",
   },
   pw_check: {
     elementLabel: "비밀번호 확인",
@@ -35,13 +29,9 @@ const signUpField: { [key: string]: IFields } = {
     value: "",
     validation: {
       required: true,
-      id: false,
-      pw: false,
-      email: false,
-      phoneNumber: false,
     },
     valid: false,
-    errorMessage: null,
+    errorMessage: "비밀번호 확인 항목은 필수 입력값입니다.",
   },
   name: {
     elementLabel: "이름",
@@ -49,13 +39,9 @@ const signUpField: { [key: string]: IFields } = {
     value: "",
     validation: {
       required: true,
-      id: false,
-      pw: false,
-      email: false,
-      phoneNumber: false,
     },
     valid: false,
-    errorMessage: null,
+    errorMessage: "이름 항목은 필수 입력값입니다.",
   },
   phoneNumber: {
     elementLabel: "휴대전화",
@@ -64,12 +50,9 @@ const signUpField: { [key: string]: IFields } = {
     validation: {
       required: true,
       phoneNumber: true,
-      id: false,
-      pw: false,
-      email: false,
     },
     valid: false,
-    errorMessage: null,
+    errorMessage: "휴대전화 항목은 필수 입력값입니다.",
   },
   email: {
     elementLabel: "이메일",
@@ -78,12 +61,9 @@ const signUpField: { [key: string]: IFields } = {
     validation: {
       required: true,
       email: true,
-      id: false,
-      pw: false,
-      phoneNumber: false,
     },
     valid: false,
-    errorMessage: null,
+    errorMessage: "이메일 항목은 필수 입력값입니다.",
   },
 };
 

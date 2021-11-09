@@ -1,0 +1,52 @@
+.LoginForm {
+  width: 100%;
+  width: 420px;
+  margin: 0 auto;
+}
+
+.LoginForm a.Submit {
+  margin: 20px 0 15px 0;
+  display: block;
+  text-align: center;
+  border: 1px solid #111;
+  color: #111;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: 400;
+  padding: 15px 0;
+}
+.LoginForm a.Submit:hover {
+  color: #fff;
+  background-color: #111;
+}
+
+.LoginForm li {
+  color: #111;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.LoginForm li > a {
+  color: #111;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.LoginForm li > a:hover {
+  color: #888;
+}
+
+.LoginForm .Forgot {
+  width: 60%;
+  float: left;
+  text-align: left;
+}
+
+.LoginForm .Join {
+  width: 40%;
+  float: right;
+  text-align: right;
+}

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useMemo } from "react";
 import withForm from "../hocs/withForm";
 import signUpField from "../utils/fields/signUpField";
 import { Input } from "../components";
@@ -24,7 +23,7 @@ function SignUpForm(props: SignUpProps) {
     if (errorMessage) {
       alert(errorMessage);
     } else {
-      props.submit(signUpActions.signUp);
+      props.submit(signUpActions.signUp)();
     }
   };
 
@@ -46,7 +45,6 @@ function SignUpForm(props: SignUpProps) {
                   type={formElement.config.inputType}
                   value={formElement.config.value}
                   onChange={props.onChange}
-                  errorMessage={formElement.config.errorMessage}
                 />
               </div>
             );

@@ -1,10 +1,8 @@
 import { take, call, put, fork } from "redux-saga/effects";
 import { signUpServices } from "../services";
 import { signUpConstants, signUpActions } from "../actions";
-import { createBrowserHistory } from "history";
+import { history } from "../utils/history";
 import { IUserInfo } from "../interfaces";
-
-const history = createBrowserHistory();
 
 function* signUp(userInfo: IUserInfo) {
   try {

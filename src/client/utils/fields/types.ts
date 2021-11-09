@@ -8,9 +8,9 @@ export interface IFields {
 }
 
 export interface IValidation {
-  required: boolean;
-  id: boolean;
-  pw: boolean;
-  email: boolean;
-  phoneNumber: boolean;
+  required?: boolean;
+  id?: boolean;
+  pw?: boolean;
+  email?: boolean;
+  phoneNumber?: boolean;
 }
