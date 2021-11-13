@@ -22,4 +22,6 @@ export interface ITerms {
   head: string;
   content: Array<string>;
   tail: Array<string>;
+  required: boolean;
+  errorMessage?: string;
 }

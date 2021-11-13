@@ -19,20 +19,43 @@ interface SignUpProps {
 }
 
 function SignUpForm(props: SignUpProps) {
+  const termsLen = signUpTermsField.length;
   const [agreeAllState, setAgreeAllState] = useState<boolean>(false);
+  const [checkBoxState, setCheckBoxState] = useState<boolean[][]>(
+    Array(termsLen)
+      .fill(null)
+      .map((v, i) => Array(signUpTermsField[i].tail.length).fill(false)),
+  );
 
   let errorMessage = "";
 
   const handleSubmitClick = () => {
     if (errorMessage) {
       alert(errorMessage);
-    } else {
-      props.submit(signUpActions.signUp)();
+      return;
     }
+
+    for (let i = 0; i < termsLen; i++) {
+      if (!signUpTermsField[i].required) continue;
+
+      if (checkBoxState[i].indexOf(false) != -1) {
+        alert(signUpTermsField[i].errorMessage);
+        return;
+      }
+    }
+
+    props.submit(signUpActions.signUp)();
   };
 
-  const handleCheckBox = () => {
+  const handleAgreeAll = () => {
     setAgreeAllState(!agreeAllState);
+    setCheckBoxState(
+      Array(termsLen)
+        .fill(null)
+        .map((v, i) =>
+          Array(signUpTermsField[i].tail.length).fill(!agreeAllState),
+        ),
+    );
   };
 
   return (
@@ -63,7 +86,8 @@ function SignUpForm(props: SignUpProps) {
           <input
             type="checkbox"
             id="agree_all_check"
-            onChange={handleCheckBox}
+            checked={agreeAllState}
+            onChange={handleAgreeAll}
           ></input>
           <label htmlFor="agree_all_check">
             이용약관 및 개인정보수집 및 이용, 쇼핑정보 수신(선택)에 모두
@@ -74,10 +98,14 @@ function SignUpForm(props: SignUpProps) {
           return (
             <Terms
               key={index}
+              index={index}
               head={field.head}
               content={field.content}
               tail={field.tail}
+              checkBoxState={checkBoxState}
+              setCheckBoxState={setCheckBoxState}
               agreeAllState={agreeAllState}
+              setAgreeAllState={setAgreeAllState}
             />
           );
         })}

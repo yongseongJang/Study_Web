@@ -1,5 +1,4 @@
 import { ITerms } from "../../utils/fields/types";
-import * as React from "react";
 
 const signUpTermsField: Array<ITerms> = [
   {
@@ -10,6 +9,8 @@ const signUpTermsField: Array<ITerms> = [
       "1. 이 약관은 2013년 05월 30일부터 적용됩니다.",
     ],
     tail: ["이용약관에 동의하십니까?"],
+    required: true,
+    errorMessage: "이용약관에 동의 하세요",
   },
   {
     head: "[필수] 개인정보 수집 및 이용 동의",
@@ -40,14 +41,17 @@ const signUpTermsField: Array<ITerms> = [
       "※ 동의를 거부할 수 있으나 거부시 회원 가입이 불가능합니다.",
     ],
     tail: ["개인정보 수집 및 이용에 동의하십니까?"],
+    required: true,
+    errorMessage: "개인정보 수집 및 이용에 동의 하세요",
   },
   {
-    head: "[필수] 쇼핑정보 수신 동의",
+    head: "[선택] 쇼핑정보 수신 동의",
     content: [
       "할인쿠폰 및 혜택, 이벤트, 신상품 소식 등 쇼핑몰에서 제공하는 유익한 쇼핑정보를 SMS나 이메일로 받아보실 수 있습니다.",
       "단, 주문/거래 정보 및 주요 정책과 관련된 내용은 수신동의 여부와 관계없이 발송됩니다.",
       "선택 약관에 동의하지 않으셔도 회원가입은 가능하며, 회원가입 후 회원정보수정 페이지에서 언제든지 수신여부를 변경하실 수 있습니다.",
     ],
+    required: false,
     tail: ["SMS 수신을 동의하십니까?", "이메일 수신을 동의하십니까?"],
   },
 ];
