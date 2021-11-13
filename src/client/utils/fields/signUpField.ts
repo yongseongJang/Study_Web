@@ -11,6 +11,7 @@ const signUpField: { [key: string]: IFields } = {
     },
     valid: false,
     errorMessage: "아이디 항목은 필수 입력값입니다.",
+    info: "(영문소문자/숫자, 4~16자)",
   },
   pw: {
     elementLabel: "비밀번호",
@@ -22,6 +23,7 @@ const signUpField: { [key: string]: IFields } = {
     },
     valid: false,
     errorMessage: "비밀번호 항목은 필수 입력값입니다.",
+    info: "(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)",
   },
   pw_check: {
     elementLabel: "비밀번호 확인",
@@ -53,6 +55,7 @@ const signUpField: { [key: string]: IFields } = {
     },
     valid: false,
     errorMessage: "휴대전화 항목은 필수 입력값입니다.",
+    info: "(010-0000-0000)",
   },
   email: {
     elementLabel: "이메일",

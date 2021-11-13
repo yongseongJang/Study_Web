@@ -1,3 +1,5 @@
+import React = require("react");
+
 export interface IFields {
   elementLabel: string;
   inputType: string;
@@ -5,6 +7,7 @@ export interface IFields {
   validation: IValidation;
   valid: boolean;
   errorMessage: string | null;
+  info?: string;
 }
 
 export interface IValidation {
@@ -13,4 +16,10 @@ export interface IValidation {
   pw?: boolean;
   email?: boolean;
   phoneNumber?: boolean;
+}
+
+export interface ITerms {
+  head: string;
+  content: Array<string>;
+  tail: Array<string>;
 }

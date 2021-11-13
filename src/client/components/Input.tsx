@@ -5,6 +5,7 @@ interface InputProps {
   id: string;
   type: any;
   value: string;
+  info: string | undefined;
   onChange: () => void;
 }
 
@@ -19,6 +20,7 @@ function Input(props: InputProps) {
           value={props.value}
           onChange={props.onChange}
         />
+        <span className="Input__Label__Info">{props.info}</span>
       </label>
     </div>
   );
