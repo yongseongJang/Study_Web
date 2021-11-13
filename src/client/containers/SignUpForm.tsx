@@ -52,7 +52,7 @@ function SignUpForm(props: SignUpProps) {
                   label={formElement.config.elementLabel}
                   type={formElement.config.inputType}
                   value={formElement.config.value}
-                  info={formElement.config.info ? formElement.config.info : ""}
+                  info={formElement.config.info}
                   onChange={props.onChange}
                 />
               </div>
