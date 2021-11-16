@@ -1,0 +1,55 @@
+const headerSubCategory = {
+  Brand: [
+    "UNIFORM BRIDGE",
+    "EDIT15EDITION",
+    "ARC'TERYX",
+    "DON JUAN",
+    "MEGAZINE",
+    "MALIBU",
+    "INCENSE & HOLDER",
+    "PUEBCO",
+    "RBOW",
+    "REDWING",
+    "REPRODUCTION OF FOUND",
+    "STILL BY HAND",
+    "TECNICA",
+    "ZDA",
+  ],
+  Categories: {
+    Man: [
+      "Outer",
+      "Knit",
+      "Sweatshirts",
+      "Shirts",
+      "T-Shirts",
+      "Bottoms",
+      "Exclusive",
+    ],
+    Women: [
+      "Outer",
+      "Knit",
+      "Sweatshirts",
+      "Shirts",
+      "T-Shirts",
+      "Bottoms",
+      "One-piece",
+    ],
+    Acc: ["Head wear", "Shoes", "Bag", "Etc.", "Life style", "Exclusive"],
+  },
+  Sale: [
+    "Top",
+    "Bottom",
+    "Clearance",
+    "REDWING - 15%",
+    "TECNICA -20%",
+    "MALIBU SANDALS - 40%",
+  ],
+  LookBook: [
+    "Uniform Bridge 21-22 Fall / Winter Part.1 Lookbook",
+    "Uniform Bridge 21-22 Fall / Winter Part.2 Lookbook",
+    "Uniform Bridge 21-22 Winter Lookbook",
+    "still by hand 21-22 AW Lookbook",
+  ],
+};
+
+export default headerSubCategory;

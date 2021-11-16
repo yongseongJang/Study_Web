@@ -22,3 +22,196 @@ body {
   padding: 135px 0 400px 0;
   box-sizing: border-box;
 }
+
+.Footer {
+  margin-top: -370px;
+  clear: both;
+  background: #ededed;
+  transition: 1s all ease;
+}
+
+.Footer a {
+  color: #111;
+}
+
+.Footer__Layout {
+  width: 100%;
+  padding: 57px 5% 0;
+  box-sizing: border-box;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  color: #111;
+  font-size: 12.5px;
+  line-height: 28px;
+  letter-spacing: 0px;
+  font-weight: 400;
+  z-index: 999;
+}
+
+.Footer__Layout__Left {
+  float: left;
+  width: 50%;
+  padding: 0 0 40px;
+  box-sizing: border-box;
+}
+
+.Footer__Layout__Left > ul {
+  overflow: hidden;
+}
+
+.Footer__Layout__Left__Menu {
+  line-height: 28px;
+  margin-bottom: 60px;
+  box-sizing: border-box;
+  font-size: 12.5px;
+}
+
+.Footer__Layout__Left__Info__Line:before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 13px;
+  margin-left: 7px;
+  margin-right: 7px;
+  background-color: #515151;
+  vertical-align: middle;
+}
+
+.Footer__Layout__Right {
+  float: left;
+  width: 50%;
+  padding: 0 0 20px 0;
+  box-sizing: border-box;
+}
+
+.Footer__Layout__Right > ul {
+  overflow: hidden;
+}
+
+.Footer__Layout__Right > ul > li {
+  font-size: 12.5px;
+  text-align: right;
+}
+
+.Footer__Layout__Right__URL {
+  margin-bottom: 60px;
+}
+
+.Footer__Layout__Right__SNS {
+  margin-bottom: 60px;
+}
+
+.Header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-width: 1440px;
+  max-width: 100%;
+  height: 90px;
+  transition: all 0.4s;
+  margin: 0 auto;
+  z-index: 4000;
+}
+
+.Header__Area {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.Header__Area__Nav {
+  position: relative;
+}
+
+.Header__Area__Nav ul {
+  list-style: none;
+  margin: 0 auto;
+}
+
+.Header__Area__Nav__Logo {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  padding: 24px 57px 0 0;
+  text-align: left;
+  transform: none;
+  height: 43px;
+  margin: 0;
+  float: left;
+}
+
+.Header__Area__Nav__Category__Shop > ul > li {
+  padding-top: 36px;
+  float: left;
+  margin-left: 15px;
+}
+
+.Header__Area__Nav__Category__Shop > ul > li > a {
+  color: #444;
+}
+
+.Header__Area__Nav__Category__Shop__Banner {
+  position: absolute;
+  top: 100px;
+  right: 0;
+  z-index: 2;
+}
+
+.Header__Area__Nav__Category__Shop__Sub {
+  position: absolute;
+  top: 82px;
+  left: 258px;
+  right: 0;
+  z-index: 1;
+}
+
+.Header__Area__Nav__Category__Shop__Sub > li {
+  padding-top: 13px;
+}
+
+.Header__Area__Nav__Right {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  margin: 0;
+}
+
+.Header__Area__Nav__Right > ul {
+  box-sizing: border-box;
+}
+
+.Header__Area__Nav__Right > ul > li {
+  display: inline-block;
+  padding: 0 0 0 0;
+}
+
+.Header__Area__Nav__Right__Search {
+  color: #444;
+}
+
+.Header__Area__Nav__Right__Search > div {
+  position: absolute;
+  width: 160px;
+  top: 0;
+  left: -160px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s all ease;
+}
+
+.Header__Area__Nav__Right__Search > div:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.Header__Area__Nav__Right > ul > li > a {
+  color: #444;
+  padding-left: 15px;
+  font-size: 12.5px;
+  font-weight: normal;
+  letter-spacing: -0.2px;
+}
