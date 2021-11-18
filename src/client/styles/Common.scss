@@ -154,25 +154,6 @@ body {
   color: #444;
 }
 
-.Header__Area__Nav__Category__Shop__Banner {
-  position: absolute;
-  top: 100px;
-  right: 0;
-  z-index: 2;
-}
-
-.Header__Area__Nav__Category__Shop__Sub {
-  position: absolute;
-  top: 82px;
-  left: 258px;
-  right: 0;
-  z-index: 1;
-}
-
-.Header__Area__Nav__Category__Shop__Sub > li {
-  padding-top: 13px;
-}
-
 .Header__Area__Nav__Right {
   position: absolute;
   top: 36px;
@@ -214,4 +195,33 @@ body {
   font-size: 12.5px;
   font-weight: normal;
   letter-spacing: -0.2px;
+}
+
+.Header__Area__Nav__Category__Shop .ImageBanner {
+  display: none;
+  position: absolute;
+  top: 100px;
+  right: 0;
+  z-index: 2;
+}
+
+.Header__Area__Nav__Category__Shop .HeaderSub {
+  display: none;
+  position: absolute;
+  top: 82px;
+  left: 258px;
+  right: 0;
+  z-index: 1;
+}
+
+.Header__Area__Nav__Category__Shop > ul > li:hover .ImageBanner {
+  display: block;
+}
+
+.Header__Area__Nav__Category__Shop > ul > li:hover .HeaderSub {
+  display: block;
+}
+
+.Header__Area__Nav__Category__Shop__Sub .HeaderSub > li {
+  padding-top: 13px;
 }
