@@ -9,8 +9,8 @@ function App() {
     <React.Fragment>
       <Header />
       <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={SignUp} />
+        <Route path="/member/login" component={Login} />
+        <Route path="/member/join" component={SignUp} />
       </Switch>
       <Footer />
     </React.Fragment>

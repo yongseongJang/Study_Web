@@ -34,7 +34,7 @@ function LoginForm(props: LoginProps) {
     }
   };
   return (
-    <div className="LoginForm">
+    <div className="login-form">
       <form>
         {props
           .renderElements()
@@ -43,45 +43,32 @@ function LoginForm(props: LoginProps) {
               errorMessage = formElement.config.errorMessage;
             }
             return (
-              <div key={formElement.id} className="LoginForm__Input_Wrapper">
+              <div key={formElement.id} className="login-form__input-wrapper">
                 <Input
                   id={formElement.id}
                   label={formElement.config.elementLabel}
                   type={formElement.config.inputType}
                   value={formElement.config.value}
                   info={formElement.config.info}
+                  placeholder={formElement.config.placeholder}
                   onChange={props.onChange}
                 />
               </div>
             );
           })}
 
-        <a className="Submit" onClick={handleSubmitClick}>
-          SIGN IN
-        </a>
-        <ul>
-          <li className="Forgot">
-            {"Forgot your "}
-            <a href="#none">ID?</a>
-            {" or "}
-            <a href="#none" className="right">
-              PASSWORD?
-            </a>
-          </li>
-          <li className="Join">
-            <a href="/signup">CREATE ACCOUNT</a>
-          </li>
-          <li className="">
-            <a href="">
-              <img src="http://img.echosting.cafe24.com/skin/base_ko_KR/member/btn_kakao_login.gif" />
-            </a>
-          </li>
-          <li className="">
-            <a href="">
-              <img src="http://img.echosting.cafe24.com/skin/base_ko_KR/member/btn_naver_login.gif" />
-            </a>
-          </li>
-        </ul>
+        <div className="login-form__sub-menu">
+          <a href="member/id">아이디찾기</a>
+          <a href="member/passwd">비밀번호찾기</a>
+        </div>
+        <p>
+          <a href="" className="btn-login">
+            LOGIN
+          </a>
+          <a href="" className="btn-agree">
+            REGISTER
+          </a>
+        </p>
       </form>
     </div>
   );

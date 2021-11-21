@@ -1,13 +1,14 @@
 import React = require("react");
 
 export interface IFields {
-  elementLabel: string;
+  elementLabel?: string;
   inputType: string;
   value: string;
   validation: IValidation;
   valid: boolean;
   errorMessage: string | null;
   info?: string;
+  placeholder?: string;
 }
 
 export interface IValidation {
