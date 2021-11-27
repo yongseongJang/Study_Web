@@ -36,6 +36,21 @@ input:focus {
   outline: none;
 }
 
+input[type="radio"] {
+  width: 13px;
+  height: 13px;
+  border: 0;
+}
+
+input[type="radio"] + label {
+  margin: 0 4px 0 2px;
+}
+
 ul li {
   list-style: none;
+}
+
+b,
+strong {
+  font-weight: bolder;
 }

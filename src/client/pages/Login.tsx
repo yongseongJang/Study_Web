@@ -8,7 +8,7 @@ function Login() {
       <div className="login__page-outer">
         <div className="page-outer__page-inner">
           <TopMenu />
-          <main className="page-outer__contents">
+          <main className="page-inner__contents">
             <div className="contents__section-wrap">
               <section className="section-wrap__spacer"></section>
               <section>
@@ -33,7 +33,6 @@ function Login() {
                     </li>
                   </ul> */}
                 </div>
-                <div></div>
               </section>
               <section>
                 <div className="section-wrap__separator1"></div>

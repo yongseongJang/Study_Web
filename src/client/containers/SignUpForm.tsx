@@ -8,6 +8,7 @@ import { signUpActions } from "../actions";
 import { IFields } from "../utils/fields/types";
 import { IUserInfo } from "../interfaces";
 import signUpTermsField from "../utils/fields/signUpTermsField";
+import ico_required_blue from "../../public/img/ico_required_blue.gif";
 
 interface SignUpProps {
   renderElements: () => [];
@@ -29,7 +30,9 @@ function SignUpForm(props: SignUpProps) {
 
   let errorMessage = "";
 
-  const handleSubmitClick = () => {
+  const handleSubmitClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
     if (errorMessage) {
       alert(errorMessage);
       return;
@@ -59,40 +62,93 @@ function SignUpForm(props: SignUpProps) {
   };
 
   return (
-    <div className="SignUpForm">
+    <div className="signup-form">
       <form>
-        {props
-          .renderElements()
-          .map((formElement: { id: string; config: IFields }) => {
-            if (formElement.config.errorMessage) {
-              errorMessage = formElement.config.errorMessage;
-            }
+        <div>
+          <table>
+            <colgroup>
+              <col style={{ width: "150px" }} />
+              <col style={{ width: "auto" }} />
+            </colgroup>
+            <tbody>
+              <tr>
+                <th>
+                  회원구분 <img src={ico_required_blue} alt="필수" />
+                </th>
+                <td>
+                  <input type="radio" id="member_type" checked={true} />
+                  <label htmlFor="member_type">개인회원</label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>기본정보</h3>
+        <p className="signup-form__required">
+          <img src={ico_required_blue} alt="필수" />
+          {" 필수입력사항"}
+        </p>
+        <div>
+          <table>
+            <colgroup>
+              <col style={{ width: "150px" }} />
+              <col style={{ width: "auto" }} />
+            </colgroup>
+            <tbody>
+              {props
+                .renderElements()
+                .map((formElement: { id: string; config: IFields }) => {
+                  if (formElement.config.errorMessage) {
+                    errorMessage = formElement.config.errorMessage;
+                  }
 
-            return (
-              <div key={formElement.id} className="SignUpForm__Input__Wrapper">
-                <Input
-                  id={formElement.id}
-                  label={formElement.config.elementLabel}
-                  type={formElement.config.inputType}
-                  value={formElement.config.value}
-                  info={formElement.config.info}
-                  onChange={props.onChange}
-                />
-              </div>
-            );
-          })}
-
-        <div className="SignUpForm__AgreeAll">
-          <input
-            type="checkbox"
-            id="agree_all_check"
-            checked={agreeAllState}
-            onChange={handleAgreeAll}
-          ></input>
-          <label htmlFor="agree_all_check">
-            이용약관 및 개인정보수집 및 이용, 쇼핑정보 수신(선택)에 모두
-            동의합니다.
-          </label>
+                  return (
+                    <tr key={formElement.id}>
+                      <th>
+                        {`${formElement.config.elementLabel} `}
+                        {formElement.config.validation.required ? (
+                          <img src={ico_required_blue} alt="필수" />
+                        ) : (
+                          ""
+                        )}
+                      </th>
+                      <td>
+                        <Input
+                          id={formElement.id}
+                          label={""}
+                          type={formElement.config.inputType}
+                          value={formElement.config.value}
+                          info={formElement.config.info}
+                          onChange={props.onChange}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+        <h3>
+          <strong>전체 동의</strong>
+        </h3>
+        <div className="signup-form__agree-all">
+          <p>
+            <span>
+              <input
+                type="checkbox"
+                id="agree_all_check"
+                checked={agreeAllState}
+                onChange={handleAgreeAll}
+              ></input>
+              <em></em>
+            </span>
+            <label htmlFor="agree_all_check">
+              <strong>
+                이용약관 및 개인정보수집 및 이용, 쇼핑정보 수신(선택)에 모두
+                동의합니다.
+              </strong>
+            </label>
+          </p>
         </div>
         {signUpTermsField.map((field, index) => {
           return (
@@ -109,16 +165,10 @@ function SignUpForm(props: SignUpProps) {
             />
           );
         })}
-        <div className="SignUpForm__BtnArea">
-          <a className="SignUpForm__BtnArea__Left" href="/">
-            BACK
-          </a>
-          <a
-            className="SignUpForm__BtnArea__Right"
-            href="#none"
-            onClick={handleSubmitClick}
-          >
-            JOIN
+        <div className="signup-form__clearfix"></div>
+        <div className="signup-form__btn">
+          <a className="btn__submit" href="" onClick={handleSubmitClick}>
+            회원가입
           </a>
         </div>
       </form>

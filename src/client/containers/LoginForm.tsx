@@ -62,10 +62,10 @@ function LoginForm(props: LoginProps) {
           <a href="member/passwd">비밀번호찾기</a>
         </div>
         <p>
-          <a href="" className="btn-login">
+          <a href="" className="btn-login" onClick={handleSubmitClick}>
             LOGIN
           </a>
-          <a href="" className="btn-agree">
+          <a href="/member/join" className="btn-agree">
             REGISTER
           </a>
         </p>

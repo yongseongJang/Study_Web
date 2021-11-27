@@ -31,9 +31,9 @@ function Terms(props: TermsProps) {
   };
 
   return (
-    <div className="Terms__AgreeArea">
+    <div className="terms__agree-area">
       <h3>{props.head}</h3>
-      <div className="Terms__AgreeArea__Content">
+      <div className="agree-area__content">
         <div>
           {props.content.map((phrases, index) => {
             return <p key={index}>{phrases}</p>;

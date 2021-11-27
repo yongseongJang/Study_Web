@@ -21,7 +21,7 @@ export function* login(id: string, password: string) {
 
     yield put(loginActions.loginSuccess(token, id, userName));
 
-    history.replace("/signup");
+    history.replace("/");
 
     forkCheckAuthTimeout = yield fork(checkAuthTimeout, expirationTime);
   } catch (err) {
