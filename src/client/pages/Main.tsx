@@ -1,8 +1,14 @@
 import * as React from "react";
 import mainBanner from "../../public/img/mainbanner.jpg";
 import search from "../../public/img/search.png";
+import coat from "../../public/img/coat.jpg";
+import knit from "../../public/img/knit.jpg";
+import still_by_hand from "../../public/img/still_by_hand.jpg";
+import arcteryx from "../../public/img/arcteryx.jpg";
 
 function Main() {
+  const secondSectionImage = [coat, knit, still_by_hand, arcteryx];
+
   return (
     <div className="main">
       <div className="main__page-outer">
@@ -75,7 +81,25 @@ function Main() {
                   </div>
                 </div>
               </section>
-              <section className="content__section"></section>
+              <section className="content__section">
+                <div className="section__element">
+                  {secondSectionImage.map((v, i) => {
+                    return (
+                      <div className="element__column" key={i}>
+                        <div className="column__wrap">
+                          <div className="wrap__picture-menu">
+                            <div>
+                              <a href="/">
+                                <img src={v} />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
               <section className="content__section"></section>
               <section className="content__section"></section>
               <section className="content__section"></section>

@@ -27,7 +27,7 @@
             position: relative;
             display: block;
 
-            .section__element {
+            .section__element:nth-child(1) {
               position: relative;
               display: flex;
 
@@ -156,6 +156,31 @@
                         word-wrap: break-word;
                       }
                     }
+                  }
+                }
+              }
+            }
+          }
+
+          .content__section:nth-child(2) {
+            border-style: solid;
+            border-width: 1px 0px 0px 0px;
+            padding: 65px 0px 0px 0px;
+
+            .section__element {
+              position: relative;
+              display: flex;
+
+              .element__column {
+                position: relative;
+                display: flex;
+                width: 25%;
+
+                .column__wrap {
+                  width: 100%;
+
+                  img {
+                    height: 300px;
                   }
                 }
               }
