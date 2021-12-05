@@ -11,6 +11,7 @@ import thirdFirstTwo from "../../public/img/3-3.jpg";
 import thirdSecondTwo from "../../public/img/3-4.jpg";
 import thirdFirstThree from "../../public/img/3-5.jpg";
 import thirdSecondThree from "../../public/img/3-6.jpg";
+import renewalEvent from "../../public/img/renewal_event.jpg";
 
 function Main() {
   const secondSectionImage = [coat, knit, still_by_hand, arcteryx];
@@ -179,10 +180,32 @@ function Main() {
               <section className="content__section"></section>
               <section className="content__section"></section>
               <section className="content__section"></section>
-              <section className="content__section"></section>
-              <section className="content__section"></section>
-              <section className="content__section"></section>
-              <section className="content__section"></section>
+              <section className="content__section">
+                <div className="section__element">
+                  <div className="element__column">
+                    <div className="column__wrap">
+                      <div className="wrap__space"></div>
+                      <div className="wrap__container">
+                        <div className="container__left">
+                          <div className="left__wrap">
+                            <h4>
+                              The Edit Edition online store has been renewed.As
+                              a thank you, we are running a discount event, so
+                              please click the banner.
+                            </h4>
+                          </div>
+                        </div>
+                        <div className="container__right">
+                          <a href="">
+                            <img src={renewalEvent} alt="" />
+                          </a>
+                        </div>
+                      </div>
+                      <div className="wrap__space2"></div>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </div>
           </main>
         </div>
