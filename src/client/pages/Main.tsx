@@ -5,9 +5,31 @@ import coat from "../../public/img/coat.jpg";
 import knit from "../../public/img/knit.jpg";
 import still_by_hand from "../../public/img/still_by_hand.jpg";
 import arcteryx from "../../public/img/arcteryx.jpg";
+import thirdFirstOne from "../../public/img/3-1.jpg";
+import thirdSecondOne from "../../public/img/3-2.jpg";
+import thirdFirstTwo from "../../public/img/3-3.jpg";
+import thirdSecondTwo from "../../public/img/3-4.jpg";
+import thirdFirstThree from "../../public/img/3-5.jpg";
+import thirdSecondThree from "../../public/img/3-6.jpg";
 
 function Main() {
   const secondSectionImage = [coat, knit, still_by_hand, arcteryx];
+
+  const thirdSectionTitle = [
+    "UNIFORM BRIDGE 21-22 WINTER",
+    "UNIFORM BRIDGE 21-22 FALL/WINTER",
+    "STILL BY HAND 21 AW",
+  ];
+  const thirdSectionFirstImage = [
+    thirdFirstOne,
+    thirdFirstTwo,
+    thirdFirstThree,
+  ];
+  const thirdSectionSecondImage = [
+    thirdSecondOne,
+    thirdSecondTwo,
+    thirdSecondThree,
+  ];
 
   return (
     <div className="main">
@@ -100,7 +122,59 @@ function Main() {
                   })}
                 </div>
               </section>
-              <section className="content__section"></section>
+              <section className="content__section">
+                <div className="section__element">
+                  <div className="element__column">
+                    <div className="column__wrap">
+                      <div className="wrap__carousel">
+                        <article className="carousel__slide">
+                          <div className="slide__inner">
+                            <div className="inner__left">
+                              {thirdSectionTitle.map((v, i) => {
+                                return (
+                                  <div className="left__item" key={i}>
+                                    <h2 className="item__title">
+                                      <a href="">{v}</a>
+                                    </h2>
+                                    <div className="item__read-more">
+                                      <a href="">
+                                        <span>View lookbook</span>
+                                      </a>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            <div className="inner_right">
+                              {thirdSectionFirstImage.map((v, i) => {
+                                return (
+                                  <div className="right__first-image" key={i}>
+                                    <a href="">
+                                      <img src={v} alt="" />
+                                    </a>
+                                  </div>
+                                );
+                              })}
+                              {thirdSectionSecondImage.map((v, i) => {
+                                return (
+                                  <div
+                                    className={`right__right-image${i}`}
+                                    key={i}
+                                  >
+                                    <a href="">
+                                      <img src={v} alt="" />
+                                    </a>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </article>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
               <section className="content__section"></section>
               <section className="content__section"></section>
               <section className="content__section"></section>

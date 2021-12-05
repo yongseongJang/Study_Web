@@ -6,7 +6,7 @@ import "./styles/App.scss";
 
 function App() {
   return (
-    <React.Fragment>
+    <div style={{ position: "relative", overflow: "hidden" }}>
       <Header />
       <Switch>
         <Route exact path="/" component={Main} />
@@ -14,7 +14,7 @@ function App() {
         <Route path="/member/join" component={SignUp} />
       </Switch>
       <Footer />
-    </React.Fragment>
+    </div>
   );
 }
 export default App;
