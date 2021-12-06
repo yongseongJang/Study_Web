@@ -12,7 +12,7 @@ import thirdSecondTwo from "../../public/img/3-4.jpg";
 import thirdFirstThree from "../../public/img/3-5.jpg";
 import thirdSecondThree from "../../public/img/3-6.jpg";
 import renewalEvent from "../../public/img/renewal_event.jpg";
-
+import womensLine from "../../public/img/womens_line.jpg";
 function Main() {
   const secondSectionImage = [coat, knit, still_by_hand, arcteryx];
 
@@ -177,7 +177,28 @@ function Main() {
                 </div>
               </section>
               <section className="content__section"></section>
-              <section className="content__section"></section>
+              <section className="content__section">
+                <div className="section__column">
+                  <div className="column__left">
+                    <div className="left__wrap">
+                      <div className="wrap__container">
+                        <a href="">
+                          <p>STILL BY HAND</p>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="column__right">
+                    <div className="right__wrap">
+                      <div className="wrap__container">
+                        <a href="">
+                          <img src={womensLine} />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
               <section className="content__section"></section>
               <section className="content__section"></section>
               <section className="content__section">
