@@ -6,6 +6,8 @@ dotenv.config();
 
 class MongooseLoader {
   private static instance: MongooseLoader;
+  private mongoURI =
+    process.env.MONGO_URI || "mongodb://localhost:27017/onlineshop_copy";
 
   private constructor() {}
 
@@ -19,7 +21,7 @@ class MongooseLoader {
 
   public async init() {
     await mongoose
-      .connect(process.env.MONGO_URI!, {
+      .connect(this.mongoURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         keepAlive: true,

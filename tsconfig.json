@@ -8,7 +8,9 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "removeComments": true,
-    "jsx": "react"
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

@@ -1,5 +1,5 @@
 interface User {
-  _id: string;
+  _id: number;
   id: string;
   pw: string;
   name: string;

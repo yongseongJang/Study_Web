@@ -1,4 +1,5 @@
 import UserRepository from "../models/repositories/user.repository";
+import { getConnection } from "typeorm";
 import createValidator from "../utils/validation/createValidator";
 import {
   userRegistrationSchema,
@@ -19,13 +20,19 @@ class UserService {
   private userRepository: UserRepository;
 
   constructor() {
-    this.userRepository = new UserRepository();
+    const connection = getConnection();
+    this.userRepository = connection.getCustomRepository(UserRepository);
   }
 
   public async login(id: string, password: string): Promise<LoginInfo> {
     try {
-      const hash: Pick<IUser, "pw"> | null =
-        await this.userRepository.readPasswordById(id);
+      const hash: string | null = await this.userRepository.readPasswordById(
+        id,
+      );
+
+      if (!hash) {
+        throw new Errorhandler(401, "ValidationError", "Invalid Id");
+      }
 
       await this.comparePasswordToHash(password, hash);
 
@@ -61,7 +68,7 @@ class UserService {
         pw: hash,
       });
 
-      await this.userRepository.createUserInfo(convertedUserInfo);
+      await this.userRepository.createUser(convertedUserInfo);
     } catch (err) {
       throw err;
     }
@@ -78,29 +85,22 @@ class UserService {
       });
   };
 
-  private comparePasswordToHash = (
-    password: string,
-    hash: Pick<IUser, "pw"> | null,
-  ) => {
+  private comparePasswordToHash = (password: string, hash: string) => {
     return new Promise((resolve, reject) => {
-      if (hash !== null) {
-        bcrypt
-          .compare(password, hash.pw)
-          .then((res: boolean) => {
-            if (!res) {
-              reject(
-                new Errorhandler(401, "ValidationError", "Invalid Password"),
-              );
-            } else {
-              resolve(res);
-            }
-          })
-          .catch((err: Error) => {
-            reject(new Errorhandler(500, err.name, err.message));
-          });
-      } else {
-        reject(new Errorhandler(401, "ValidationError", "Invalid Id"));
-      }
+      bcrypt
+        .compare(password, hash)
+        .then((res: boolean) => {
+          if (!res) {
+            reject(
+              new Errorhandler(401, "ValidationError", "Invalid Password"),
+            );
+          } else {
+            resolve(res);
+          }
+        })
+        .catch((err: Error) => {
+          reject(new Errorhandler(500, err.name, err.message));
+        });
     });
   };
 
@@ -108,7 +108,7 @@ class UserService {
     return new Promise((resolve, reject) => {
       jwt.sign(
         { id },
-        process.env.PRIVATEKEY!,
+        process.env.PRIVATEKEY || "privatekey",
         {
           expiresIn: authExpirationTime,
         },
