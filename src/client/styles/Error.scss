@@ -1,0 +1,20 @@
+.error {
+  .error__page-outer {
+    position: relative;
+    padding-left: 70px;
+
+    .page-outer__page-inner {
+      position: relative;
+      width: 100%;
+
+      .page-inner__error-title {
+        color: #000000;
+        font-family: DM Sans;
+        font-size: 40px;
+        line-height: 70px;
+        font-weight: 500;
+        margin: 25px 25px;
+      }
+    }
+  }
+}

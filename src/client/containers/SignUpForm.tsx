@@ -27,8 +27,9 @@ function SignUpForm(props: SignUpProps) {
       .fill(null)
       .map((v, i) => Array(signUpTermsField[i].tail.length).fill(false)),
   );
-
   let errorMessage = "";
+  let password = "";
+  let passwordCheck = "";
 
   const handleSubmitClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -45,6 +46,11 @@ function SignUpForm(props: SignUpProps) {
         alert(signUpTermsField[i].errorMessage);
         return;
       }
+    }
+
+    if (password !== passwordCheck) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
     }
 
     props.submit(signUpActions.signUp)();
@@ -100,6 +106,12 @@ function SignUpForm(props: SignUpProps) {
                 .map((formElement: { id: string; config: IFields }) => {
                   if (formElement.config.errorMessage) {
                     errorMessage = formElement.config.errorMessage;
+                  }
+
+                  if (formElement.id === "pw") {
+                    password = formElement.config.value;
+                  } else if (formElement.id === "pw_check") {
+                    passwordCheck = formElement.config.value;
                   }
 
                   return (

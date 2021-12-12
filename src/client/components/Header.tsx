@@ -40,7 +40,7 @@ function Header() {
         </a>
         <div className="header--static__widget">
           <div className="material-icons">
-            <a href="">
+            <a href="/member/login">
               <span className="material-icons-outlined">person</span>
             </a>
           </div>
@@ -63,7 +63,7 @@ function Header() {
         <nav className="header--dynamic__navigation">
           <ul>
             <li>
-              <a href="">
+              <a href="/product/list">
                 <span>ALL PRODUCT</span>
               </a>
             </li>

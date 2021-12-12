@@ -89,12 +89,12 @@ function Main() {
                             <br />
                             CS Center : Mon–Fri / 10:00 ~ 17:00
                             <br />
-                            02-2231-2593
+                            02-0001-0001
                           </h5>
                           <h6>
                             Editedition Showroom
                             <br />
-                            236, Itaewon-ro, Yongsan-gu, Seoul
+                            000, Itaewon-ro, Yongsan-gu, Seoul
                             <br />
                             Mon–Sun / 11:00 ~ 21:00
                           </h6>

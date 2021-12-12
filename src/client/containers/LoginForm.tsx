@@ -58,8 +58,8 @@ function LoginForm(props: LoginProps) {
           })}
 
         <div className="login-form__sub-menu">
-          <a href="member/id">아이디찾기</a>
-          <a href="member/passwd">비밀번호찾기</a>
+          <a href="">아이디찾기</a>
+          <a href="">비밀번호찾기</a>
         </div>
         <p>
           <a href="" className="btn-login" onClick={handleSubmitClick}>
