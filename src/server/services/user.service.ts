@@ -62,7 +62,7 @@ class UserService {
     try {
       const validatedUserInfo = validateUserRegistrationInfo(userInfo);
 
-      // id 중복 확인 로직 추가하기
+      await this.checkIdDuplication(validatedUserInfo.id);
 
       const hash = await this.stringPasswordToHash(validatedUserInfo.pw);
 
@@ -146,6 +146,14 @@ class UserService {
       );
     });
   };
+
+  private async checkIdDuplication(id: string) {
+    const userName = await this.userRepository.readUserNameById(id);
+
+    if (userName !== null) {
+      throw new ErrorHandler(409, "ConflictError", "ID Duplication");
+    }
+  }
 }
 
 export default UserService;
