@@ -58,9 +58,11 @@ class UserService {
     }
   }
 
-  public async registerUserInfo(userInfo: IUser) {
+  public async registerUser(userInfo: IUser) {
     try {
       const validatedUserInfo = validateUserRegistrationInfo(userInfo);
+
+      // id 중복 확인 로직 추가하기
 
       const hash = await this.stringPasswordToHash(validatedUserInfo.pw);
 
@@ -69,6 +71,28 @@ class UserService {
       });
 
       await this.userRepository.createUser(convertedUserInfo);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public async deleteUserById(id: string) {
+    try {
+      // id validate
+
+      await this.userRepository.deleteUserById(id);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public async updateUserInfoById(id: string, userInfo: IUser) {
+    try {
+      // id validate
+
+      const validatedUserInfo = await validateUserRegistrationInfo(userInfo);
+
+      await this.userRepository.updateUserInfoById(id, validatedUserInfo);
     } catch (err) {
       throw err;
     }

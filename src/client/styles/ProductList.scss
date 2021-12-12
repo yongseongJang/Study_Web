@@ -1,0 +1,42 @@
+.product-list {
+  .product-list__page-outer {
+    position: relative;
+    padding-left: 70px;
+
+    .page-outer__page-inner {
+      position: relative;
+      padding: 35px 0 100px;
+
+      .page-inner__contents {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
+
+        .contents__section-wrap {
+          .section-wrap__title {
+            width: 1400px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 20px;
+
+            h4 {
+              margin: 25px 0 10px;
+              color: #000;
+              font-size: 30px;
+              font-weight: 500;
+              word-wrap: break-word;
+              text-transform: uppercase;
+            }
+
+            .title__page {
+              position: absolute;
+              right: 0;
+              top: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

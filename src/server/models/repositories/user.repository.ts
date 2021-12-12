@@ -40,6 +40,29 @@ class UserRepository extends Repository<User> {
       throw new Errorhandler(500, err.name, err.message);
     }
   }
+
+  public async deleteUserById(id: string): Promise<void> {
+    try {
+      await this.manager.transaction(async (transactionEntityManger) => {
+        await transactionEntityManger.delete(User, { id });
+      });
+    } catch (err: any) {
+      throw new Errorhandler(500, err.name, err.message);
+    }
+  }
+
+  public async updateUserInfoById(
+    id: string,
+    validatedUserInfo: IUser,
+  ): Promise<void> {
+    try {
+      await this.manager.transaction(async (transactionEntityManager) => {
+        await transactionEntityManager.update(User, { id }, validatedUserInfo);
+      });
+    } catch (err: any) {
+      throw new Errorhandler(500, err.name, err.message);
+    }
+  }
 }
 
 export default UserRepository;
