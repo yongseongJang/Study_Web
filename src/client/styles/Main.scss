@@ -623,7 +623,7 @@
                       .slide__inner {
                         display: flex;
                         flex-direction: column;
-                        height: 1920px;
+                        height: 1000px;
                         .inner__left {
                           .left__item {
                             top: 1%;
@@ -635,7 +635,7 @@
                           }
                         }
                         .inner_right {
-                          top: 13%;
+                          top: 25%;
                           transform: translateX(0);
                           .right__first-image {
                             width: 100%;
@@ -644,25 +644,8 @@
                             }
                           }
                           [class^="right__right-image"] {
-                            animation: displayFirstImage 10.5s infinite;
                             width: 100%;
                             transform: translateX(0);
-                            top: 750px;
-                            img {
-                              height: 750px;
-                            }
-                          }
-
-                          .right__right-image1 {
-                            animation-delay: 0.3s;
-                          }
-
-                          .right__right-image1 {
-                            animation-delay: 3.3s;
-                          }
-
-                          .right__right-image2 {
-                            animation-delay: 6.3s;
                           }
                         }
                       }
