@@ -165,3 +165,24 @@
     }
   }
 }
+
+@media screen and (max-width: 1020px) {
+  .signup {
+    .signup__page-outer {
+      padding-left: 0px;
+      .page-outer__page-inner {
+        width: 768px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .signup {
+    .signup__page-outer {
+      .page-outer__page-inner {
+        width: 86%;
+      }
+    }
+  }
+}

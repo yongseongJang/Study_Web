@@ -127,3 +127,47 @@
     }
   }
 }
+
+@media screen and (max-width: 1020px) {
+  .login {
+    .login__page-outer {
+      padding-left: 0px;
+      .page-outer__page-inner {
+        width: 768px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .login {
+    .login__page-outer {
+      .page-outer__page-inner {
+        width: 86%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .login {
+    .page-outer__page-inner {
+      .page-inner__contents {
+        .contents__section-wrap {
+          .section-wrap__main {
+            > div {
+              width: 97%;
+            }
+            .login-form {
+              p {
+                a {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
