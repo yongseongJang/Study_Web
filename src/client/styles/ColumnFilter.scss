@@ -1,0 +1,41 @@
+.column-filter {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  a {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 7px;
+    padding: 0;
+    transition: all 0.3s ease-in;
+    line-height: 1.39em;
+
+    svg {
+      circle {
+        fill: #7e7e7e;
+      }
+    }
+  }
+
+  a:hover {
+    svg {
+      circle {
+        fill: #000;
+      }
+    }
+  }
+  a[class="active"] {
+    svg {
+      circle {
+        fill: #000;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .column-filter {
+    display: none;
+  }
+}
