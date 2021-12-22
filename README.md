@@ -4,5 +4,5 @@
 
 ## Node.js(Express) + React
 
-- publishing main page, register page, login page, product page
+- publishing main page, user register page, login page, product list page
 - develop login, logout, register user function
