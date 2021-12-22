@@ -1,4 +1,7 @@
 import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../reducers/types";
+import { loginActions } from "../actions";
 import mainBanner from "../../public/img/mainbanner.jpg";
 import search from "../../public/img/search.png";
 import coat from "../../public/img/coat.jpg";
@@ -13,8 +16,13 @@ import thirdFirstThree from "../../public/img/3-5.jpg";
 import thirdSecondThree from "../../public/img/3-6.jpg";
 import renewalEvent from "../../public/img/renewal_event.jpg";
 import womensLine from "../../public/img/womens_line.jpg";
+
 function Main() {
   const secondSectionImage = [coat, knit, still_by_hand, arcteryx];
+
+  const dispatch = useDispatch();
+
+  const { token } = useSelector((state: RootState) => state.loginReducer);
 
   const thirdSectionTitle = [
     "UNIFORM BRIDGE 21-22 WINTER",
@@ -31,6 +39,12 @@ function Main() {
     thirdSecondTwo,
     thirdSecondThree,
   ];
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    dispatch(loginActions.logout());
+  };
 
   return (
     <div className="main">
@@ -59,12 +73,22 @@ function Main() {
                       <div className="wrap__menu">
                         <div className="menu__container">
                           <ul>
-                            <li>
-                              <a href="/member/login">Login</a>
-                            </li>
-                            <li>
-                              <a href="/member/join">Join</a>
-                            </li>
+                            {token ? (
+                              <li>
+                                <a href="/" onClick={handleClick}>
+                                  Logout
+                                </a>
+                              </li>
+                            ) : (
+                              <React.Fragment>
+                                <li>
+                                  <a href="/member/login">Login</a>
+                                </li>
+                                <li>
+                                  <a href="/member/join">Join</a>
+                                </li>
+                              </React.Fragment>
+                            )}
                             <li>
                               <a href="/myshop/order">Order</a>
                             </li>

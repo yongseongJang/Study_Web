@@ -30,9 +30,9 @@ export function* login(id: string, password: string) {
 }
 
 export function* logout() {
-  yield cancel(forkCheckAuthTimeout);
   yield put(loginActions.logoutSuccess());
   history.replace("/");
+  yield cancel(forkCheckAuthTimeout);
 }
 
 export function* watchLoginRequest() {
