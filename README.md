@@ -6,3 +6,7 @@
 
 - publishing main page, user register page, login page, product list page
 - develop login, logout, register user function
+
+## DB ERD
+
+- [https://www.erdcloud.com/d/8xeRRYsdnRGrXGuHc](https://www.erdcloud.com/d/8xeRRYsdnRGrXGuHc)
