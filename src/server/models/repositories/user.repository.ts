@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from "typeorm";
-import { User } from "../entity/user";
+import { User } from "../entity";
 import { User as IUser } from "../../interfaces";
 import Errorhandler from "../../utils/error";
 

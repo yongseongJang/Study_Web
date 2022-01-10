@@ -18,10 +18,10 @@ function Item(props: Item) {
         <div className="inner__image">
           <a href="">
             <span className="image__sold-out"></span>
-            <img
+            {/* <img
               src={require(`../../public/img/product/${props.name}.jpg`)}
               alt=""
-            />
+            /> */}
           </a>
         </div>
         <div className="inner_content">

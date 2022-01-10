@@ -12,7 +12,6 @@ class Loader {
   }
 
   public async config() {
-    // await MongooseLoader.getInstance().init();
     try {
       await createConnection();
       logger.log("info", "Successfully connected to mysql");
