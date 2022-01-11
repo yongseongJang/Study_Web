@@ -6,7 +6,7 @@ export class User {
   _id?: number;
 
   @Column({
-    type: "varchar",
+    type: "int",
     length: 100,
     nullable: false,
     default: "",
@@ -15,7 +15,6 @@ export class User {
 
   @Column({
     type: "varchar",
-    length: 255,
     nullable: false,
     default: "",
   })
@@ -31,7 +30,6 @@ export class User {
 
   @Column({
     type: "varchar",
-    length: 255,
     nullable: false,
     default: "",
   })
@@ -39,7 +37,6 @@ export class User {
 
   @Column({
     type: "varchar",
-    length: 255,
     nullable: true,
     default: "",
   })
@@ -47,7 +44,6 @@ export class User {
 
   @Column({
     type: "varchar",
-    length: 255,
     nullable: false,
     default: "",
   })
@@ -55,7 +51,6 @@ export class User {
 
   @Column({
     type: "varchar",
-    length: 255,
     nullable: false,
     default: "",
   })
