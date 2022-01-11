@@ -11,14 +11,14 @@ export class User {
     nullable: false,
     default: "",
   })
-  id: string;
+  id!: string;
 
   @Column({
     type: "varchar",
     nullable: false,
     default: "",
   })
-  pw: string;
+  pw!: string;
 
   @Column({
     type: "varchar",
@@ -26,42 +26,45 @@ export class User {
     nullable: false,
     default: "",
   })
-  name: string;
+  name!: string;
 
   @Column({
     type: "varchar",
     nullable: false,
     default: "",
   })
-  address: string;
+  address!: string;
 
   @Column({
+    name: "regular_phone",
     type: "varchar",
     nullable: true,
     default: "",
   })
-  regular_phone: string | null;
+  regularPhone?: string;
+
+  @Column({
+    name: "cellular_Phone",
+    type: "varchar",
+    nullable: false,
+    default: "",
+  })
+  cellularPhone!: string;
 
   @Column({
     type: "varchar",
     nullable: false,
     default: "",
   })
-  cellular_phone: string;
+  email!: string;
 
   @Column({
-    type: "varchar",
-    nullable: false,
-    default: "",
-  })
-  email: string;
-
-  @Column({
+    name: "is_forever",
     type: "boolean",
     nullable: true,
     default: false,
   })
-  is_forever: boolean | null;
+  isForever?: boolean;
 
   @Column({
     type: "char",
@@ -69,37 +72,14 @@ export class User {
     nullable: false,
     default: "",
   })
-  birthday: string;
+  birthday!: string;
 
   @Column({
+    name: "membership_level",
     type: "varchar",
     length: 10,
     nullable: false,
     default: "WHITE",
   })
-  membership_level: string;
-
-  constructor(
-    id: string,
-    pw: string,
-    name: string,
-    address: string,
-    regular_phone: string | null,
-    cellular_phone: string,
-    email: string,
-    is_forever: boolean | null,
-    birthday: string,
-    membership_level: string,
-  ) {
-    this.id = id;
-    this.pw = pw;
-    this.name = name;
-    this.address = address;
-    this.regular_phone = regular_phone;
-    this.cellular_phone = cellular_phone;
-    this.email = email;
-    this.is_forever = is_forever;
-    this.birthday = birthday;
-    this.membership_level = membership_level;
-  }
+  membershipLevel!: string;
 }

@@ -11,64 +11,49 @@ export class Product {
     nullable: false,
     default: "",
   })
-  name: string;
+  name!: string;
 
   @Column({
     type: "int",
     nullable: false,
     default: 0,
   })
-  price: number;
+  price!: number;
 
   @Column({
+    name: "sale_price",
     type: "int",
     nullable: false,
     default: 0,
   })
-  sale_price: number;
+  salePrice!: number;
 
   @Column({
     type: "varchar",
     nullable: false,
     default: "",
   })
-  image: string;
+  image!: string;
 
   @Column({
+    name: "stock_count",
     type: "int",
     nullable: false,
     default: 0,
   })
-  stock_count: number;
+  stockCount!: number;
 
   @Column({
+    name: "sell_count",
     type: "int",
     nullable: false,
     default: 0,
   })
-  sell_count: number;
+  sellCount!: number;
 
   @OneToMany(
     () => ProductCategory,
     (productCategory) => productCategory.product,
   )
-  productCategory: ProductCategory[];
-
-  constructor(
-    name: string,
-    price: number,
-    sale_price: number,
-    image: string,
-    stock_count: number,
-    sell_count: number,
-    productCategory: ProductCategory[],
-  ) {
-    this.name = name;
-    this.price = price;
-    this.sale_price = sale_price;
-    this.image = image;
-    this.stock_count = stock_count;
-    this.sell_count = sell_count;
-    this.productCategory = productCategory;
-  }
+  productCategory?: ProductCategory[];
 }

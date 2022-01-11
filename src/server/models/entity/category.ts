@@ -11,16 +11,11 @@ export class Category {
     nullable: false,
     default: "",
   })
-  name: string;
+  name!: string;
 
   @OneToMany(
     () => ProductCategory,
     (productCategory) => productCategory.category,
   )
-  productCategory: ProductCategory[];
-
-  constructor(name: string, productCategory: ProductCategory[]) {
-    this.name = name;
-    this.productCategory = productCategory;
-  }
+  productCategory?: ProductCategory[];
 }
