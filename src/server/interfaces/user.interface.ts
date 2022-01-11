@@ -4,12 +4,12 @@ interface User {
   pw: string;
   name: string;
   address: string;
-  regular_phone: string | null;
-  cellular_phone: string;
+  regularPhone: string | null;
+  cellularPhone: string;
   email: string;
-  is_forever: boolean | null;
+  isForever: boolean | null;
   birthday: string;
-  membership_level: string;
+  membershipLevel: string;
 }
 
 export default User;
