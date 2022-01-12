@@ -4,10 +4,10 @@ interface User {
   pw: string;
   name: string;
   address: string;
-  regularPhone: string | null;
+  regularPhone: string | undefined;
   cellularPhone: string;
   email: string;
-  isForever: boolean | null;
+  isForever: boolean | undefined;
   birthday: string;
   membershipLevel: string;
 }

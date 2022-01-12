@@ -41,7 +41,7 @@ export class User {
     nullable: true,
     default: "",
   })
-  regularPhone?: string;
+  regularPhone!: string | null;
 
   @Column({
     name: "cellular_Phone",
@@ -64,7 +64,7 @@ export class User {
     nullable: true,
     default: false,
   })
-  isForever?: boolean;
+  isForever!: boolean | null;
 
   @Column({
     type: "char",
