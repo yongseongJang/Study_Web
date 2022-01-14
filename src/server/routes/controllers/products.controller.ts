@@ -11,12 +11,14 @@ class ProductController {
 
   public readAllProduct: RequestHandler = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      // const page =
-      //   req.query && req.query.page && typeof req.query.page === "string"
-      //     ? Number(req.query.page)
-      //     : 1;
-      // const result = await this.productService.readAllProduct(page);
-      // res.status(200).send(result);
+      const page =
+        req.query && req.query.page && typeof req.query.page === "string"
+          ? Number(req.query.page)
+          : 1;
+
+      const result = await this.productService.readAllProduct(page);
+
+      res.status(200).send(result);
     },
   );
 

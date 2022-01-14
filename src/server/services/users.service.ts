@@ -5,7 +5,7 @@ import {
   userRegistrationSchema,
   emailSchema,
 } from "../utils/validation/schemas/userSchema";
-import { User as IUser, LoginInfo } from "../interfaces";
+import { User as IUser, ILoginInfo } from "../interfaces";
 import Errorhandler from "../utils/error";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
@@ -24,7 +24,7 @@ class UserService {
     this.userRepository = connection.getCustomRepository(UserRepository);
   }
 
-  public async login(id: string, password: string): Promise<LoginInfo> {
+  public async login(id: string, password: string): Promise<ILoginInfo> {
     try {
       const hash: string | null = await this.userRepository.readPasswordById(
         id,

@@ -7,3 +7,4 @@ export { default as ProductImage } from "./productImage.interface";
 export { default as ProductDetail } from "./productDetail.interface";
 export { default as ProductSize } from "./productSize.interface";
 export { default as ProductCaution } from "./productCaution.interface";
+export { default as Pagination } from "./pagination.interface";
