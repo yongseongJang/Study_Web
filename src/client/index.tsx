@@ -9,6 +9,7 @@ import rootReducer from "./reducers";
 import rootSaga from "./sagas";
 import { Router } from "react-router-dom";
 import { history } from "./utils/history";
+import { CookiesProvider } from "react-cookie";
 import App from "./App";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -20,13 +21,15 @@ const persistor = persistStore(store);
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <Router history={history}>
-        <App />
-      </Router>
-    </PersistGate>
-  </Provider>,
+  <CookiesProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </PersistGate>
+    </Provider>
+  </CookiesProvider>,
 
   document.getElementById("root"),
 );
