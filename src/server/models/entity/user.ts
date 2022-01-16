@@ -6,7 +6,7 @@ export class User {
   _id?: number;
 
   @Column({
-    type: "int",
+    type: "varchar",
     length: 100,
     nullable: false,
     default: "",

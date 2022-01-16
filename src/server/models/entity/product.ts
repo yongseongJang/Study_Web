@@ -23,7 +23,7 @@ export class Product {
   @Column({
     name: "sale_price",
     type: "int",
-    nullable: false,
+    nullable: true,
     default: 0,
   })
   salePrice!: number;

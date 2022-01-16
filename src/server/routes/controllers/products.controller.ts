@@ -22,9 +22,24 @@ class ProductController {
     },
   );
 
-  public readProductByBrand: RequestHandler = asyncHandler(
+  public readProductByCategory: RequestHandler = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      res.status(200).send();
+      let { category } = req.params;
+
+      category = category.replace("_", " ");
+      category = category.toUpperCase();
+
+      const page =
+        req.query && req.query.page && typeof req.query.page === "string"
+          ? Number(req.query.page)
+          : 1;
+
+      const result = await this.productService.readProductByCategory(
+        category,
+        page,
+      );
+
+      res.status(200).send(result);
     },
   );
 }

@@ -16,7 +16,8 @@ class Loader {
       await createConnection();
       logger.log("info", "Successfully connected to mysql");
     } catch (e) {
-      logger.error(e);
+      logger.log("error", e);
+      // logger.error(e);
     }
 
     ExpressLoader.getInstance().init(this.app);

@@ -5,7 +5,7 @@ import Errorhandler from "../../utils/error";
 
 @EntityRepository(Product)
 class ProductRepository extends Repository<Product> {
-  public async readAllProduct(): Promise<IProduct[] | null> {
+  public async readAllProduct(): Promise<IProduct[]> {
     try {
       return await this.manager.transaction(
         async (transactionEntityManager) => {
@@ -19,9 +19,7 @@ class ProductRepository extends Repository<Product> {
     }
   }
 
-  public async readProductByCategory(
-    category: string,
-  ): Promise<IProduct[] | null> {
+  public async readProductByCategory(category: string): Promise<IProduct[]> {
     try {
       return await this.manager.transaction(
         async (transactionEntityManager) => {

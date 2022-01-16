@@ -1,5 +1,5 @@
 import {
-  Category,
+  ProductCategory,
   ProductImage,
   ProductDetail,
   ProductSize,
@@ -14,7 +14,7 @@ interface Product {
   image: string;
   stockCount: number;
   sellCount: number;
-  category?: Category[];
+  productCategory?: ProductCategory[];
   productImage?: ProductImage[];
   productDetail?: ProductDetail[];
   productSize?: ProductSize[];

@@ -4,7 +4,7 @@ import "../styles/Popup.scss";
 
 interface PopupProps {
   setCookie: (
-    name: string,
+    name: "nonePopup",
     value: any,
     options?: CookieSetOptions | undefined,
   ) => void;

@@ -11,12 +11,12 @@ export class ProductCategory {
     name: "product_id",
     referencedColumnName: "_id",
   })
-  product!: Product;
+  product?: Product;
 
   @ManyToOne(() => Category)
   @JoinColumn({
     name: "category_id",
     referencedColumnName: "_id",
   })
-  category!: Category;
+  category?: Category;
 }

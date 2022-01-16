@@ -5,7 +5,7 @@ import {
   userRegistrationSchema,
   emailSchema,
 } from "../utils/validation/schemas/userSchema";
-import { User as IUser, ILoginInfo } from "../interfaces";
+import { User as IUser, LoginInfo as ILoginInfo } from "../interfaces";
 import Errorhandler from "../utils/error";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";

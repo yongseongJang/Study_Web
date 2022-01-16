@@ -24,6 +24,10 @@ function ProductList(props: ProductListProps) {
 
   const [itemColumnLength, setItemColumnLength] = useState<number>(4);
 
+  // useEffect(() => {
+
+  // });
+
   // 상품 정보 서버에서 가져오는 걸로 수정하기
   const productList = [
     {
