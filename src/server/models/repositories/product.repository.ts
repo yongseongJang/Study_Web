@@ -25,8 +25,8 @@ class ProductRepository extends Repository<Product> {
         async (transactionEntityManager) => {
           const product = await transactionEntityManager
             .createQueryBuilder(Product, "product")
-            .innerJoin("product.productCategory", "product_category")
-            .innerJoin(
+            .leftJoin("product.productCategory", "product_category")
+            .leftJoin(
               "product_category.category",
               "category",
               "category.name = :name",
@@ -48,10 +48,10 @@ class ProductRepository extends Repository<Product> {
         async (transactionEntityManager) => {
           const product = await transactionEntityManager
             .createQueryBuilder(Product, "product")
-            .innerJoinAndSelect("product.productImage", "product_image")
-            .innerJoinAndSelect("product.productDetail", "product_detail")
-            .innerJoinAndSelect("product.productSize", "product_size")
-            .innerJoinAndSelect("product.productCaution", "product_caution")
+            .leftJoinAndSelect("product.productImage", "product_image")
+            .leftJoinAndSelect("product.productDetail", "product_detail")
+            .leftJoinAndSelect("product.productSize", "product_size")
+            .leftJoinAndSelect("product.productCaution", "product_caution")
             .where("product._id = :_id", { _id })
             .getOne();
 
