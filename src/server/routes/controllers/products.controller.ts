@@ -42,6 +42,16 @@ class ProductController {
       res.status(200).send(result);
     },
   );
+
+  public readProductById: RequestHandler = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { _id } = req.params;
+
+      const result = await this.productService.readProductById(_id);
+
+      res.status(200).send(result);
+    },
+  );
 }
 
 export default ProductController;

@@ -1,5 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { ProductCategory } from ".";
+import {
+  ProductCategory,
+  ProductDetail,
+  ProductImage,
+  ProductSize,
+  ProductCaution,
+} from ".";
 
 @Entity()
 export class Product {
@@ -56,4 +62,16 @@ export class Product {
     (productCategory) => productCategory.product,
   )
   productCategory?: ProductCategory[];
+
+  @OneToMany(() => ProductImage, (productImage) => productImage.product)
+  productImage!: ProductImage[];
+
+  @OneToMany(() => ProductDetail, (productDetail) => productDetail.product)
+  productDetail!: ProductDetail[];
+
+  @OneToMany(() => ProductSize, (productSize) => productSize.product)
+  productSize?: ProductSize[];
+
+  @OneToMany(() => ProductCaution, (productCaution) => productCaution.product)
+  productCaution?: ProductCaution[];
 }

@@ -54,6 +54,18 @@ class ProductService {
     }
   }
 
+  public async readProductById(_id: string): Promise<IProduct | undefined> {
+    try {
+      const id = Number(_id);
+
+      const product = await this.productRepository.readProductById(id);
+
+      return product;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   private paginate = (
     totalItemCount: number,
     currentPage = 1,

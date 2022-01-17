@@ -41,6 +41,27 @@ class ProductRepository extends Repository<Product> {
       throw new Errorhandler(500, err.name, err.message);
     }
   }
+
+  public async readProductById(_id: number): Promise<IProduct | undefined> {
+    try {
+      return await this.manager.transaction(
+        async (transactionEntityManager) => {
+          const product = await transactionEntityManager
+            .createQueryBuilder(Product, "product")
+            .innerJoinAndSelect("product.productImage", "product_image")
+            .innerJoinAndSelect("product.productDetail", "product_detail")
+            .innerJoinAndSelect("product.productSize", "product_size")
+            .innerJoinAndSelect("product.productCaution", "product_caution")
+            .where("product._id = :_id", { _id })
+            .getOne();
+
+          return product;
+        },
+      );
+    } catch (err: any) {
+      throw new Errorhandler(500, err.name, err.message);
+    }
+  }
 }
 
 export default ProductRepository;

@@ -1,6 +1,5 @@
 interface ProductCaution {
-  _id: number;
-  product_id: number;
+  _id?: number;
   cautionOrder: number;
   caution: string;
 }

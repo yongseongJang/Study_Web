@@ -1,6 +1,5 @@
 interface ProductSize {
-  _id: number;
-  product_id: number;
+  _id?: number;
   sizeOrder: number;
   size: string;
   measurement: string;

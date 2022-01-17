@@ -1,6 +1,5 @@
 interface ProductImage {
-  _id: number;
-  product_id: number;
+  _id?: number;
   imageOrder: number;
   fileName: string;
 }

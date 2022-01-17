@@ -23,6 +23,7 @@ class ProductRouter {
   private initializeRoutes(): void {
     this.router.get("/", this.productController.readAllProduct);
     this.router.get("/:category", this.productController.readProductByCategory);
+    this.router.get("/:category/:_id", this.productController.readProductById);
   }
 
   public getRouter(): Router {
