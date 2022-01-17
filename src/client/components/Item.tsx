@@ -2,9 +2,8 @@ import * as React from "react";
 
 interface Item {
   name: string;
-  category: string;
-  price: string;
-  salePrice: string | undefined;
+  price: number;
+  salePrice: number;
   soldOut: boolean;
   width: number;
 }
@@ -18,18 +17,17 @@ function Item(props: Item) {
         <div className="inner__image">
           <a href="">
             <span className="image__sold-out"></span>
-            {/* <img
-              src={require(`../../public/img/product/${props.name}.jpg`)}
+            <img
+              src={require(`../../public/img/all_product/${props.name}.jpg`)}
               alt=""
-            /> */}
+            />
           </a>
         </div>
         <div className="inner_content">
-          <a href="" className="content__title"></a>
+          <a href="" className="content__title">
+            {props.name}
+          </a>
           <ul className="content__element">
-            <li>
-              <span>{props.category}</span>
-            </li>
             <li>
               <span>{`KRW ${props.price}`}</span>
             </li>

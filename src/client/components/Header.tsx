@@ -66,12 +66,12 @@ function Header() {
         <nav className="header--dynamic__navigation">
           <ul>
             <li>
-              <a href="/product/list/all-product">
+              <a href="/product/list/all_product">
                 <span>ALL PRODUCT</span>
               </a>
             </li>
             <li>
-              <a href="/product/list/uniform-bridge">
+              <a href="/product/list/uniform_bridge">
                 <span>UNIFORM BRIDGE</span>
               </a>
             </li>

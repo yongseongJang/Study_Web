@@ -1,10 +1,10 @@
 interface IProduct {
   name: string;
   price: number;
-  sale_price: number;
+  salePrice: number;
   image: string;
-  stock_count: number;
-  sell_count: number;
+  stockCount: number;
+  sellCount: number;
 }
 
 export default IProduct;

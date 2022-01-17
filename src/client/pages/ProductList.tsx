@@ -1,7 +1,10 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../reducers/types";
 import * as queryString from "query-string";
 import { Item, ColumnFilter } from "../components";
+import { productActions } from "../actions";
 interface ProductListProps {
   match: {
     params: {
@@ -24,55 +27,14 @@ function ProductList(props: ProductListProps) {
 
   const [itemColumnLength, setItemColumnLength] = useState<number>(4);
 
-  // useEffect(() => {
+  const dispatch = useDispatch();
+  const { pagination, products } = useSelector(
+    (state: RootState) => state.productReducer,
+  );
 
-  // });
-
-  // 상품 정보 서버에서 가져오는 걸로 수정하기
-  const productList = [
-    {
-      name: "wool balmacaan coat navy",
-      category: "UNIFORM BRIDGE",
-      price: "315,000",
-      salePrice: "252,000",
-      soldOut: false,
-    },
-    {
-      name: "wool balmacaan coat black",
-      category: "UNIFORM BRIDGE",
-      price: "315,000",
-      salePrice: "252,000",
-      soldOut: false,
-    },
-    {
-      name: "wool balmacaan coat khaki beige",
-      category: "UNIFORM BRIDGE",
-      price: "315,000",
-      salePrice: "252,000",
-      soldOut: false,
-    },
-    {
-      name: "utility mountain down parka navy",
-      category: "UNIFORM BRIDGE",
-      price: "299,000",
-      salePrice: "239,200",
-      soldOut: false,
-    },
-    {
-      name: "utility mountain down parka grey",
-      category: "UNIFORM BRIDGE",
-      price: "299,000",
-      salePrice: "239,200",
-      soldOut: false,
-    },
-    {
-      name: "utility mountain down parka khaki",
-      category: "UNIFORM BRIDGE",
-      price: "299,000",
-      salePrice: "239,200",
-      soldOut: false,
-    },
-  ];
+  useEffect(() => {
+    dispatch(productActions.requestProducts(category));
+  }, []);
 
   const itemWidth = 80 / itemColumnLength;
 
@@ -109,15 +71,14 @@ function ProductList(props: ProductListProps) {
                   />
                 </div>
                 <div className="products__item-wrap">
-                  {productList.map((product, index) => {
+                  {products.map((product, index) => {
                     return (
                       <Item
                         key={index}
                         name={product.name}
-                        category={product.category}
                         price={product.price}
                         salePrice={product.salePrice}
-                        soldOut={product.soldOut}
+                        soldOut={product.stockCount > 0 ? true : false}
                         width={itemWidth}
                       />
                     );

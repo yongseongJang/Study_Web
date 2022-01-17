@@ -6,7 +6,7 @@ export const productConstants = {
   REQUEST_PRODUCTS_FAILURE: "REQUEST_PRODUCTS_FAILURE",
 };
 
-const requestProducts = (category?: string) => {
+const requestProducts = (category: string) => {
   return {
     type: productConstants.REQUEST_PRODUCTS,
     category,

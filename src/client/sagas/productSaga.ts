@@ -1,21 +1,21 @@
-import { take, call, put } from "redux-saga/effects";
+import { take, call, put, fork } from "redux-saga/effects";
 import { productServices } from "../services";
 import { productConstants, productActions } from "../actions";
 
-export function* requestProduct(category: string | null) {
+export function* requestProduct(category: string) {
   try {
     let _pagination, _products;
-    if (category) {
+    if (category === "all_product") {
       const { pagination, products } = yield call(
-        productServices.getProductsByCategory,
-        category,
+        productServices.getAllProducts,
       );
 
       _pagination = pagination;
       _products = products;
     } else {
       const { pagination, products } = yield call(
-        productServices.getAllProducts,
+        productServices.getProductsByCategory,
+        category,
       );
 
       _pagination = pagination;
@@ -35,4 +35,4 @@ export function* watchRequestProduct() {
   }
 }
 
-export const productSaga = [];
+export const productSaga = [fork(watchRequestProduct)];

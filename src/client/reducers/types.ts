@@ -1,6 +1,8 @@
+import { IPagination, IProduct } from "../interfaces";
 export interface RootState {
   loginReducer: loginReducerState;
   signupReducer: signupReducerState;
+  productReducer: productReducerState;
 }
 
 export interface signupReducerState {
@@ -15,4 +17,10 @@ export interface loginReducerState {
   token: string;
   email: string;
   userName: string;
+}
+
+export interface productReducerState {
+  isRequesting: boolean;
+  pagination: IPagination[];
+  products: IProduct[];
 }
