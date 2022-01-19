@@ -50,7 +50,6 @@ class ProductRepository extends Repository<Product> {
             .createQueryBuilder(Product, "product")
             .leftJoinAndSelect("product.productImage", "product_image")
             .leftJoinAndSelect("product.productDetail", "product_detail")
-            .leftJoinAndSelect("product.productSize", "product_size")
             .leftJoinAndSelect("product.productCaution", "product_caution")
             .where("product._id = :_id", { _id })
             .getOne();

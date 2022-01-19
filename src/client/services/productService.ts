@@ -24,7 +24,17 @@ const getProductsByCategory = async (category: string) => {
     });
 };
 
+const getProductDetail = async (category: string, productId: number) => {
+  return await axios
+    .get(`/api/products/${category}/${productId}`)
+    .then((res) => {
+      const { product } = res.data;
+      return { product };
+    });
+};
+
 export const productServices = {
   getAllProducts,
   getProductsByCategory,
+  getProductDetail,
 };

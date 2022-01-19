@@ -1,7 +1,9 @@
 import * as React from "react";
 
 interface Item {
+  id: number;
   name: string;
+  category: string;
   price: number;
   salePrice: number;
   soldOut: boolean;
@@ -15,7 +17,7 @@ function Item(props: Item) {
     <article className="item" style={{ width: `${props.width}%` }}>
       <div className="item__inner">
         <div className="inner__image">
-          <a href="">
+          <a href={`/products/${props.category}/${props.id}`}>
             <span className="image__sold-out"></span>
             <img
               src={require(`../../public/img/all_product/${props.name}.jpg`)}

@@ -3,7 +3,6 @@ import {
   ProductCategory,
   ProductDetail,
   ProductImage,
-  ProductSize,
   ProductCaution,
 } from ".";
 
@@ -42,6 +41,13 @@ export class Product {
   image!: string;
 
   @Column({
+    type: "varchar",
+    nullable: false,
+    default: "",
+  })
+  size!: string;
+
+  @Column({
     name: "stock_count",
     type: "int",
     nullable: false,
@@ -68,9 +74,6 @@ export class Product {
 
   @OneToMany(() => ProductDetail, (productDetail) => productDetail.product)
   productDetail!: ProductDetail[];
-
-  @OneToMany(() => ProductSize, (productSize) => productSize.product)
-  productSize?: ProductSize[];
 
   @OneToMany(() => ProductCaution, (productCaution) => productCaution.product)
   productCaution?: ProductCaution[];

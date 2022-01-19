@@ -71,11 +71,13 @@ function ProductList(props: ProductListProps) {
                   />
                 </div>
                 <div className="products__item-wrap">
-                  {products.map((product, index) => {
+                  {products.map((product) => {
                     return (
                       <Item
-                        key={index}
+                        key={product._id}
+                        id={product._id}
                         name={product.name}
+                        category={category}
                         price={product.price}
                         salePrice={product.salePrice}
                         soldOut={product.stockCount > 0 ? true : false}

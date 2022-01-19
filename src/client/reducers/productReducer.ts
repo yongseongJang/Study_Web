@@ -2,8 +2,9 @@ import { productConstants } from "../actions";
 
 const initialState = {
   isRequesting: false,
-  pagination: [],
+  pagination: {},
   products: [],
+  productDetail: {},
 };
 
 export const productReducer = (
@@ -21,6 +22,16 @@ export const productReducer = (
         products: action.products,
       };
     case productConstants.REQUEST_PRODUCTS_FAILURE:
+      return { ...state, isRequesting: false };
+    case productConstants.REQUEST_PRODUCT_DETAIL:
+      return { ...state, isRequesting: false };
+    case productConstants.REQUEST_PRODUCT_DETAIL_SUCCESS:
+      return {
+        ...state,
+        isRequesting: true,
+        productDetail: action.productDeatil,
+      };
+    case productConstants.REQUEST_PRODUCT_DETAIL_FAILURE:
       return { ...state, isRequesting: false };
     default:
       return state;

@@ -2,7 +2,6 @@ import {
   ProductCategory,
   ProductImage,
   ProductDetail,
-  ProductSize,
   ProductCaution,
 } from ".";
 
@@ -12,12 +11,12 @@ interface Product {
   price: number;
   salePrice: number;
   image: string;
+  size: string;
   stockCount: number;
   sellCount: number;
   productCategory?: ProductCategory[];
   productImage?: ProductImage[];
   productDetail?: ProductDetail[];
-  productSize?: ProductSize[];
   productCaution?: ProductCaution[];
 }
 

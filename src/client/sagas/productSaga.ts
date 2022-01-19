@@ -28,6 +28,20 @@ export function* requestProduct(category: string) {
   }
 }
 
+export function* requestProductDetail(category: string, productId: number) {
+  try {
+    const { product: productDetail } = yield call(
+      productServices.getProductDetail,
+      category,
+      productId,
+    );
+
+    yield put(productActions.requestProductDetailSuccess(productDetail));
+  } catch (err) {
+    yield put(productActions.requestProductDetailFailure(err));
+  }
+}
+
 export function* watchRequestProduct() {
   while (true) {
     const { category } = yield take(productConstants.REQUEST_PRODUCTS);
@@ -35,4 +49,16 @@ export function* watchRequestProduct() {
   }
 }
 
-export const productSaga = [fork(watchRequestProduct)];
+export function* watchRequestProductDetail() {
+  while (true) {
+    const { category, productId } = yield take(
+      productConstants.REQUEST_PRODUCT_DETAIL,
+    );
+    yield call(requestProductDetail, category, productId);
+  }
+}
+
+export const productSaga = [
+  fork(watchRequestProduct),
+  fork(watchRequestProductDetail),
+];
