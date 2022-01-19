@@ -22,7 +22,7 @@ interface ProductListProps {
 }
 
 function ProductList(props: ProductListProps) {
-  const category = props.match.params.category.replace(/-/g, " ");
+  const category = props.match.params.category.replace(/_/g, " ");
   const search = queryString.parse(props.location.search);
 
   const [itemColumnLength, setItemColumnLength] = useState<number>(4);
