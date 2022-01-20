@@ -23,4 +23,5 @@ export interface productReducerState {
   isRequesting: boolean;
   pagination: IPagination[];
   products: IProduct[];
+  productDetail: IProduct;
 }

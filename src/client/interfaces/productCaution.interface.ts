@@ -1,7 +1,7 @@
 interface IProductCaution {
-  _id?: number;
+  _id: number;
   caution_order: number;
-  file_name: string;
+  caution: string;
 }
 
 export default IProductCaution;

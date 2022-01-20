@@ -42,7 +42,7 @@ const requestProductDetail = (category: string, productId: number) => {
   };
 };
 
-const requestProductDetailSuccess = (productDetail: IProductDetail) => {
+const requestProductDetailSuccess = (productDetail: IProduct) => {
   return {
     type: productConstants.REQUEST_PRODUCT_DETAIL_SUCCESS,
     productDetail,

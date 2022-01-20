@@ -1,5 +1,5 @@
 interface IProductImage {
-  _id?: number;
+  _id: number;
   image_order: number;
   file_name: string;
 }

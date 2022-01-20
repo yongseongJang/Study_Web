@@ -1,5 +1,5 @@
 interface IProductDetail {
-  _id?: number;
+  _id: number;
   detail_order: number;
   detail: string;
 }

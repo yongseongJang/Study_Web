@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../reducers/types";
 import { productActions } from "../actions";
 import {
   IProduct,
@@ -13,16 +14,12 @@ interface ProductDetailProps {
   match: {
     params: {
       category: string;
-      productId: string;
+      id: string;
     };
     path: string;
     url: string;
     isExact: boolean;
   };
-  product: IProduct;
-  productDetail: IProductDetail[];
-  productImage: IProductImage[];
-  productCaution: IProductCaution[];
 }
 
 interface Option {
@@ -30,9 +27,21 @@ interface Option {
 }
 
 function ProductDetail(props: ProductDetailProps) {
+  const category = props.match.params.category.replace(/_/g, " ");
+  const productId = Number(props.match.params.id);
+
   const { totalPrice, setTotalPrice } = useState<number>(0);
 
   // const { totalProducts, setTotalProducts } = useState<Option>({});
+
+  const dispatch = useDispatch();
+  const { productDetail } = useSelector(
+    (state: RootState) => state.productReducer,
+  );
+  console.log(productDetail);
+  useEffect(() => {
+    dispatch(productActions.requestProductDetail(category, productId));
+  }, []);
 
   return (
     <section className="productDetail">
@@ -41,30 +50,34 @@ function ProductDetail(props: ProductDetailProps) {
           <div className="contents__box">
             <div className="box__name">
               <a href="" className="name__brandName"></a>
-              <h5 className="name__productName">{props.product.name}</h5>
+              <h5 className="name__productName">
+                {productDetail ? productDetail.name : null}
+              </h5>
             </div>
             <div className="box__detail"></div>
           </div>
         </div>
       </div>
-      <div className="detail__center">
-        {props.productImage.map((image, index) => {
-          return (
-            <>
-              <div className="center__image" key={index}>
-                <img src={image.file_name} />
-              </div>
-              <p>
-                <br />
-              </p>
-              <p>
-                <br />
-              </p>
-            </>
-          );
-        })}
+      <div className="productDetail__center">
+        {productDetail && productDetail.productImage
+          ? productDetail.productImage.map((image, index) => {
+              return (
+                <React.Fragment key={index}>
+                  <div className="center__image" key={index}>
+                    <img src={image.file_name} />
+                  </div>
+                  <p>
+                    <br />
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                </React.Fragment>
+              );
+            })
+          : null}
       </div>
-      <div className="detail__right">
+      <div className="productDetail__right">
         <div className="right__contents">
           <div className="contents__box">
             <table className="box__table">
@@ -75,7 +88,9 @@ function ProductDetail(props: ProductDetailProps) {
                   </th>
                   <td>
                     <span>
-                      <strong>{`KRW ${props.product.price}`}</strong>
+                      <strong>{`KRW ${
+                        productDetail ? productDetail.price : null
+                      }`}</strong>
                     </span>
                   </td>
                 </tr>
@@ -85,9 +100,11 @@ function ProductDetail(props: ProductDetailProps) {
                   </th>
                   <td>
                     <span>
-                      {`KRW ${props.product.salePrice}`}
+                      {`KRW ${productDetail ? productDetail.salePrice : null}`}
                       <span>{`( KRW ${
-                        props.product.price - props.product.salePrice
+                        productDetail
+                          ? productDetail.price - productDetail.salePrice
+                          : null
                       } 할인)`}</span>
                     </span>
                   </td>
@@ -122,25 +139,25 @@ function ProductDetail(props: ProductDetailProps) {
                   <tr className="option__product">
                     <td>
                       <p>
-                        {`${props.product.name} -`}
+                        {`${productDetail ? productDetail.name : null} -`}
                         <span>S</span>
                       </p>
                     </td>
+                    <td>
+                      <span>
+                        <input type="text" />
+                        <a href="">
+                          <img src="" alt="수량증가" />
+                        </a>
+                        <a href="">
+                          <img src="" alt="수량감소" />
+                        </a>
+                      </span>
+                      <a href="">
+                        <img src="" alt="삭제" />
+                      </a>
+                    </td>
                   </tr>
-                  <td>
-                    <span>
-                      <input type="text" />
-                      <a href="">
-                        <img src="" alt="수량증가" />
-                      </a>
-                      <a href="">
-                        <img src="" alt="수량감소" />
-                      </a>
-                    </span>
-                    <a href="">
-                      <img src="" alt="삭제" />
-                    </a>
-                  </td>
                 </tbody>
               </table>
             </div>
@@ -178,15 +195,17 @@ function ProductDetail(props: ProductDetailProps) {
               <div className="info__tabs-stage">
                 <div className="tabs-stage-1">
                   <p>
-                    {props.productCaution.map((caution, index) => {
-                      return (
-                        <React.Fragment key={index}>
-                          {caution}
-                          <br />
-                          <br />
-                        </React.Fragment>
-                      );
-                    })}
+                    {productDetail && productDetail.productCaution
+                      ? productDetail.productCaution.map((caution, index) => {
+                          return (
+                            <React.Fragment key={index}>
+                              {caution.caution}
+                              <br />
+                              <br />
+                            </React.Fragment>
+                          );
+                        })
+                      : null}
                   </p>
                 </div>
                 <div className="tabs-stage-2">

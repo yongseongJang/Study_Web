@@ -29,7 +29,7 @@ export const productReducer = (
       return {
         ...state,
         isRequesting: true,
-        productDetail: action.productDeatil,
+        productDetail: action.productDetail,
       };
     case productConstants.REQUEST_PRODUCT_DETAIL_FAILURE:
       return { ...state, isRequesting: false };
