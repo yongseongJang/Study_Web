@@ -4,25 +4,25 @@ import { productConstants, productActions } from "../actions";
 
 export function* requestProduct(category: string) {
   try {
-    let _pagination, _products;
+    let _pagination, _productList;
     if (category === "all_product") {
-      const { pagination, products } = yield call(
+      const { pagination, productList } = yield call(
         productServices.getAllProducts,
       );
 
       _pagination = pagination;
-      _products = products;
+      _productList = productList;
     } else {
-      const { pagination, products } = yield call(
+      const { pagination, productList } = yield call(
         productServices.getProductsByCategory,
         category,
       );
 
       _pagination = pagination;
-      _products = products;
+      _productList = productList;
     }
 
-    yield put(productActions.requestProductsSuccess(_pagination, _products));
+    yield put(productActions.requestProductsSuccess(_pagination, _productList));
   } catch (err) {
     yield put(productActions.requestProductsFailure(err));
   }
@@ -30,13 +30,13 @@ export function* requestProduct(category: string) {
 
 export function* requestProductDetail(category: string, productId: number) {
   try {
-    const { product: productDetail } = yield call(
+    const { product } = yield call(
       productServices.getProductDetail,
       category,
       productId,
     );
 
-    yield put(productActions.requestProductDetailSuccess(productDetail));
+    yield put(productActions.requestProductDetailSuccess(product));
   } catch (err) {
     yield put(productActions.requestProductDetailFailure(err));
   }

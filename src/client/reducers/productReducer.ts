@@ -3,8 +3,8 @@ import { productConstants } from "../actions";
 const initialState = {
   isRequesting: false,
   pagination: {},
-  products: [],
-  productDetail: {},
+  productList: [],
+  product: {},
 };
 
 export const productReducer = (
@@ -19,7 +19,7 @@ export const productReducer = (
         ...state,
         isRequesting: false,
         pagination: action.pagination,
-        products: action.products,
+        productList: action.productList,
       };
     case productConstants.REQUEST_PRODUCTS_FAILURE:
       return { ...state, isRequesting: false };
@@ -29,7 +29,7 @@ export const productReducer = (
       return {
         ...state,
         isRequesting: true,
-        productDetail: action.productDetail,
+        product: action.product,
       };
     case productConstants.REQUEST_PRODUCT_DETAIL_FAILURE:
       return { ...state, isRequesting: false };

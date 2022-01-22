@@ -4,8 +4,8 @@ const getAllProducts = async () => {
   return await axios
     .get("/api/products/")
     .then((res) => {
-      const { pagination, paginatedProduct: products } = res.data;
-      return { pagination, products };
+      const { pagination, paginatedProduct: productList } = res.data;
+      return { pagination, productList };
     })
     .catch((err) => {
       throw err;
@@ -16,8 +16,8 @@ const getProductsByCategory = async (category: string) => {
   return await axios
     .get(`/api/products/${category}`)
     .then((res) => {
-      const { pagination, paginatedProduct: products } = res.data;
-      return { pagination, products };
+      const { pagination, paginatedProduct: productList } = res.data;
+      return { pagination, productList };
     })
     .catch((err) => {
       throw err;

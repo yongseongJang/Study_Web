@@ -1,13 +1,6 @@
 import * as React from "react";
 import { Switch, Route } from "react-router-dom";
-import {
-  Main,
-  Login,
-  SignUp,
-  ProductList,
-  ProductDetail,
-  Error,
-} from "./pages";
+import { Main, Login, SignUp, ProductList, Product, Error } from "./pages";
 import { Header, Footer } from "./components";
 import "./styles/App.scss";
 
@@ -20,7 +13,7 @@ function App() {
         <Route path="/member/login" component={Login} />
         <Route path="/member/join" component={SignUp} />
         <Route exact path="/products/:category" component={ProductList} />
-        <Route path="/products/:category/:id" component={ProductDetail} />
+        <Route path="/products/:category/:productId" component={Product} />
         <Route component={Error} />
       </Switch>
       <Footer />

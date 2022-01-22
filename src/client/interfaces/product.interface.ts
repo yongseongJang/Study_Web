@@ -1,4 +1,9 @@
-import { IProductCaution, IProductDetail, IProductImage } from ".";
+import {
+  IProductCaution,
+  IProductDetail,
+  IProductImage,
+  IProductSize,
+} from ".";
 
 interface IProduct {
   _id: number;
@@ -9,9 +14,10 @@ interface IProduct {
   size: string;
   stockCount: number;
   sellCount: number;
-  productImage?: IProductImage[];
-  productDetail?: IProductDetail[];
+  productImage: IProductImage[];
+  productDetail: IProductDetail[];
   productCaution?: IProductCaution[];
+  productSize?: IProductSize[];
 }
 
 export default IProduct;

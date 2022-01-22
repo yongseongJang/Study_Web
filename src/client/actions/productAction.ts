@@ -1,4 +1,4 @@
-import { IProduct, IPagination, IProductDetail } from "../interfaces";
+import { IProduct, IPagination } from "../interfaces";
 
 export const productConstants = {
   REQUEST_PRODUCTS: "REQUEST_PRODUCTS",
@@ -18,12 +18,15 @@ const requestProducts = (category: string) => {
 
 const requestProductsSuccess = (
   pagination: IPagination,
-  products: IProduct[],
+  productList: Omit<
+    IProduct,
+    "productDetail" | "productImage" | "productCaution" | "productSize"
+  >[],
 ) => {
   return {
     type: productConstants.REQUEST_PRODUCTS_SUCCESS,
     pagination,
-    products,
+    productList,
   };
 };
 
@@ -42,10 +45,10 @@ const requestProductDetail = (category: string, productId: number) => {
   };
 };
 
-const requestProductDetailSuccess = (productDetail: IProduct) => {
+const requestProductDetailSuccess = (product: IProduct) => {
   return {
     type: productConstants.REQUEST_PRODUCT_DETAIL_SUCCESS,
-    productDetail,
+    product,
   };
 };
 
