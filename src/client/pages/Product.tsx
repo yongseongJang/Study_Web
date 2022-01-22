@@ -5,7 +5,7 @@ interface ProductDetailProps {
   match: {
     params: {
       category: string;
-      id: string;
+      productId: string;
     };
     path: string;
     url: string;
@@ -15,7 +15,7 @@ interface ProductDetailProps {
 
 function Product(props: ProductDetailProps) {
   const category = props.match.params.category.replace(/_/g, " ");
-  const productId = Number(props.match.params.id);
+  const productId = Number(props.match.params.productId);
 
   return (
     <div className="productDetail">

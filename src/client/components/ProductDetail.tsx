@@ -23,7 +23,7 @@ function ProductDetail(props: productDetailProps) {
               return (
                 <React.Fragment key={index}>
                   <br />
-                  {detail}
+                  {detail.detail}
                 </React.Fragment>
               );
             })}

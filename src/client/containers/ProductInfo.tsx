@@ -16,41 +16,46 @@ interface ProductInfoProps {
 }
 
 function ProductInfo(props: ProductInfoProps) {
-  const category = props.category.replace(/_/g, " ");
-  const productId = Number(props.productId);
-
   const dispatch = useDispatch();
   const { product } = useSelector((state: RootState) => state.productReducer);
 
   useEffect(() => {
-    dispatch(productActions.requestProductDetail(category, productId));
+    dispatch(
+      productActions.requestProductDetail(props.category, props.productId),
+    );
   }, []);
 
   return (
     <div className="productInfo">
-      <section className="productDetail__left">
-        <ProductDetail
-          brandName={category}
-          productName={product.name}
-          productDetail={product.productDetail}
-        ></ProductDetail>
-      </section>
-      <section className="productDetail__center">
-        <ProductImage productImage={product.productImage}></ProductImage>
-      </section>
-      <section className="productDetail__right">
-        <ProductOption
-          productName={product.name}
-          price={product.price}
-          salePrice={product.salePrice}
-          productSize={product.productSize}
-        ></ProductOption>
-        <div className="right__order-wrap">
-          <a href="">BUY NOW</a>
-          <a href="">ADD TO CART</a>
-        </div>
-        <ProductGuide productCaution={product.productCaution}></ProductGuide>
-      </section>
+      {product ? (
+        <>
+          <section className="productDetail__left">
+            <ProductDetail
+              brandName={props.category}
+              productName={product.name}
+              productDetail={product.productDetail}
+            ></ProductDetail>
+          </section>
+          <section className="productDetail__center">
+            <ProductImage productImage={product.productImage}></ProductImage>
+          </section>
+          <section className="productDetail__right">
+            <ProductOption
+              productName={product.name}
+              price={product.price}
+              salePrice={product.salePrice}
+              productSize={product.productSize}
+            ></ProductOption>
+            <div className="right__order-wrap">
+              <a href="">BUY NOW</a>
+              <a href="">ADD TO CART</a>
+            </div>
+            <ProductGuide
+              productCaution={product.productCaution}
+            ></ProductGuide>
+          </section>
+        </>
+      ) : null}
     </div>
   );
 }

@@ -67,32 +67,34 @@ function ProductOption(props: productOption) {
             <col style={{ width: "60px" }} />
           </colgroup>
           <tbody>
-            {Object.entries(option).map((size, index) => {
-              return (
-                <tr className="selectedOption__product" key={index}>
-                  <td>
-                    <p>
-                      {props.productName}
-                      <br />-<span>{size}</span>
-                    </p>
-                  </td>
-                  <td>
-                    <span>
-                      <input type="text" value={option[size]} />
-                      <a href="">
-                        <img src="" alt="수량증가" />
-                      </a>
-                      <a href="">
-                        <img src="" alt="수량감소" />
-                      </a>
-                    </span>
-                    <a href="">
-                      <img src="" alt="삭제" />
-                    </a>
-                  </td>
-                </tr>
-              );
-            })}
+            {option
+              ? Object.entries(option).map((size, index) => {
+                  return (
+                    <tr className="selectedOption__product" key={index}>
+                      <td>
+                        <p>
+                          {props.productName}
+                          <br />-<span>{size}</span>
+                        </p>
+                      </td>
+                      <td>
+                        <span>
+                          <input type="text" value={option[size]} />
+                          <a href="">
+                            <img src="" alt="수량증가" />
+                          </a>
+                          <a href="">
+                            <img src="" alt="수량감소" />
+                          </a>
+                        </span>
+                        <a href="">
+                          <img src="" alt="삭제" />
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                })
+              : null}
           </tbody>
         </table>
       </div>

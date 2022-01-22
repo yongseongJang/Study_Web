@@ -28,7 +28,7 @@ function ProductList(props: ProductListProps) {
   const [itemColumnLength, setItemColumnLength] = useState<number>(4);
 
   const dispatch = useDispatch();
-  const { pagination, products } = useSelector(
+  const { pagination, productList } = useSelector(
     (state: RootState) => state.productReducer,
   );
 
@@ -71,13 +71,13 @@ function ProductList(props: ProductListProps) {
                   />
                 </div>
                 <div className="products__item-wrap">
-                  {products.map((product) => {
+                  {productList.map((product) => {
                     return (
                       <Item
                         key={product._id}
                         id={product._id}
                         name={product.name}
-                        category={category}
+                        category={props.match.params.category}
                         price={product.price}
                         salePrice={product.salePrice}
                         soldOut={product.stockCount > 0 ? true : false}

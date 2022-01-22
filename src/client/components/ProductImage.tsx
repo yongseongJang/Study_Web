@@ -15,9 +15,9 @@ function ProductImage(props: productImageProps) {
               <img src="" alt="" />
             </div>
             <p>
-              <p>
-                <br />
-              </p>
+              <br />
+            </p>
+            <p>
               <br />
             </p>
           </React.Fragment>

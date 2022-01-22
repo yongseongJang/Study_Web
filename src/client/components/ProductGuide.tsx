@@ -26,7 +26,7 @@ function ProductGuide(props: productGuideProps) {
               ? props.productCaution.map((caution, index) => {
                   return (
                     <React.Fragment key={index}>
-                      {caution}
+                      {caution.caution}
                       <br />
                     </React.Fragment>
                   );
