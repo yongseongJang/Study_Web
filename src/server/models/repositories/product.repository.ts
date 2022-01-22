@@ -51,6 +51,7 @@ class ProductRepository extends Repository<Product> {
             .leftJoinAndSelect("product.productImage", "product_image")
             .leftJoinAndSelect("product.productDetail", "product_detail")
             .leftJoinAndSelect("product.productCaution", "product_caution")
+            .leftJoinAndSelect("product.productSize", "product_size")
             .where("product._id = :_id", { _id })
             .getOne();
 

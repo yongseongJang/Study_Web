@@ -3,6 +3,7 @@ import {
   ProductImage,
   ProductDetail,
   ProductCaution,
+  ProductSize,
 } from ".";
 
 interface Product {
@@ -18,6 +19,7 @@ interface Product {
   productImage?: ProductImage[];
   productDetail?: ProductDetail[];
   productCaution?: ProductCaution[];
+  productSize?: ProductSize[];
 }
 
 export default Product;

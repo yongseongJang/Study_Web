@@ -4,6 +4,7 @@ import {
   ProductDetail,
   ProductImage,
   ProductCaution,
+  ProductSize,
 } from ".";
 
 @Entity()
@@ -77,4 +78,7 @@ export class Product {
 
   @OneToMany(() => ProductCaution, (productCaution) => productCaution.product)
   productCaution?: ProductCaution[];
+
+  @OneToMany(() => ProductSize, (productSize) => productSize.product)
+  productSize?: ProductSize[];
 }
