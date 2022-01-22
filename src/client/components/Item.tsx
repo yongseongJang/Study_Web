@@ -1,8 +1,8 @@
 import * as React from "react";
-
 interface Item {
   id: number;
   name: string;
+  image: string;
   category: string;
   price: number;
   salePrice: number;
@@ -20,7 +20,7 @@ function Item(props: Item) {
           <a href={`/products/${props.category}/${props.id}`}>
             <span className="image__sold-out"></span>
             <img
-              src={require(`../../public/img/all_product/${props.name}.jpg`)}
+              src={`${process.env.REACT_APP_S3_URI}/${props.image}`}
               alt=""
             />
           </a>

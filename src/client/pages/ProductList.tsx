@@ -77,6 +77,7 @@ function ProductList(props: ProductListProps) {
                         key={product._id}
                         id={product._id}
                         name={product.name}
+                        image={product.image}
                         category={props.match.params.category}
                         price={product.price}
                         salePrice={product.salePrice}
