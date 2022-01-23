@@ -61,6 +61,8 @@ function ProductInfo(props: ProductInfoProps) {
                   </div>
                   <ProductGuide
                     productCaution={product.productCaution}
+                    name={product.name}
+                    size={product.size}
                   ></ProductGuide>
                 </div>
               </div>
