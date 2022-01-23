@@ -6,13 +6,17 @@ interface productImageProps {
 }
 
 function ProductImage(props: productImageProps) {
+  console.log(props.productImage);
   return (
     <div className="productImage">
       {props.productImage.map((image, index) => {
         return (
           <React.Fragment key={index}>
             <div className="productImage__image">
-              <img src="" alt="" />
+              <img
+                src={`${process.env.REACT_APP_S3_URI}/${image.fileName}`}
+                alt=""
+              />
             </div>
             <p>
               <br />

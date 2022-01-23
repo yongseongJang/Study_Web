@@ -14,16 +14,21 @@ function ProductDetail(props: productDetailProps) {
         <div className="contents__box">
           <div className="box__name">
             <a href="" className="name__brandName">
-              {props.brandName}
+              {props.brandName.toUpperCase()}
             </a>
             <h5 className="name__productName">{props.productName}</h5>
           </div>
           <div className="box__detail">
+            <br />
+            {props.productName}
+            <br />
+            <br />
+            Detail
             {props.productDetail.map((detail, index) => {
               return (
                 <React.Fragment key={index}>
                   <br />
-                  {detail.detail}
+                  {`■ ${detail.detail}`}
                 </React.Fragment>
               );
             })}

@@ -12,8 +12,10 @@ function ProductGuide(props: productGuideProps) {
         <a href="#">SIZE GUIDE</a>
       </span>
       <ul className="productGuide__nav">
-        <li className="nav__tab-active">
-          <a href="#">CAUTION</a>
+        <li>
+          <a className="nav__tab-active" href="#">
+            CAUTION
+          </a>
         </li>
         <li>
           <a href="#">DELIVERY</a>
@@ -28,13 +30,14 @@ function ProductGuide(props: productGuideProps) {
                     <React.Fragment key={index}>
                       {caution.caution}
                       <br />
+                      <br />
                     </React.Fragment>
                   );
                 })
               : null}
           </p>
         </div>
-        <div className="stage-2">
+        <div className="stage-2" style={{ display: "none" }}>
           <p>
             <strong>배송 안내</strong>
             <br />

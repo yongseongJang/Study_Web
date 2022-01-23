@@ -1,0 +1,38 @@
+.productDetail {
+  width: 100%;
+  height: 100%;
+  display: table;
+
+  .productDetail__contents {
+    display: table-cell;
+    line-height: 20px;
+    vertical-align: middle;
+
+    .contents__box {
+      .box__name {
+        font-weight: bold;
+        padding-bottom: 10px;
+        line-height: 50px;
+        font-size: 2em;
+
+        .name__brandName {
+          font: 11px/20px sans-serif;
+          font-weight: bold;
+          text-decoration: underline;
+        }
+        .name__productName {
+          margin-top: 10px;
+          font-size: 19px;
+        }
+      }
+
+      .box__detail {
+        font-weight: 600;
+        padding-bottom: 10px;
+        width: 83%;
+        font-size: 12px;
+        text-align: left;
+      }
+    }
+  }
+}

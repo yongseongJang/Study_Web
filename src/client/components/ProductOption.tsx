@@ -14,8 +14,9 @@ interface option {
 }
 
 function ProductOption(props: productOption) {
-  const { option, setOption } = useState<unknown>({});
-  const { totalPrice, setTotalPrice } = useState<number>(0);
+  const [option, setOption] = useState<option>({});
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
   return (
     <div className="productOption">
       <table className="productOption__info">
@@ -23,22 +24,29 @@ function ProductOption(props: productOption) {
           <tr>
             <td>
               <span>
-                <strong>{`KRW ${props.price}`}</strong>
+                <strong
+                  style={
+                    props.salePrice
+                      ? { textDecoration: "line-through" }
+                      : undefined
+                  }
+                >{`KRW ${props.price}`}</strong>
               </span>
             </td>
           </tr>
           <tr>
             <td>
-              <span>
-                {`KRW ${props.salePrice}`}
-                <span>{`(KRW ${props.price - props.salePrice} 할인)`}</span>
-              </span>
+              {props.salePrice ? (
+                <span>
+                  {`KRW ${props.salePrice}`}
+                  <span>{` ( KRW ${props.price - props.salePrice} 할인)`}</span>
+                </span>
+              ) : null}
             </td>
           </tr>
         </tbody>
       </table>
-      <table>
-        <caption>상품 옵션</caption>
+      <table className="productOption__size">
         <tbody>
           <tr>
             <th scope="row">SIZE</th>
@@ -60,7 +68,7 @@ function ProductOption(props: productOption) {
           </tr>
         </tbody>
       </table>
-      <div className="productionOption__selectedOption">
+      <div className="box__selectedOption">
         <table>
           <colgroup>
             <col style={{ width: "230px" }} />
@@ -79,7 +87,7 @@ function ProductOption(props: productOption) {
                       </td>
                       <td>
                         <span>
-                          <input type="text" value={option[size]} />
+                          <input type="text" value={option.size} />
                           <a href="">
                             <img src="" alt="수량증가" />
                           </a>
@@ -98,11 +106,11 @@ function ProductOption(props: productOption) {
           </tbody>
         </table>
       </div>
-      <div className="productOption__totalPrice">
-        <strong>Total</strong>:
+      <div className="box__totalPrice">
+        <strong>{`Total `}</strong>:
         <span className="totalPrice__total">
           <strong>
-            <em>{`KRW ${totalPrice}`}</em>
+            <em>{totalPrice == 0 ? ` 0` : ` KRW ${totalPrice}`}</em>
           </strong>
         </span>
       </div>

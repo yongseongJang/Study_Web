@@ -8,6 +8,7 @@ import {
   ProductImage,
   ProductGuide,
   ProductOption,
+  TopMenu,
 } from "../components";
 
 interface ProductInfoProps {
@@ -27,32 +28,43 @@ function ProductInfo(props: ProductInfoProps) {
 
   return (
     <div className="productInfo">
+      <TopMenu />
       {product ? (
         <>
-          <section className="productDetail__left">
+          <section className="productInfo__left">
             <ProductDetail
               brandName={props.category}
               productName={product.name}
               productDetail={product.productDetail}
             ></ProductDetail>
           </section>
-          <section className="productDetail__center">
+          <section className="productInfo__center">
             <ProductImage productImage={product.productImage}></ProductImage>
           </section>
-          <section className="productDetail__right">
-            <ProductOption
-              productName={product.name}
-              price={product.price}
-              salePrice={product.salePrice}
-              productSize={product.productSize}
-            ></ProductOption>
-            <div className="right__order-wrap">
-              <a href="">BUY NOW</a>
-              <a href="">ADD TO CART</a>
+          <section className="productInfo__right">
+            <div className="right__wrap">
+              <div className="wrap__contents">
+                <div className="contents__box">
+                  <ProductOption
+                    productName={product.name}
+                    price={product.price}
+                    salePrice={product.salePrice}
+                    productSize={product.productSize}
+                  ></ProductOption>
+                  <div className="box__order-wrap">
+                    <a className="order-wrap__leftBtn" href="">
+                      BUY NOW
+                    </a>
+                    <a className="order-wrap__rightBtn" href="">
+                      ADD TO CART
+                    </a>
+                  </div>
+                  <ProductGuide
+                    productCaution={product.productCaution}
+                  ></ProductGuide>
+                </div>
+              </div>
             </div>
-            <ProductGuide
-              productCaution={product.productCaution}
-            ></ProductGuide>
           </section>
         </>
       ) : null}

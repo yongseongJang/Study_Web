@@ -1,6 +1,6 @@
 interface IProductDetail {
   _id: number;
-  detail_order: number;
+  detailOrder: number;
   detail: string;
 }
 

@@ -18,7 +18,7 @@ function Product(props: ProductDetailProps) {
   const productId = Number(props.match.params.productId);
 
   return (
-    <div className="productDetail">
+    <div className="product">
       <ProductInfo category={category} productId={productId}></ProductInfo>
     </div>
   );

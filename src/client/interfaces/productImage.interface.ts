@@ -1,7 +1,7 @@
 interface IProductImage {
   _id: number;
-  image_order: number;
-  file_name: string;
+  imageOrder: number;
+  fileName: string;
 }
 
 export default IProductImage;

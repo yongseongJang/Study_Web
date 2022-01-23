@@ -1,0 +1,102 @@
+.productInfo {
+  position: relative;
+  width: 100%;
+
+  .productInfo__left {
+    position: fixed;
+    display: block;
+    top: 0px; // inline style로 수정
+    bottom: auto; // inline style로 수정
+    left: 80px;
+    width: 25%;
+    height: 100%;
+    padding: 0 0.5% 0 3.5%;
+    text-align: left;
+    font-size: 13px;
+  }
+
+  .productInfo__center {
+    width: 50%;
+    margin: 0 auto 150px;
+    min-height: 1200px;
+  }
+
+  .productInfo__right {
+    display: block;
+    position: fixed;
+    inset: 0px auto auto 1145px;
+    width: 24%;
+    height: 100%;
+    padding: 0 3% 0 0%;
+
+    .right__wrap {
+      width: 85%;
+      height: 100%;
+      display: table;
+
+      .wrap__contents {
+        display: table-cell;
+        line-height: 20px;
+        vertical-align: middle;
+
+        .contents__box {
+          max-width: 442px;
+
+          .box__order-wrap {
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0 40px 0;
+            text-align: center;
+
+            a {
+              width: 100%;
+              border: 1px solid transparent;
+              border-radius: 2px;
+              margin: 0 2px;
+              box-sizing: border-box;
+              padding: 2px 8px;
+              word-break: keep-all;
+              word-wrap: break-word;
+              white-space: normal;
+              display: flex;
+              flex: 1;
+              align-items: center;
+              justify-content: center;
+              word-spacing: -0.5px;
+              letter-spacing: 0;
+              color: #fff;
+              height: 36px;
+            }
+
+            .order-wrap__leftBtn {
+              background-color: #000;
+            }
+
+            .order-wrap__leftBtn:hover {
+              background-color: #43495a;
+            }
+            .order-wrap__rightBtn {
+              background-color: #84868b;
+            }
+            .order-wrap__rightBtn:hover {
+              background-color: #77797d;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .productInfo {
+    .productInfo__right {
+      .right__order-wrap {
+        a {
+          height: 46px;
+        }
+      }
+    }
+  }
+}

@@ -10,8 +10,6 @@ interface Item {
   width: number;
 }
 
-// 상품 이미지 서버에서 가져오는 걸로 수정하기
-
 function Item(props: Item) {
   return (
     <article className="item" style={{ width: `${props.width}%` }}>
