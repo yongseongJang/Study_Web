@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { IProductSize } from "../interfaces";
 
-interface productOption {
+interface productOptionProps {
   productName: string;
   price: number;
   salePrice: number;
@@ -13,9 +13,42 @@ interface option {
   [size: string]: number;
 }
 
-function ProductOption(props: productOption) {
+function ProductOption(props: productOptionProps) {
   const [option, setOption] = useState<option>({});
   const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  const handleSizeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const size = e.currentTarget.getAttribute("data-size");
+    if (size && !option.size) {
+      setOption({ ...option, [size]: 1 });
+    }
+  };
+
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^0-9]/g, "");
+    const inputValue = value === "" ? 1 : Number(value);
+
+    const size = e.currentTarget.parentElement
+      ? e.currentTarget.parentElement.getAttribute("data-size")
+      : null;
+
+    if (size) {
+      setOption({ ...option, [size]: inputValue });
+    }
+  };
+
+  const handleRemoveClick = (e: React.MouseEvent) => {
+    const size = e.currentTarget.getAttribute("data-size");
+
+    if (size) {
+      const tmp = option;
+      delete tmp[size];
+
+      setOption({ ...tmp });
+    }
+  };
 
   return (
     <div className="productOption">
@@ -56,7 +89,11 @@ function ProductOption(props: productOption) {
                   ? props.productSize.map((size, index) => {
                       return (
                         <li key={index}>
-                          <a href="">
+                          <a
+                            data-size={size.size}
+                            href=""
+                            onClick={handleSizeClick}
+                          >
                             <span>{size.size}</span>
                           </a>
                         </li>
@@ -76,7 +113,7 @@ function ProductOption(props: productOption) {
           </colgroup>
           <tbody>
             {option
-              ? Object.entries(option).map((size, index) => {
+              ? Object.keys(option).map((size, index) => {
                   return (
                     <tr className="selectedOption__product" key={index}>
                       <td>
@@ -86,8 +123,11 @@ function ProductOption(props: productOption) {
                         </p>
                       </td>
                       <td>
-                        <span>
-                          <input type="text" value={option.size} />
+                        <span data-size={size}>
+                          <input
+                            value={option[size]}
+                            onChange={handleQuantityChange}
+                          />
                           <a href="">
                             <img src="" alt="수량증가" />
                           </a>
@@ -95,7 +135,7 @@ function ProductOption(props: productOption) {
                             <img src="" alt="수량감소" />
                           </a>
                         </span>
-                        <a href="">
+                        <a href="" data-size={size} onClick={handleRemoveClick}>
                           <img src="" alt="삭제" />
                         </a>
                       </td>

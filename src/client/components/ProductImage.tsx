@@ -6,7 +6,6 @@ interface productImageProps {
 }
 
 function ProductImage(props: productImageProps) {
-  console.log(props.productImage);
   return (
     <div className="productImage">
       {props.productImage.map((image, index) => {
