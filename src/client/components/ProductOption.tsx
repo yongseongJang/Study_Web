@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IProductSize } from "../interfaces";
 import btn_count_down from "../../public/img/btn_count_down.gif";
 import btn_count_up from "../../public/img/btn_count_up.gif";
@@ -81,6 +81,16 @@ function ProductOption(props: productOptionProps) {
       setOption({ ...option, [size]: quantity });
     }
   };
+
+  useEffect(() => {
+    const price = props.salePrice ? props.salePrice : props.price;
+
+    const total = Object.keys(option).reduce((acc, size) => {
+      return acc + option[size] * price;
+    }, 0);
+
+    setTotalPrice(total);
+  }, [option]);
 
   return (
     <div className="productOption">
