@@ -59,7 +59,48 @@
     }
   }
 
-  .productOption__size {
+  .box__selectedOption {
+    margin: 21px 0 0;
+
+    .selectedOption__product {
+      height: 40px;
+
+      .product__wrap {
+        display: flex;
+
+        .wrap__quantity {
+          display: inline-block;
+          position: relative;
+          width: 50px;
+          vertical-align: top;
+
+          input {
+            width: 22px;
+            height: 19px;
+            padding: 0 2px 0 3px;
+            border: 1px solid #d4d8d9;
+            border-radius: 3px 0 0 3px;
+          }
+
+          .quantity__increase {
+            position: absolute;
+            left: 21px;
+            top: -3px;
+          }
+
+          .quantity__decrease {
+            position: absolute;
+            left: 21px;
+            bottom: 0;
+            top: 7px;
+          }
+        }
+
+        .wrap__delete-img {
+          width: 20px;
+        }
+      }
+    }
   }
 
   .box__totalPrice {

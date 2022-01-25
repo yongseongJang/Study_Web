@@ -1,6 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 import { IProductSize } from "../interfaces";
+import btn_count_down from "../../public/img/btn_count_down.gif";
+import btn_count_up from "../../public/img/btn_count_up.gif";
+import btn_price_delete from "../../public/img/btn_price_delete.gif";
 
 interface productOptionProps {
   productName: string;
@@ -40,13 +43,42 @@ function ProductOption(props: productOptionProps) {
   };
 
   const handleRemoveClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
     const size = e.currentTarget.getAttribute("data-size");
 
     if (size) {
       const tmp = option;
+
       delete tmp[size];
 
       setOption({ ...tmp });
+    }
+  };
+
+  const handleIncreaseClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const size = e.currentTarget.parentElement
+      ? e.currentTarget.parentElement.getAttribute("data-size")
+      : null;
+
+    if (size) {
+      setOption({ ...option, [size]: option[size] + 1 });
+    }
+  };
+
+  const handleDecreaseClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const size = e.currentTarget.parentElement
+      ? e.currentTarget.parentElement.getAttribute("data-size")
+      : null;
+
+    if (size) {
+      const quantity = option[size] > 2 ? option[size] - 1 : 1;
+
+      setOption({ ...option, [size]: quantity });
     }
   };
 
@@ -119,24 +151,36 @@ function ProductOption(props: productOptionProps) {
                       <td>
                         <p>
                           {props.productName}
-                          <br />-<span>{size}</span>
+                          <span>{` - ${size}`}</span>
                         </p>
                       </td>
-                      <td>
-                        <span data-size={size}>
+                      <td className="product__wrap">
+                        <span className="wrap__quantity" data-size={size}>
                           <input
                             value={option[size]}
                             onChange={handleQuantityChange}
                           />
-                          <a href="">
-                            <img src="" alt="수량증가" />
+                          <a
+                            className="quantity__increase"
+                            href=""
+                            onClick={handleIncreaseClick}
+                          >
+                            <img src={btn_count_up} alt="수량증가" />
                           </a>
-                          <a href="">
-                            <img src="" alt="수량감소" />
+                          <a
+                            href=""
+                            className="quantity__decrease"
+                            onClick={handleDecreaseClick}
+                          >
+                            <img src={btn_count_down} alt="수량감소" />
                           </a>
                         </span>
                         <a href="" data-size={size} onClick={handleRemoveClick}>
-                          <img src="" alt="삭제" />
+                          <img
+                            className="wrap__delete-img"
+                            src={btn_price_delete}
+                            alt="삭제"
+                          />
                         </a>
                       </td>
                     </tr>
