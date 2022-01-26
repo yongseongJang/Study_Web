@@ -43,6 +43,10 @@
         }
       }
     }
+
+    img {
+      max-width: 100%;
+    }
   }
 
   .productGuide__size {
@@ -98,6 +102,30 @@
       padding: 20px 0;
       color: hsl(0, 0%, 33%);
       text-align: left;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .productGuide {
+    .productGuide__stage {
+      padding-bottom: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .productGuide {
+    .productGuide__size-popup {
+      width: 620px;
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .productGuide {
+    .productGuide__size-popup {
+      width: 490px;
     }
   }
 }

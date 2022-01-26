@@ -147,7 +147,7 @@ function ProductOption(props: productOptionProps) {
           </tr>
         </tbody>
       </table>
-      <div className="box__selectedOption">
+      <div className="productOption__selectedOption">
         <table>
           <colgroup>
             <col style={{ width: "230px" }} />
@@ -200,7 +200,7 @@ function ProductOption(props: productOptionProps) {
           </tbody>
         </table>
       </div>
-      <div className="box__totalPrice">
+      <div className="productOption__totalPrice">
         <strong>{`Total `}</strong>:
         <span className="totalPrice__total">
           <strong>

@@ -36,3 +36,26 @@
     }
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .productDetail {
+    margin: 0 auto;
+
+    .productDetail__contents {
+      .contents__box {
+        margin: 0 auto;
+
+        .box__name {
+          font-size: 20px;
+          text-align: center;
+        }
+        .box__detail {
+          text-align: left;
+          max-width: 442px;
+          font-size: 12px;
+          margin: 0 auto 50px;
+        }
+      }
+    }
+  }
+}

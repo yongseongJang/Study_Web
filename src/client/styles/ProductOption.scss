@@ -59,7 +59,7 @@
     }
   }
 
-  .box__selectedOption {
+  .productOption__selectedOption {
     margin: 21px 0 0;
 
     .selectedOption__product {
@@ -103,7 +103,7 @@
     }
   }
 
-  .box__totalPrice {
+  .productOption__totalPrice {
     margin: 0;
     padding: 18px 0px 10px;
     border-top: 1px solid #e7e7e7;
@@ -117,5 +117,11 @@
       font-size: 16px;
       font-style: normal;
     }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .productOption {
+    margin: 0 auto;
   }
 }

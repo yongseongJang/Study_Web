@@ -56,6 +56,12 @@ function ProductInfo(props: ProductInfoProps) {
       <TopMenu />
       {product ? (
         <>
+          <section className="productInfo__image">
+            <img
+              src={`${process.env.REACT_APP_S3_URI}/${product.image}`}
+              alt=""
+            />
+          </section>
           <section className="productInfo__left">
             <ProductDetail
               brandName={props.category}
