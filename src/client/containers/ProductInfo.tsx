@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers/types";
 import { productActions } from "../actions";
@@ -17,13 +17,38 @@ interface ProductInfoProps {
 }
 
 function ProductInfo(props: ProductInfoProps) {
+  const [browserWidth, setBrowserWidth] = useState<number>(
+    window.innerHeight ? window.innerWidth : document.body.clientWidth,
+  );
+
   const dispatch = useDispatch();
   const { product } = useSelector((state: RootState) => state.productReducer);
 
+  let resizeTimer = setTimeout(() => {
+    return 0;
+  }, 0);
+  const handleResize = () => {
+    if (resizeTimer) {
+      clearTimeout(resizeTimer);
+    }
+
+    resizeTimer = setTimeout(() => {
+      setBrowserWidth(
+        window.innerHeight ? window.innerWidth : document.body.clientWidth,
+      );
+    }, 100);
+  };
+
   useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
     dispatch(
       productActions.requestProductDetail(props.category, props.productId),
     );
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -41,7 +66,10 @@ function ProductInfo(props: ProductInfoProps) {
           <section className="productInfo__center">
             <ProductImage productImage={product.productImage}></ProductImage>
           </section>
-          <section className="productInfo__right">
+          <section
+            className="productInfo__right"
+            style={{ inset: `0px auto auto ${browserWidth * 0.75}px` }}
+          >
             <div className="right__wrap">
               <div className="wrap__contents">
                 <div className="contents__box">
