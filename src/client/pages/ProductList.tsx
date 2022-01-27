@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../reducers/types";
+import { useState } from "react";
 import * as queryString from "query-string";
-import { Item, ColumnFilter } from "../components";
-import { productActions } from "../actions";
+import { ColumnFilter } from "../components";
+import { ProductListInfo } from "../containers";
+
 interface ProductListProps {
   match: {
     params: {
@@ -26,15 +25,6 @@ function ProductList(props: ProductListProps) {
   const search = queryString.parse(props.location.search);
 
   const [itemColumnLength, setItemColumnLength] = useState<number>(4);
-
-  const dispatch = useDispatch();
-  const { pagination, productList } = useSelector(
-    (state: RootState) => state.productReducer,
-  );
-
-  useEffect(() => {
-    dispatch(productActions.requestProducts(category));
-  }, []);
 
   const itemWidth = 80 / itemColumnLength;
 
@@ -70,23 +60,10 @@ function ProductList(props: ProductListProps) {
                     onClick={handleClick}
                   />
                 </div>
-                <div className="products__item-wrap">
-                  {productList.map((product) => {
-                    return (
-                      <Item
-                        key={product._id}
-                        id={product._id}
-                        name={product.name}
-                        image={product.image}
-                        category={props.match.params.category}
-                        price={product.price}
-                        salePrice={product.salePrice}
-                        soldOut={product.stockCount > 0 ? true : false}
-                        width={itemWidth}
-                      />
-                    );
-                  })}
-                </div>
+                <ProductListInfo
+                  category={category}
+                  itemWidth={itemWidth}
+                ></ProductListInfo>
               </section>
             </div>
           </main>
