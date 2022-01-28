@@ -21,7 +21,7 @@ export interface loginReducerState {
 
 export interface productReducerState {
   isRequesting: boolean;
-  pagination: IPagination[];
+  pagination: IPagination;
   productList: Omit<
     IProduct,
     "productDetail" | "productImage" | "productCaution" | "productSize"

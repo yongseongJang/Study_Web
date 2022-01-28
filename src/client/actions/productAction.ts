@@ -9,10 +9,11 @@ export const productConstants = {
   REQUEST_PRODUCT_DETAIL_FAILURE: "REQUEST_PRODUCT_DETAIL_FAILURE",
 };
 
-const requestProducts = (category: string) => {
+const requestProducts = (category: string, page = 1) => {
   return {
     type: productConstants.REQUEST_PRODUCTS,
     category,
+    page,
   };
 };
 

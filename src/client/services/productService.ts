@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const getAllProducts = async () => {
+const getAllProducts = async (page: number) => {
   return await axios
-    .get("/api/products/")
+    .get(`/api/products?page=${page}`)
     .then((res) => {
       const { pagination, paginatedProduct: productList } = res.data;
       return { pagination, productList };
@@ -12,9 +12,9 @@ const getAllProducts = async () => {
     });
 };
 
-const getProductsByCategory = async (category: string) => {
+const getProductsByCategory = async (category: string, page: number) => {
   return await axios
-    .get(`/api/products/${category}`)
+    .get(`/api/products/${category}?page=${page}`)
     .then((res) => {
       const { pagination, paginatedProduct: productList } = res.data;
       return { pagination, productList };

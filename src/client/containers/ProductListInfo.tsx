@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers/types";
-import { Item } from "../components";
+import { Item, Pagination } from "../components";
 import { productActions } from "../actions";
 
 interface ProductListInfoProps {
@@ -11,7 +11,7 @@ interface ProductListInfoProps {
 
 function ProductListInfo(props: ProductListInfoProps) {
   const dispatch = useDispatch();
-  const { productList } = useSelector(
+  const { pagination, productList } = useSelector(
     (state: RootState) => state.productReducer,
   );
 
@@ -19,23 +19,34 @@ function ProductListInfo(props: ProductListInfoProps) {
     dispatch(productActions.requestProducts(props.category));
   }, []);
 
+  const requestPage = (page: number) => {
+    dispatch(productActions.requestProducts(props.category, page));
+  };
+
   return (
     <div className="productListInfo">
-      {productList.map((product) => {
-        return (
-          <Item
-            key={product._id}
-            id={product._id}
-            name={product.name}
-            image={product.image}
-            category={props.category}
-            price={product.price}
-            salePrice={product.salePrice}
-            soldOut={product.stockCount > 0 ? true : false}
-            width={props.itemWidth}
-          />
-        );
-      })}
+      <div className="productListInfo__item-wrap">
+        {productList.map((product) => {
+          return (
+            <Item
+              key={product._id}
+              id={product._id}
+              name={product.name}
+              image={product.image}
+              category={props.category}
+              price={product.price}
+              salePrice={product.salePrice}
+              soldOut={product.stockCount > 0 ? true : false}
+              width={props.itemWidth}
+            />
+          );
+        })}
+      </div>
+
+      <Pagination
+        pagination={pagination}
+        requestPage={requestPage}
+      ></Pagination>
     </div>
   );
 }
