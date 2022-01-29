@@ -154,7 +154,7 @@ function ProductOption(props: productOptionProps) {
             <col style={{ width: "60px" }} />
           </colgroup>
           <tbody>
-            {option
+            {option && Object.keys(option)
               ? Object.keys(option).map((size, index) => {
                   return (
                     <tr className="selectedOption__product" key={index}>

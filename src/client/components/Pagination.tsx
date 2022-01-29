@@ -5,9 +5,12 @@ interface PaginationProps {
   requestPage: (page: number) => void;
 }
 function Pagination(props: PaginationProps) {
-  const pages = Array(props.pagination.endPage - props.pagination.startPage + 1)
-    .fill(null)
-    .map((v, i) => props.pagination.startPage + i);
+  const pages =
+    props.pagination.endPage && props.pagination.startPage
+      ? Array(props.pagination.endPage - props.pagination.startPage + 1)
+          .fill(null)
+          .map((v, i) => props.pagination.startPage + i)
+      : null;
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
