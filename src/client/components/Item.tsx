@@ -24,12 +24,17 @@ function Item(props: Item) {
           </a>
         </div>
         <div className="inner_content">
-          <a href="" className="content__title">
+          <a
+            href={`/products/${props.category}/${props.id}`}
+            className="content__title"
+          >
             {props.name}
           </a>
           <ul className="content__element">
             <li>
-              <span>{`KRW ${props.price}`}</span>
+              <span
+                className={props.salePrice ? "invalid-price" : undefined}
+              >{`KRW ${props.price}`}</span>
             </li>
             {props.salePrice ? (
               <li>

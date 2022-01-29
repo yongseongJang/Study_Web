@@ -30,6 +30,10 @@
         line-height: initial;
         li {
           line-height: 20px;
+
+          .invalid-price {
+            text-decoration: line-through;
+          }
         }
       }
     }
