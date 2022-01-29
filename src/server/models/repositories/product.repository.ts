@@ -72,6 +72,8 @@ class ProductRepository extends Repository<Product> {
               "category.name = :name",
               { name: category },
             )
+            .skip(skip)
+            .take(take)
             .getMany();
 
           return product;
