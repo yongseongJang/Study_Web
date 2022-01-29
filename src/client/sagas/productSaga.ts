@@ -5,7 +5,8 @@ import { productConstants, productActions } from "../actions";
 export function* requestProduct(category: string, page: number) {
   try {
     let _pagination, _productList;
-    if (category === "all_product") {
+
+    if (category === "all product") {
       const { pagination, productList } = yield call(
         productServices.getAllProducts,
         page,

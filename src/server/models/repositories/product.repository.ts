@@ -41,12 +41,8 @@ class ProductRepository extends Repository<Product> {
           return await transactionEntityManager
             .createQueryBuilder(Product, "product")
             .leftJoin("product.productCategory", "product_category")
-            .leftJoin(
-              "product_category.category",
-              "category",
-              "category.name = :name",
-              { name: category },
-            )
+            .leftJoin("product_category.category", "category")
+            .where("category.name = :name", { name: category })
             .getCount();
         },
       );
@@ -66,12 +62,8 @@ class ProductRepository extends Repository<Product> {
           const product = await transactionEntityManager
             .createQueryBuilder(Product, "product")
             .leftJoin("product.productCategory", "product_category")
-            .leftJoin(
-              "product_category.category",
-              "category",
-              "category.name = :name",
-              { name: category },
-            )
+            .leftJoin("product_category.category", "category")
+            .where("category.name = :name", { name: category })
             .skip(skip)
             .take(take)
             .getMany();

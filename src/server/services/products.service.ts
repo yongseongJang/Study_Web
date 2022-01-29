@@ -71,7 +71,7 @@ class ProductService {
   private paginate = (
     totalItemCount: number,
     currentPage = 1,
-    pageItemCount = 16,
+    pageItemCount = 12,
     pageInterval = 5,
   ): IPagination => {
     const totalPage = Math.ceil(totalItemCount / pageItemCount);
