@@ -10,6 +10,7 @@
     "build:server": "tsc -p tsconfig.server.json",
     "build": "npm run build:client && npm run build:server",
     "start": "node ./build/server/app.js",
+    "start:background": "nohup node ./build/server/app.js &",
     "lint:client": "eslint \"./src/client/**/*.{ts,tsx}\"",
     "lint:server": "eslint ./src/server/**/*.ts"
   },
