@@ -58,7 +58,7 @@ function ProductInfo(props: ProductInfoProps) {
         <>
           <section className="productInfo__image">
             <img
-              src={`${process.env.REACT_APP_S3_URI}/${product.image}`}
+              src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${product.image}`}
               alt=""
             />
           </section>

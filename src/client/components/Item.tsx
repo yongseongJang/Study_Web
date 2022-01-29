@@ -18,7 +18,7 @@ function Item(props: Item) {
           <a href={`/products/${props.category}/${props.id}`}>
             <span className="image__sold-out"></span>
             <img
-              src={`${process.env.REACT_APP_S3_URI}/${props.image}`}
+              src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${props.image}`}
               alt=""
             />
           </a>

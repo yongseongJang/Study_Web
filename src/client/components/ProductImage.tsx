@@ -14,7 +14,7 @@ function ProductImage(props: productImageProps) {
               <React.Fragment key={index}>
                 <div className="productImage__image">
                   <img
-                    src={`${process.env.REACT_APP_S3_URI}/${image.fileName}`}
+                    src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${image.fileName}`}
                     alt=""
                   />
                 </div>

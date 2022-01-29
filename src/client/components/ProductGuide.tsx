@@ -45,7 +45,7 @@ function ProductGuide(props: productGuideProps) {
             <span className="wrap__line2"></span>
           </span>
         </span>
-        <img src={`${process.env.REACT_APP_S3_URI}/${props.size}`} />
+        <img src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${props.size}`} />
       </div>
       <span className="productGuide__size">
         <a
