@@ -15,14 +15,13 @@ class ProductService {
     page: number,
   ): Promise<{ pagination: object; paginatedProduct: IProduct[] }> {
     try {
-      const product = await this.productRepository.readAllProduct();
-
-      const productCount = product ? product.length : 0;
+      const productCount = await this.productRepository.countAllProduct();
 
       const pagination = this.paginate(productCount, page);
-      const paginatedProduct = product.slice(
+
+      const paginatedProduct = await this.productRepository.readAllProduct(
         pagination.startIndex,
-        pagination.endIndex + 1,
+        pagination.endIndex - pagination.startIndex + 1,
       );
 
       return { pagination, paginatedProduct };
@@ -36,17 +35,18 @@ class ProductService {
     page: number,
   ): Promise<{ pagination: object; paginatedProduct: IProduct[] }> {
     try {
-      const product = await this.productRepository.readProductByCategory(
+      const productCount = await this.productRepository.countProductByCategory(
         category,
       );
 
-      const productCount = product ? product.length : 0;
-
       const pagination = this.paginate(productCount, page);
-      const paginatedProduct = product.slice(
-        pagination.startIndex,
-        pagination.endIndex + 1,
-      );
+
+      const paginatedProduct =
+        await this.productRepository.readProductByCategory(
+          category,
+          pagination.startIndex,
+          pagination.endIndex - pagination.startIndex + 1,
+        );
 
       return { pagination, paginatedProduct };
     } catch (err) {

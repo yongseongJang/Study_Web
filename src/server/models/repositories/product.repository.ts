@@ -5,11 +5,26 @@ import Errorhandler from "../../utils/error";
 
 @EntityRepository(Product)
 class ProductRepository extends Repository<Product> {
-  public async readAllProduct(): Promise<IProduct[]> {
+  public async countAllProduct(): Promise<number> {
     try {
       return await this.manager.transaction(
         async (transactionEntityManager) => {
-          const product = await transactionEntityManager.find(Product);
+          return await transactionEntityManager.count(Product);
+        },
+      );
+    } catch (err: any) {
+      throw new Errorhandler(500, err.name, err.message);
+    }
+  }
+
+  public async readAllProduct(skip: number, take: number): Promise<IProduct[]> {
+    try {
+      return await this.manager.transaction(
+        async (transactionEntityManager) => {
+          const product = await transactionEntityManager.find(Product, {
+            skip,
+            take,
+          });
 
           return product;
         },
@@ -19,7 +34,32 @@ class ProductRepository extends Repository<Product> {
     }
   }
 
-  public async readProductByCategory(category: string): Promise<IProduct[]> {
+  public async countProductByCategory(category: string): Promise<number> {
+    try {
+      return await this.manager.transaction(
+        async (transactionEntityManager) => {
+          return await transactionEntityManager
+            .createQueryBuilder(Product, "product")
+            .leftJoin("product.productCategory", "product_category")
+            .leftJoin(
+              "product_category.category",
+              "category",
+              "category.name = :name",
+              { name: category },
+            )
+            .getCount();
+        },
+      );
+    } catch (err: any) {
+      throw new Errorhandler(500, err.name, err.message);
+    }
+  }
+
+  public async readProductByCategory(
+    category: string,
+    skip: number,
+    take: number,
+  ): Promise<IProduct[]> {
     try {
       return await this.manager.transaction(
         async (transactionEntityManager) => {
