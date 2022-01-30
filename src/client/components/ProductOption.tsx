@@ -24,7 +24,8 @@ function ProductOption(props: productOptionProps) {
     e.preventDefault();
 
     const size = e.currentTarget.getAttribute("data-size");
-    if (size && !option.size) {
+
+    if (size && !option[size]) {
       setOption({ ...option, [size]: 1 });
     }
   };

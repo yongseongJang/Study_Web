@@ -6,7 +6,7 @@ export function* requestProduct(category: string, page: number) {
   try {
     let _pagination, _productList;
 
-    if (category === "all product") {
+    if (category === "all_product") {
       const { pagination, productList } = yield call(
         productServices.getAllProducts,
         page,

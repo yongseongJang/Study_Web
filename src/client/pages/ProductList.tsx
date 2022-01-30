@@ -21,8 +21,8 @@ interface ProductListProps {
 }
 
 function ProductList(props: ProductListProps) {
-  const category = props.match.params.category.replace(/_/g, " ");
-  const search = queryString.parse(props.location.search);
+  const category = props.match.params.category;
+  const { page } = queryString.parse(props.location.search);
 
   const [itemColumnLength, setItemColumnLength] = useState<number>(4);
 
@@ -43,7 +43,7 @@ function ProductList(props: ProductListProps) {
           <main className="page-inner__contents">
             <div className="contents__section-wrap">
               <section className="section-wrap__title">
-                <h4>{category}</h4>
+                <h4>{category.replace(/_/g, " ")}</h4>
                 <div className="title__page">
                   <ul>
                     <li>
@@ -62,6 +62,7 @@ function ProductList(props: ProductListProps) {
                 </div>
                 <ProductListInfo
                   category={category}
+                  page={typeof page === "string" ? Number(page) : null}
                   itemWidth={itemWidth}
                 ></ProductListInfo>
               </section>

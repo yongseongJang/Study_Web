@@ -6,6 +6,7 @@ import { productActions } from "../actions";
 
 interface ProductListInfoProps {
   category: string;
+  page: number | null;
   itemWidth: number;
 }
 
@@ -16,12 +17,12 @@ function ProductListInfo(props: ProductListInfoProps) {
   );
 
   React.useEffect(() => {
-    dispatch(productActions.requestProducts(props.category));
+    if (props.page) {
+      dispatch(productActions.requestProducts(props.category, props.page));
+    } else {
+      dispatch(productActions.requestProducts(props.category));
+    }
   }, []);
-
-  const requestPage = (page: number) => {
-    dispatch(productActions.requestProducts(props.category, page));
-  };
 
   return (
     <div className="productListInfo">
@@ -45,7 +46,7 @@ function ProductListInfo(props: ProductListInfoProps) {
 
       <Pagination
         pagination={pagination}
-        requestPage={requestPage}
+        category={props.category}
       ></Pagination>
     </div>
   );

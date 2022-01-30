@@ -2,7 +2,7 @@ import * as React from "react";
 import { IPagination } from "../interfaces";
 interface PaginationProps {
   pagination: IPagination;
-  requestPage: (page: number) => void;
+  category: string;
 }
 function Pagination(props: PaginationProps) {
   const pages =
@@ -12,20 +12,13 @@ function Pagination(props: PaginationProps) {
           .map((v, i) => props.pagination.startPage + i)
       : null;
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-
-    props.requestPage(Number(e.currentTarget.getAttribute("data-page")));
-  };
-
   return (
     <div className="pagination">
       <ol>
         <li>
           <a
-            href=""
+            href={`/products/${props.category}?page=${props.pagination.startPage}`}
             data-page={props.pagination.startPage}
-            onClick={handleClick}
           >
             {"<"}
           </a>
@@ -35,9 +28,8 @@ function Pagination(props: PaginationProps) {
               return (
                 <li key={index}>
                   <a
-                    href=""
+                    href={`/products/${props.category}?page=${page}`}
                     data-page={page}
-                    onClick={handleClick}
                     className={
                       props.pagination.currentPage == page
                         ? "currentPage"
@@ -51,7 +43,10 @@ function Pagination(props: PaginationProps) {
             })
           : null}
         <li>
-          <a href="" data-page={props.pagination.endPage} onClick={handleClick}>
+          <a
+            href={`/products/${props.category}?page=${props.pagination.endPage}`}
+            data-page={props.pagination.endPage}
+          >
             {">"}
           </a>
         </li>
