@@ -11,3 +11,4 @@ export { default as ProductImage } from "./ProductImage";
 export { default as ProductGuide } from "./ProductGuide";
 export { default as ProductOption } from "./ProductOption";
 export { default as Pagination } from "./Pagination";
+export { default as Table } from "./Table";
