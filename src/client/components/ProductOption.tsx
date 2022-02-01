@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useState, useEffect } from "react";
 import { IProductSize, IOption } from "../interfaces";
 import btn_count_down from "../../public/img/btn_count_down.gif";
@@ -10,10 +11,11 @@ interface productOptionProps {
   price: number;
   salePrice: number;
   productSize: IProductSize[] | undefined;
+  option: IOption;
+  setOption: Dispatch<SetStateAction<IOption>>;
 }
 
 function ProductOption(props: productOptionProps) {
-  const [option, setOption] = useState<IOption>({});
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const handleSizeClick = (e: React.MouseEvent) => {
@@ -21,8 +23,8 @@ function ProductOption(props: productOptionProps) {
 
     const size = e.currentTarget.getAttribute("data-size");
 
-    if (size && !option[size]) {
-      setOption({ ...option, [size]: 1 });
+    if (size && !props.option[size]) {
+      props.setOption({ ...props.option, [size]: 1 });
     }
   };
 
@@ -35,7 +37,7 @@ function ProductOption(props: productOptionProps) {
       : null;
 
     if (size) {
-      setOption({ ...option, [size]: inputValue });
+      props.setOption({ ...props.option, [size]: inputValue });
     }
   };
 
@@ -45,23 +47,22 @@ function ProductOption(props: productOptionProps) {
     const size = e.currentTarget.getAttribute("data-size");
 
     if (size) {
-      const tmp = option;
+      const tmp = props.option;
 
       delete tmp[size];
 
-      setOption({ ...tmp });
+      props.setOption({ ...tmp });
     }
   };
 
   const handleIncreaseClick = (e: React.MouseEvent) => {
     e.preventDefault();
-
     const size = e.currentTarget.parentElement
       ? e.currentTarget.parentElement.getAttribute("data-size")
       : null;
 
     if (size) {
-      setOption({ ...option, [size]: option[size] + 1 });
+      props.setOption({ ...props.option, [size]: props.option[size] + 1 });
     }
   };
 
@@ -73,21 +74,21 @@ function ProductOption(props: productOptionProps) {
       : null;
 
     if (size) {
-      const quantity = option[size] > 2 ? option[size] - 1 : 1;
+      const quantity = props.option[size] > 2 ? props.option[size] - 1 : 1;
 
-      setOption({ ...option, [size]: quantity });
+      props.setOption({ ...props.option, [size]: quantity });
     }
   };
 
   useEffect(() => {
     const price = props.salePrice ? props.salePrice : props.price;
 
-    const total = Object.keys(option).reduce((acc, size) => {
-      return acc + option[size] * price;
+    const total = Object.keys(props.option).reduce((acc, size) => {
+      return acc + props.option[size] * price;
     }, 0);
 
     setTotalPrice(total);
-  }, [option]);
+  }, [props.option]);
 
   return (
     <div className="productOption">
@@ -151,8 +152,8 @@ function ProductOption(props: productOptionProps) {
             <col style={{ width: "60px" }} />
           </colgroup>
           <tbody>
-            {option && Object.keys(option)
-              ? Object.keys(option).map((size, index) => {
+            {props.option && Object.keys(props.option)
+              ? Object.keys(props.option).map((size, index) => {
                   return (
                     <tr className="selectedOption__product" key={index}>
                       <td>
@@ -164,7 +165,7 @@ function ProductOption(props: productOptionProps) {
                       <td className="product__wrap">
                         <span className="wrap__quantity" data-size={size}>
                           <input
-                            value={option[size]}
+                            value={props.option[size]}
                             onChange={handleQuantityChange}
                           />
                           <a

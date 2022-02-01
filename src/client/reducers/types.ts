@@ -1,8 +1,9 @@
-import { IPagination, IProduct } from "../interfaces";
+import { IPagination, IProduct, ICartInfo } from "../interfaces";
 export interface RootState {
   loginReducer: loginReducerState;
   signupReducer: signupReducerState;
   productReducer: productReducerState;
+  cartReducer: cartReducerState;
 }
 
 export interface signupReducerState {
@@ -27,4 +28,9 @@ export interface productReducerState {
     "productDetail" | "productImage" | "productCaution" | "productSize"
   >[];
   product: IProduct;
+}
+
+export interface cartReducerState {
+  isRequesting: boolean;
+  cartInfo: ICartInfo[];
 }

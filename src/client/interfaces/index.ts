@@ -7,4 +7,4 @@ export { default as IProductDetail } from "./productDetail.interface";
 export { default as IProductCaution } from "./productCaution.interface";
 export { default as IProductSize } from "./productSize.interface";
 export { default as IOption } from "./option.interface";
-export { default as ICart } from "./cart.interface";
+export { default as ICartInfo } from "./cartInfo.interface";

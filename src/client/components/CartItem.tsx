@@ -1,29 +1,32 @@
 import * as React from "react";
-import { IProduct, IOption } from "../interfaces";
+import { ICartInfo } from "../interfaces";
 
 interface CartItemProps {
-  product: Pick<IProduct, "_id" | "name" | "price" | "salePrice" | "image">;
-  size: string;
-  quantity: number;
+  info: ICartInfo;
+  category: string;
 }
 
 function CartItem(props: CartItemProps) {
   return (
     <div className="cartItem">
-      <a href={`/products/${props.product._id}`}>
+      <a href={`/products/${props.category}/${props.info.productId}`}>
         <img
           className="cartItem__image"
-          src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${props.product.image}`}
+          src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${props.info.productInfo.image}`}
         ></img>
       </a>
       <p className="cartItem__name">
-        <a href={`/products/${props.product._id}`}>{`${props.product.name}`}</a>
+        <a
+          href={`/products/${props.category}/${props.info.productId}`}
+        >{`${props.info.productInfo.name}`}</a>
       </p>
-      <p>{`[옵션: ${props.size}]`}</p>
+      <p>{`[옵션: ${props.info.option}]`}</p>
       <ul>
-        <li className="cartItem__price">{`KRW ${props.product.price}`}</li>
-        <li className="cartItem__salePrice">{`KRW ${props.product.salePrice}`}</li>
-        <li className="cartItem__quantity">{`수량 : ${props.quantity}`}</li>
+        <li className="cartItem__price">{`KRW ${props.info.productInfo.price}`}</li>
+        <li className="cartItem__salePrice">{`-KRW ${
+          props.info.productInfo.price - props.info.productInfo.salePrice
+        }`}</li>
+        <li className="cartItem__quantity">{`수량 : ${props.info.quantity}`}</li>
       </ul>
     </div>
   );

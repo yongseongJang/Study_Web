@@ -1,12 +1,16 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
 import { CartItem, Pagination } from "../components";
-
+import { RootState } from "../reducers/types";
 interface CartModalProps {
   isVisible: boolean;
   onClick: (e: React.MouseEvent) => void;
+  category: string;
 }
 
 function CartModal(props: CartModalProps) {
+  const { cartInfo } = useSelector((state: RootState) => state.cartReducer);
+
   return (
     <div
       className="cartModal"
@@ -24,10 +28,22 @@ function CartModal(props: CartModalProps) {
       <div className="cartModal__content">
         <div className="content__count">
           {`총 `}
-          <strong></strong>
+          <strong>{cartInfo.length}</strong>
           {` 개`}
         </div>
-        <ul className="content__item-list">{/* <CartItem></CartItem> */}</ul>
+        <ul className="content__item-list">
+          {cartInfo && Array.isArray(cartInfo)
+            ? cartInfo.map((info, index) => {
+                return (
+                  <CartItem
+                    key={index}
+                    info={info}
+                    category={props.category}
+                  ></CartItem>
+                );
+              })
+            : null}
+        </ul>
         {/* <Pagination></Pagination> */}
       </div>
       <div className="cartModal__button">

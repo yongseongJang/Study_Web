@@ -1,0 +1,40 @@
+.cartItem {
+  width: 150px;
+  margin: 0 auto;
+  font-size: 12px;
+  color: #2e2e2e;
+
+  .cartItem__image {
+    margin: 0 0 10px;
+    border: 1px solid #ececec;
+    width: 150px;
+    height: 150px;
+  }
+
+  p {
+    font-weight: normal;
+  }
+
+  ul {
+    margin: 0 !important;
+
+    li {
+      display: block !important;
+      width: 100% !important;
+    }
+  }
+
+  .cartItem__price {
+    margin-top: 5px;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .cartItem__salePrice {
+    color: #f76560;
+  }
+
+  .cartItem__quantity {
+    color: #757575;
+  }
+}

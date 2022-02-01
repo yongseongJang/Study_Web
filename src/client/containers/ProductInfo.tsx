@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers/types";
-import { productActions } from "../actions";
+import { productActions, cartActions } from "../actions";
 import {
   ProductDetail,
   ProductImage,
@@ -11,6 +11,7 @@ import {
   TopMenu,
 } from "../components";
 import { CartModal } from "../containers";
+import { IOption, ICartInfo } from "../interfaces";
 interface ProductInfoProps {
   category: string;
   productId: number;
@@ -21,6 +22,7 @@ function ProductInfo(props: ProductInfoProps) {
     window.innerHeight ? window.innerWidth : document.body.clientWidth,
   );
   const [isVisibleCart, setIsVisibleCart] = useState<boolean>(false);
+  const [option, setOption] = useState<IOption>({});
 
   const dispatch = useDispatch();
   const { product } = useSelector((state: RootState) => state.productReducer);
@@ -54,6 +56,25 @@ function ProductInfo(props: ProductInfoProps) {
 
   const handleRightBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
+
+    if (!isVisibleCart) {
+      const cartInfo: ICartInfo[] = [];
+      Object.keys(option).forEach((size) => {
+        cartInfo.push({
+          productId: product._id,
+          option: size,
+          quantity: option[size],
+          productInfo: {
+            name: product.name,
+            price: product.price,
+            salePrice: product.salePrice,
+            image: product.image,
+          },
+        });
+      });
+
+      dispatch(cartActions.add(cartInfo));
+    }
 
     setIsVisibleCart(!isVisibleCart);
   };
@@ -90,6 +111,8 @@ function ProductInfo(props: ProductInfoProps) {
                     price={product.price}
                     salePrice={product.salePrice}
                     productSize={product.productSize}
+                    option={option}
+                    setOption={setOption}
                   ></ProductOption>
                   <div className="box__order-wrap">
                     <a className="order-wrap__leftBtn" href="">
@@ -117,6 +140,7 @@ function ProductInfo(props: ProductInfoProps) {
       <CartModal
         isVisible={isVisibleCart}
         onClick={handleRightBtnClick}
+        category={props.category}
       ></CartModal>
     </div>
   );
