@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { IProductSize } from "../interfaces";
+import { IProductSize, IOption } from "../interfaces";
 import btn_count_down from "../../public/img/btn_count_down.gif";
 import btn_count_up from "../../public/img/btn_count_up.gif";
 import btn_price_delete from "../../public/img/btn_price_delete.gif";
@@ -12,12 +12,8 @@ interface productOptionProps {
   productSize: IProductSize[] | undefined;
 }
 
-interface option {
-  [size: string]: number;
-}
-
 function ProductOption(props: productOptionProps) {
-  const [option, setOption] = useState<option>({});
+  const [option, setOption] = useState<IOption>({});
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const handleSizeClick = (e: React.MouseEvent) => {

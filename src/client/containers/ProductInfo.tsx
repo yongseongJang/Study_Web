@@ -10,7 +10,7 @@ import {
   ProductOption,
   TopMenu,
 } from "../components";
-
+import { CartModal } from "../containers";
 interface ProductInfoProps {
   category: string;
   productId: number;
@@ -20,6 +20,7 @@ function ProductInfo(props: ProductInfoProps) {
   const [browserWidth, setBrowserWidth] = useState<number>(
     window.innerHeight ? window.innerWidth : document.body.clientWidth,
   );
+  const [isVisibleCart, setIsVisibleCart] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const { product } = useSelector((state: RootState) => state.productReducer);
@@ -51,6 +52,11 @@ function ProductInfo(props: ProductInfoProps) {
     };
   }, []);
 
+  const handleRightBtnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    setIsVisibleCart(!isVisibleCart);
+  };
   return (
     <div className="productInfo">
       <TopMenu />
@@ -89,7 +95,11 @@ function ProductInfo(props: ProductInfoProps) {
                     <a className="order-wrap__leftBtn" href="">
                       BUY NOW
                     </a>
-                    <a className="order-wrap__rightBtn" href="">
+                    <a
+                      className="order-wrap__rightBtn"
+                      href=""
+                      onClick={handleRightBtnClick}
+                    >
                       ADD TO CART
                     </a>
                   </div>
@@ -104,6 +114,10 @@ function ProductInfo(props: ProductInfoProps) {
           </section>
         </>
       ) : null}
+      <CartModal
+        isVisible={isVisibleCart}
+        onClick={handleRightBtnClick}
+      ></CartModal>
     </div>
   );
 }

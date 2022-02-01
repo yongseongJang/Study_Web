@@ -3,7 +3,7 @@ import { signUpReducer } from "./signUpReducer";
 import { loginReducer } from "./loginReducer";
 import { productReducer } from "./productReducer";
 import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage/session";
 
 const persistConfig = {
   key: "root",
