@@ -47,6 +47,7 @@ function ProductListInfo(props: ProductListInfoProps) {
       <Pagination
         pagination={pagination}
         category={props.category}
+        page="products"
       ></Pagination>
     </div>
   );

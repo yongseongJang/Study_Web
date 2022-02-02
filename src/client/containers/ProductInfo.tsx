@@ -57,9 +57,11 @@ function ProductInfo(props: ProductInfoProps) {
   const handleRightBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    if (!isVisibleCart) {
+    const sizes = Object.keys(option);
+    if (!isVisibleCart && sizes.length > 0) {
       const cartInfo: ICartInfo[] = [];
-      Object.keys(option).forEach((size) => {
+
+      sizes.forEach((size) => {
         cartInfo.push({
           productId: product._id,
           option: size,

@@ -22,9 +22,12 @@ function CartItem(props: CartItemProps) {
       </p>
       <p>{`[옵션: ${props.info.option}]`}</p>
       <ul>
-        <li className="cartItem__price">{`KRW ${props.info.productInfo.price}`}</li>
+        <li className="cartItem__price">{`KRW ${
+          props.info.productInfo.price * props.info.quantity
+        }`}</li>
         <li className="cartItem__salePrice">{`-KRW ${
-          props.info.productInfo.price - props.info.productInfo.salePrice
+          (props.info.productInfo.price - props.info.productInfo.salePrice) *
+          props.info.quantity
         }`}</li>
         <li className="cartItem__quantity">{`수량 : ${props.info.quantity}`}</li>
       </ul>

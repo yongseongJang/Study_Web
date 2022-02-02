@@ -1,0 +1,19 @@
+.cartPagination {
+  margin: 60px 0 30px;
+  text-align: center;
+
+  li {
+    display: inline-block;
+    font-size: 12px;
+
+    a {
+      width: auto;
+      margin: 0 5px 0;
+      font-weight: bold;
+    }
+
+    .currentPage {
+      text-decoration: underline;
+    }
+  }
+}

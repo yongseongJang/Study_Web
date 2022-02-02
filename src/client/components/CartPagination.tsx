@@ -1,11 +1,12 @@
 import * as React from "react";
 import { IPagination } from "../interfaces";
-interface PaginationProps {
+
+interface CartPaginationProps {
   pagination: IPagination;
-  category: string;
-  page: string;
+  onClick: (e: React.MouseEvent) => void;
 }
-function Pagination(props: PaginationProps) {
+
+function CartPagination(props: CartPaginationProps) {
   const pages =
     props.pagination.endPage && props.pagination.startPage
       ? Array(props.pagination.endPage - props.pagination.startPage + 1)
@@ -14,12 +15,14 @@ function Pagination(props: PaginationProps) {
       : null;
 
   return (
-    <div className="pagination">
+    <div className="cartPagination">
       <ol>
         <li>
           <a
-            href={`/${props.page}/${props.category}?page=${props.pagination.startPage}`}
+            href=""
             data-page={props.pagination.startPage}
+            className="startPage"
+            onClick={props.onClick}
           >
             {"<"}
           </a>
@@ -29,13 +32,14 @@ function Pagination(props: PaginationProps) {
               return (
                 <li key={index}>
                   <a
-                    href={`/${props.page}/${props.category}?page=${page}`}
+                    href=""
                     data-page={page}
                     className={
                       props.pagination.currentPage == page
                         ? "currentPage"
                         : "page"
                     }
+                    onClick={props.onClick}
                   >
                     {page}
                   </a>
@@ -45,8 +49,10 @@ function Pagination(props: PaginationProps) {
           : null}
         <li>
           <a
-            href={`/${props.page}/${props.category}?page=${props.pagination.endPage}`}
+            href=""
             data-page={props.pagination.endPage}
+            className="endPage"
+            onClick={props.onClick}
           >
             {">"}
           </a>
@@ -56,4 +62,4 @@ function Pagination(props: PaginationProps) {
   );
 }
 
-export default Pagination;
+export default CartPagination;

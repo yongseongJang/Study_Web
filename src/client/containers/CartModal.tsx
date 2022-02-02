@@ -1,7 +1,10 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { CartItem, Pagination } from "../components";
+import { CartItem, CartPagination } from "../components";
 import { RootState } from "../reducers/types";
+import { paginate } from "../utils/pagination";
+import { IPagination } from "../interfaces";
 interface CartModalProps {
   isVisible: boolean;
   onClick: (e: React.MouseEvent) => void;
@@ -10,6 +13,30 @@ interface CartModalProps {
 
 function CartModal(props: CartModalProps) {
   const { cartInfo } = useSelector((state: RootState) => state.cartReducer);
+
+  const [pagination, setPagination] = useState<IPagination>(
+    paginate(cartInfo.length),
+  );
+
+  useEffect(() => {
+    setPagination(paginate(cartInfo.length));
+  }, [cartInfo]);
+
+  const handleShopBtnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    props.onClick(e);
+  };
+
+  const handlePageClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const page = e.currentTarget.getAttribute("data-page");
+
+    if (page) {
+      setPagination(paginate(cartInfo.length, Number(page)));
+    }
+  };
 
   return (
     <div
@@ -33,27 +60,32 @@ function CartModal(props: CartModalProps) {
         </div>
         <ul className="content__item-list">
           {cartInfo && Array.isArray(cartInfo)
-            ? cartInfo.map((info, index) => {
-                return (
-                  <CartItem
-                    key={index}
-                    info={info}
-                    category={props.category}
-                  ></CartItem>
-                );
-              })
+            ? cartInfo
+                .slice(pagination.startIndex, pagination.endIndex + 1)
+                .map((info, index) => {
+                  return (
+                    <CartItem
+                      key={index}
+                      info={info}
+                      category={props.category}
+                    ></CartItem>
+                  );
+                })
             : null}
         </ul>
-        {/* <Pagination></Pagination> */}
+        <CartPagination
+          pagination={pagination}
+          onClick={handlePageClick}
+        ></CartPagination>
       </div>
       <div className="cartModal__button">
-        <a href="" className="button__order">
+        <a href="/order/order" className="button__order">
           바로 구매하기
         </a>
         <a href="/order/cart" className="button__cart">
           장바구니 이동
         </a>
-        <a href="" className="button__shop">
+        <a href="" className="button__shop" onClick={handleShopBtnClick}>
           쇼핑계속하기
         </a>
       </div>
