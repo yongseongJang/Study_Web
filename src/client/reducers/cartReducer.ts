@@ -48,13 +48,17 @@ export const cartReducer = (
       tmp = [...state.cartInfo];
 
       let removeIndex = -1;
-      state.cartInfo.forEach((info, index) => {
+      state.cartInfo.some((info, index) => {
         if (
           info.productId === action.productId &&
           info.option === action.option
         ) {
           removeIndex = index;
+
+          return true;
         }
+
+        return false;
       });
 
       tmp.splice(removeIndex, 1);

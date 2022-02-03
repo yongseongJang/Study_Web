@@ -1,7 +1,12 @@
 import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../actions";
 import { Table } from "../components";
+import { RootState } from "../reducers/types";
 
 function CartInfo() {
+  const dispatch = useDispatch();
+
   const cartAttributes = [
     "이미지",
     "상품정보",
@@ -14,10 +19,38 @@ function CartInfo() {
     "선택",
   ];
 
+  const { cartInfo } = useSelector((state: RootState) => state.cartReducer);
+
+  const totalPrice = cartInfo.reduce((acc, info) => {
+    return acc + info.productInfo.price * info.quantity;
+  }, 0);
+  const totalSalePrice = cartInfo.reduce((acc, info) => {
+    return info.productInfo.salePrice
+      ? acc +
+          (info.productInfo.price - info.productInfo.salePrice) * info.quantity
+      : acc;
+  }, 0);
+
+  const handleRemoveClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const target = e.currentTarget;
+    const productId = target.getAttribute("data-id");
+    const option = target.getAttribute("data-option");
+
+    if (productId && option) {
+      dispatch(cartActions.remove(Number(productId), option));
+    }
+  };
+
   return (
     <div className="CartInfo">
       <section>
-        <Table attributes={cartAttributes}></Table>
+        <Table
+          attributes={cartAttributes}
+          instances={cartInfo}
+          onRemoveClick={handleRemoveClick}
+        ></Table>
       </section>
       <section>
         <div className="section-wrap__remove-product">
@@ -50,7 +83,10 @@ function CartInfo() {
               <th scope="col">
                 <strong>총 배송비</strong>
               </th>
-              <th scope="col">
+              <th
+                scope="col"
+                style={totalSalePrice ? undefined : { display: "none" }}
+              >
                 <strong>총 할인금액</strong>
               </th>
               <th scope="col">
@@ -64,7 +100,7 @@ function CartInfo() {
                 <div>
                   <strong>
                     {`KRW `}
-                    <span></span>
+                    <span>{totalPrice}</span>
                   </strong>
                 </div>
               </td>
@@ -73,16 +109,16 @@ function CartInfo() {
                   <strong>{`+ `}</strong>
                   <strong>
                     {`KRW `}
-                    <span></span>
+                    <span>0</span>
                   </strong>
                 </div>
               </td>
-              <td>
+              <td style={totalSalePrice ? undefined : { display: "none" }}>
                 <div>
                   <strong>{`- `}</strong>
                   <strong>
                     {`KRW `}
-                    <span></span>
+                    <span>{totalSalePrice}</span>
                   </strong>
                 </div>
               </td>
@@ -91,7 +127,7 @@ function CartInfo() {
                   <strong>{`= `}</strong>
                   <strong>
                     {`KRW `}
-                    <span></span>
+                    <span>{totalPrice - totalSalePrice}</span>
                   </strong>
                 </div>
               </td>
