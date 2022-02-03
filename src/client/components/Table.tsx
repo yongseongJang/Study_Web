@@ -1,4 +1,6 @@
 import * as React from "react";
+import btn_count_down from "../../public/img/btn_count_down.gif";
+import btn_count_up from "../../public/img/btn_count_up.gif";
 
 interface TableProps {
   attributes: string[];
@@ -46,7 +48,7 @@ function Table(props: TableProps) {
                 <img src="" alt="" />
               </a>
             </td>
-            <td>
+            <td className="product-info">
               <strong>
                 <a href=""></a>
               </strong>
@@ -56,14 +58,14 @@ function Table(props: TableProps) {
                 </li>
               </ul>
             </td>
-            <td>
-              <span>
+            <td className="product-option">
+              <span className="option__quantity">
                 <input />
-                <a>
-                  <img alt="수량증가" />
+                <a className="quantity__increase">
+                  <img src={btn_count_up} alt="수량증가" />
                 </a>
-                <a href="">
-                  <img />
+                <a href="" className="quantity__decrease">
+                  <img src={btn_count_down} alt="수량감소" />
                 </a>
               </span>
             </td>
@@ -80,10 +82,11 @@ function Table(props: TableProps) {
               <div>기본배송</div>
             </td>
             <td>무료</td>
-            <td>
-              <a href="">주문하기</a>
-              <a href="">관심상품등록</a>
-              <a href="">
+            <td className="button">
+              <a href="" className="button__order">
+                주문하기
+              </a>
+              <a href="" className="button__remove">
                 <i className="icon-delete"></i>삭제
               </a>
             </td>

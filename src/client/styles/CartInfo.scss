@@ -1,0 +1,119 @@
+.CartInfo {
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  .section-wrap__remove-product {
+    margin: 20px 0;
+    padding-bottom: 20px;
+
+    .remove-product__leftBtn {
+      float: left;
+      text-align: left;
+
+      strong {
+        margin: 0 6px 0 10px;
+        color: #353535;
+        line-height: 24px;
+      }
+
+      .leftBtn__remove {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 2px 8px;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        line-height: 18px;
+        vertical-align: middle;
+        word-spacing: -0.5px;
+        color: #fff;
+        background-color: #84868b;
+
+        .icon-delete {
+          position: relative;
+          overflow: hidden;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin: -2px 2px 0 0;
+          vertical-align: middle;
+          transform: rotate(45deg);
+        }
+
+        .icon-delete:before {
+          content: "";
+          position: absolute;
+          top: 0px;
+          right: 4px;
+          width: 2px;
+          height: 10px;
+          background: #f0f0f0;
+        }
+
+        .icon-delete:after {
+          content: "";
+          position: absolute;
+          top: 4px;
+          right: 0px;
+          width: 10px;
+          height: 2px;
+          background: #f0f0f0;
+        }
+      }
+    }
+
+    .remove-product__rightBtn {
+      float: right;
+      text-align: right;
+
+      .rightBtn__remove {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 2px 8px;
+        border: 1px solid #d1d1d1;
+        border-radius: 2px;
+        line-height: 18px;
+        vertical-align: middle;
+        word-spacing: -0.5px;
+        color: #222;
+        background-color: #fff;
+      }
+    }
+  }
+
+  .section-wrap__total-summary {
+    table {
+      position: relative;
+      margin: 10px 0 0;
+      border-color: #777;
+      border: 1px solid #d7d5d5;
+      line-height: 1.5;
+      width: 100%;
+
+      th {
+        height: 39px;
+        padding: 11px 0 10px;
+        border-bottom: 1px solid #dfdfdf;
+        color: #353535;
+        vertical-align: middle;
+        font-weight: normal;
+      }
+
+      tbody {
+        text-align: center;
+
+        td {
+          height: 58px;
+          padding: 8px 10px 7px;
+          border-top: 1px solid #dfdfdf;
+          color: #353535;
+          vertical-align: middle;
+
+          span {
+            font-size: 23px;
+            letter-spacing: -1px;
+          }
+        }
+      }
+    }
+  }
+}

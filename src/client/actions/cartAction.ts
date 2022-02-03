@@ -33,16 +33,19 @@ const addFailure = (err: unknown) => {
   };
 };
 
-const remove = (productId: number) => {
+const remove = (productId: number, option: string) => {
   return {
     type: cartConstants.REQUEST_REMOVE,
     productId,
+    option,
   };
 };
 
-const removeSuccess = () => {
+const removeSuccess = (productId: number, option: string) => {
   return {
     type: cartConstants.SUCCESS_REMOVE,
+    productId,
+    option,
   };
 };
 

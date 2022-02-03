@@ -16,7 +16,89 @@ function CartInfo() {
 
   return (
     <div className="CartInfo">
-      <Table attributes={cartAttributes}></Table>
+      <section>
+        <Table attributes={cartAttributes}></Table>
+      </section>
+      <section>
+        <div className="section-wrap__remove-product">
+          <span className="remove-product__leftBtn">
+            <strong>선택상품을</strong>
+            <a href="" className="leftBtn__remove">
+              <i className="icon-delete"></i>삭제하기
+            </a>
+          </span>
+          <span className="remove-product__rightBtn">
+            <a href="" className="rightBtn__remove">
+              장바구니비우기
+            </a>
+          </span>
+        </div>
+      </section>
+      <section className="section-wrap__total-summary">
+        <table>
+          <colgroup>
+            <col style={{ width: "17%" }} />
+            <col style={{ width: "19%" }} />
+            <col style={{ width: "17%" }} />
+            <col style={{ width: "auto" }} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">
+                <strong>총 상품금액</strong>
+              </th>
+              <th scope="col">
+                <strong>총 배송비</strong>
+              </th>
+              <th scope="col">
+                <strong>총 할인금액</strong>
+              </th>
+              <th scope="col">
+                <strong>결제예정금액</strong>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div>
+                  <strong>
+                    {`KRW `}
+                    <span></span>
+                  </strong>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <strong>{`+ `}</strong>
+                  <strong>
+                    {`KRW `}
+                    <span></span>
+                  </strong>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <strong>{`- `}</strong>
+                  <strong>
+                    {`KRW `}
+                    <span></span>
+                  </strong>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <strong>{`= `}</strong>
+                  <strong>
+                    {`KRW `}
+                    <span></span>
+                  </strong>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }

@@ -10,6 +10,14 @@ export function* requestAdd(cartInfo: ICartInfo[]) {
   }
 }
 
+export function* requestRemove(productId: number, option: string) {
+  try {
+    yield put(cartActions.removeSuccess(productId, option));
+  } catch (err) {
+    yield put(cartActions.removeFailure(err));
+  }
+}
+
 export function* watchRequestAdd() {
   while (true) {
     const { cartInfo } = yield take(cartConstants.REQUEST_ADD);
@@ -17,4 +25,11 @@ export function* watchRequestAdd() {
   }
 }
 
-export const cartSaga = [fork(watchRequestAdd)];
+export function* watchRequestRemove() {
+  while (true) {
+    const { productId, option } = yield take(cartConstants.REQUEST_REMOVE);
+    yield call(requestRemove, productId, option);
+  }
+}
+
+export const cartSaga = [fork(watchRequestAdd), fork(watchRequestRemove)];
