@@ -48,12 +48,12 @@ function Header() {
             </a>
           </div>
           <div className="material-icons">
-            <a href="">
+            <a href="/order/cart">
               <span className="material-icons-outlined">shopping_bag</span>
             </a>
           </div>
           <div className="material-icons">
-            <a href="">
+            <a href="javascript:;" style={{ cursor: "default" }}>
               <span className="material-icons-outlined">search</span>
             </a>
           </div>
@@ -80,32 +80,17 @@ function Header() {
                 <span>BRAND</span>
               </a>
             </li>
-            <li>
-              <a href="/products/categories">
-                <span>CATEGORIES</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                <span>LOOKBOOK</span>
-              </a>
-            </li>
-            <li>
-              <a href="/products/sale">
-                <span>SALE</span>
-              </a>
-            </li>
             <div className="navigation__shortSpacer"></div>
             <div className="navigation__boardMenu">
               <ul>
                 <li>
-                  <a href="">NOTICE</a>
+                  <a href="javascript:;">NOTICE</a>
                 </li>
                 <li>
-                  <a href="">REVIEW</a>
+                  <a href="javascript:;">REVIEW</a>
                 </li>
                 <li>
-                  <a href="">{`Q&A`}</a>
+                  <a href="javascript:;">{`Q&A`}</a>
                 </li>
               </ul>
             </div>

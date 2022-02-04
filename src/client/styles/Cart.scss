@@ -29,43 +29,6 @@
             font-size: 30px;
             line-height: 1.19em;
           }
-
-          .section-wrap__btn-wrap {
-            position: relative;
-            margin: 10px 0 40px;
-            padding: 10px 0;
-            text-align: center;
-
-            .btn-wrap__order-all {
-              width: 120px;
-              padding: 10px 16px;
-              display: inline-block;
-              color: #fff;
-              background-color: #000;
-              border-radius: 2px;
-              margin-right: 2px;
-            }
-            .btn-wrap__order-selected {
-              width: 120px;
-              padding: 10px 16px;
-              display: inline-block;
-              color: #fff;
-              background-color: #84868b;
-              border-radius: 2px;
-            }
-
-            .btn-wrap__shop {
-              width: 120px;
-              padding: 10px 16px;
-              display: inline-block;
-              color: #222;
-              background-color: #fff;
-              border: 1px solid #d1d1d1;
-              border-radius: 2px;
-              position: absolute;
-              right: 0;
-            }
-          }
         }
       }
     }

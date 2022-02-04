@@ -7,16 +7,26 @@ function Footer() {
         <div className="Container__Category">
           <ul>
             <li>
-              <a href="">{`Delivery & Exchange`}</a>
+              <a
+                href="javascript:;"
+                style={{ cursor: "default" }}
+              >{`Delivery & Exchange`}</a>
             </li>
             <li>
-              <a href="">Guide</a>
+              <a href="javascript:;" style={{ cursor: "default" }}>
+                Guide
+              </a>
             </li>
             <li>
-              <a href="">{`TERMS & CONDITIONS`}</a>
+              <a
+                href="javascript:;"
+                style={{ cursor: "default" }}
+              >{`TERMS & CONDITIONS`}</a>
             </li>
             <li>
-              <a href="">Privacy Policy</a>
+              <a href="javascript:;" style={{ cursor: "default" }}>
+                Privacy Policy
+              </a>
             </li>
           </ul>
         </div>

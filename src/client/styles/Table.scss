@@ -93,10 +93,19 @@
           background-color: #000;
         }
 
+        .button__order:hover {
+          background-color: #43495a;
+        }
+
         .button__remove {
           color: #000;
           background-color: #fff;
           border-color: #d7d7d7;
+        }
+
+        .button__remove:hover {
+          color: #fff;
+          background-color: #000;
         }
       }
     }

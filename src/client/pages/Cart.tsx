@@ -14,19 +14,6 @@ function Cart() {
                 <h2 className="section-wrap__title">Cart</h2>
               </section>
               <CartInfo></CartInfo>
-              <section className="section-wrap__btn-wrap">
-                <a href="" className="btn-wrap__order-all">
-                  전체상품주문
-                </a>
-                <a href="" className="btn-wrap__order-selected">
-                  선택상품주문
-                </a>
-                <span>
-                  <a href="" className="btn-wrap__shop">
-                    쇼핑계속하기
-                  </a>
-                </span>
-              </section>
             </div>
           </main>
         </div>

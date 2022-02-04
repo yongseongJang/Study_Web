@@ -11,10 +11,10 @@ function TopMenu() {
           <a href="/member/join">Join</a>
         </li>
         <li>
-          <a href="/">Order</a>
+          <a href="/order/order">Order</a>
         </li>
         <li>
-          <a href="/">{`Q&A`}</a>
+          <a href="javascript:;" style={{ cursor: "default" }}>{`Q&A`}</a>
         </li>
       </ul>
     </section>

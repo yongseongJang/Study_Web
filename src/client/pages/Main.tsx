@@ -60,11 +60,7 @@ function Main() {
                   >
                     <div className="column__wrap">
                       <div className="wrap__bannerTxt">
-                        <h3>
-                          UNIFORM BRIDGE
-                          <br />
-                          2021 BLACK FRIDAY SALE
-                        </h3>
+                        <a href="/products/uniform_bridge">UNIFORM BRIDGE</a>
                       </div>
                     </div>
                   </div>
@@ -90,22 +86,25 @@ function Main() {
                               </React.Fragment>
                             )}
                             <li>
-                              <a href="/myshop/order">Order</a>
+                              <a href="/order/order">Order</a>
                             </li>
                             <li>
-                              <a href="/">{`Q&A`}</a>
+                              <a
+                                href="javascript:;"
+                                style={{ cursor: "default" }}
+                              >{`Q&A`}</a>
                             </li>
                           </ul>
                         </div>
                       </div>
-                      <div className="wrap__search">
+                      {/* <div className="wrap__search">
                         <div className="search__container">
                           <div>
                             <input type="text" />
                             <input type="image" src={search} />
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="wrap__info">
                         <div className="info__container">
                           <h5>
@@ -136,7 +135,10 @@ function Main() {
                         <div className="column__wrap">
                           <div className="wrap__picture-menu">
                             <div>
-                              <a href="/">
+                              <a
+                                href="javascript:;"
+                                style={{ cursor: "default" }}
+                              >
                                 <img src={v} />
                               </a>
                             </div>
@@ -159,10 +161,18 @@ function Main() {
                                 return (
                                   <div className="left__item" key={i}>
                                     <h2 className="item__title">
-                                      <a href="">{v}</a>
+                                      <a
+                                        href="javascript:;"
+                                        style={{ cursor: "default" }}
+                                      >
+                                        {v}
+                                      </a>
                                     </h2>
                                     <div className="item__read-more">
-                                      <a href="">
+                                      <a
+                                        href="javascript:;"
+                                        style={{ cursor: "default" }}
+                                      >
                                         <span>View lookbook</span>
                                       </a>
                                     </div>
@@ -174,7 +184,10 @@ function Main() {
                               {thirdSectionFirstImage.map((v, i) => {
                                 return (
                                   <div className="right__first-image" key={i}>
-                                    <a href="">
+                                    <a
+                                      href="javascript:;"
+                                      style={{ cursor: "default" }}
+                                    >
                                       <img src={v} alt="" />
                                     </a>
                                   </div>
@@ -186,7 +199,10 @@ function Main() {
                                     className={`right__right-image${i}`}
                                     key={i}
                                   >
-                                    <a href="">
+                                    <a
+                                      href="javascript:;"
+                                      style={{ cursor: "default" }}
+                                    >
                                       <img src={v} alt="" />
                                     </a>
                                   </div>
@@ -206,7 +222,7 @@ function Main() {
                   <div className="column__left">
                     <div className="left__wrap">
                       <div className="wrap__container">
-                        <a href="">
+                        <a href="javascript:;" style={{ cursor: "default" }}>
                           <p>STILL BY HAND</p>
                         </a>
                       </div>
@@ -215,7 +231,7 @@ function Main() {
                   <div className="column__right">
                     <div className="right__wrap">
                       <div className="wrap__container">
-                        <a href="">
+                        <a href="javascript:;" style={{ cursor: "default" }}>
                           <img src={womensLine} />
                         </a>
                       </div>
@@ -241,7 +257,7 @@ function Main() {
                           </div>
                         </div>
                         <div className="container__right">
-                          <a href="">
+                          <a href="javascript:;" style={{ cursor: "default" }}>
                             <img src={renewalEvent} alt="" />
                           </a>
                         </div>
