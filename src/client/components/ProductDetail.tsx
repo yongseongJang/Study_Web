@@ -13,7 +13,10 @@ function ProductDetail(props: productDetailProps) {
       <div className="productDetail__contents">
         <div className="contents__box">
           <div className="box__name">
-            <a href="" className="name__brandName">
+            <a
+              href={`/products/${props.brandName.replace(/ /g, "_")}`}
+              className="name__brandName"
+            >
               {props.brandName.toUpperCase()}
             </a>
             <h5 className="name__productName">{props.productName}</h5>

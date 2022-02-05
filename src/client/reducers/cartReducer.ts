@@ -61,7 +61,9 @@ export const cartReducer = (
         return false;
       });
 
-      tmp.splice(removeIndex, 1);
+      if (removeIndex !== -1) {
+        tmp.splice(removeIndex, 1);
+      }
       return { ...state, isRequesting: false, cartInfo: tmp };
     case cartConstants.FAILURE_REMOVE:
       return { ...state, isRequesting: false };
@@ -70,6 +72,81 @@ export const cartReducer = (
     case cartConstants.SUCCESS_REMOVE_ALL:
       return { ...state, isRequesting: false, cartInfo: [] };
     case cartConstants.FAILURE_REMOVE_ALL:
+      return { ...state, isRequesting: false };
+    case cartConstants.REQUEST_INCREASE_QUANTITY:
+      return { ...state, isRequesting: true };
+    case cartConstants.SUCCESS_INCREASE_QUANTITY:
+      tmp = [...state.cartInfo];
+
+      let increaseIndex = -1;
+      state.cartInfo.some((info, index) => {
+        if (
+          info.productId === action.productId &&
+          info.option == action.option
+        ) {
+          increaseIndex = index;
+
+          return true;
+        }
+
+        return false;
+      });
+
+      if (increaseIndex !== -1) {
+        tmp[increaseIndex].quantity++;
+      }
+      return { ...state, isRequesting: false, cartInfo: tmp };
+    case cartConstants.FAILURE_INCREASE_QUANTITY:
+      return { ...state, isRequesting: false };
+    case cartConstants.REQUEST_DECREASE_QUANTITY:
+      return { ...state, isRequesting: true };
+    case cartConstants.SUCCESS_DECREASE_QUANTITY:
+      tmp = [...state.cartInfo];
+
+      let decreaseIndex = -1;
+      state.cartInfo.some((info, index) => {
+        if (
+          info.productId === action.productId &&
+          info.option == action.option
+        ) {
+          decreaseIndex = index;
+
+          return true;
+        }
+
+        return false;
+      });
+
+      if (decreaseIndex !== -1) {
+        tmp[decreaseIndex].quantity--;
+      }
+      return { ...state, isRequesting: false, cartInfo: tmp };
+    case cartConstants.FAILURE_DECREASE_QUANTITY:
+      return { ...state, isRequesting: false };
+    case cartConstants.REQUEST_CHANGE_QUANTITY:
+      return { ...state, isRequesting: true };
+    case cartConstants.SUCCESS_CHANGE_QUANTITY:
+      tmp = [...state.cartInfo];
+
+      let changeIndex = -1;
+      state.cartInfo.some((info, index) => {
+        if (
+          info.productId === action.productId &&
+          info.option == action.option
+        ) {
+          changeIndex = index;
+
+          return true;
+        }
+
+        return false;
+      });
+
+      if (changeIndex !== -1) {
+        tmp[changeIndex].quantity = action.quantity;
+      }
+      return { ...state, isRequesting: false, cartInfo: tmp };
+    case cartConstants.FAILURE_CHANGE_QUANTITY:
       return { ...state, isRequesting: false };
     default:
       return state;

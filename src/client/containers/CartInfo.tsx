@@ -20,7 +20,6 @@ function CartInfo() {
   ];
 
   const { cartInfo } = useSelector((state: RootState) => state.cartReducer);
-
   const totalPrice = cartInfo.reduce((acc, info) => {
     return acc + info.productInfo.price * info.quantity;
   }, 0);
@@ -49,6 +48,50 @@ function CartInfo() {
     dispatch(cartActions.removeAll());
   };
 
+  const handleIncreaseQuantityClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (e.currentTarget.parentElement) {
+      const productId = e.currentTarget.parentElement.getAttribute("data-id");
+      const option = e.currentTarget.parentElement.getAttribute("data-option");
+
+      if (productId && option) {
+        dispatch(cartActions.increaseQuantity(Number(productId), option));
+      }
+    }
+  };
+
+  const handleDecreaseQuantityClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (e.currentTarget.parentElement) {
+      const productId = e.currentTarget.parentElement.getAttribute("data-id");
+      const option = e.currentTarget.parentElement.getAttribute("data-option");
+      const quantity =
+        e.currentTarget.parentElement.getAttribute("data-quantity");
+
+      if (productId && option && quantity && Number(quantity) > 1) {
+        dispatch(cartActions.decreaseQuantity(Number(productId), option));
+      }
+    }
+  };
+
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.parentElement) {
+      const productId = e.currentTarget.parentElement.getAttribute("data-id");
+      const option = e.currentTarget.parentElement.getAttribute("data-option");
+
+      const value = e.target.value.replace(/[^0-9]/g, "");
+      const inputValue = value === "" ? 1 : Number(value);
+
+      if (productId && option) {
+        dispatch(
+          cartActions.changeQuantity(Number(productId), option, inputValue),
+        );
+      }
+    }
+  };
+
   return (
     <div className="CartInfo">
       {cartInfo.length > 0 ? (
@@ -58,6 +101,9 @@ function CartInfo() {
               attributes={cartAttributes}
               instances={cartInfo}
               onRemoveClick={handleRemoveClick}
+              onIncreaseClick={handleIncreaseQuantityClick}
+              onDecreaseClick={handleDecreaseQuantityClick}
+              onQuantityChange={handleQuantityChange}
             ></CartTable>
           </section>
           <section>

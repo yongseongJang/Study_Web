@@ -10,6 +10,15 @@ export const cartConstants = {
   REQUEST_REMOVE_ALL: "REQUEST_REMOVE_ALL",
   SUCCESS_REMOVE_ALL: "SUCCESS_REMOVE_ALL",
   FAILURE_REMOVE_ALL: "FAILURE_REMOVE_ALL",
+  REQUEST_INCREASE_QUANTITY: "REQUEST_INCREASE_QUANTITY",
+  SUCCESS_INCREASE_QUANTITY: "SUCCESS_INCREASE_QUANTITY",
+  FAILURE_INCREASE_QUANTITY: "FAILURE_INCREASE_QUANTITY",
+  REQUEST_DECREASE_QUANTITY: "REQUEST_DECREASE_QUANTITY",
+  SUCCESS_DECREASE_QUANTITY: "SUCCESS_DECREASE_QUANTITY",
+  FAILURE_DECREASE_QUANTITY: "FAILURE_DECREASE_QUANTITY",
+  REQUEST_CHANGE_QUANTITY: "REQUEST_CHANGE_QUANTITY",
+  SUCCESS_CHANGE_QUANTITY: "SUCCESS_CHANGE_QUANTITY",
+  FAILURE_CHANGE_QUANTITY: "FAILURE_CHANGE_QUANTITY",
   REQUEST_CART_PRODUCT: "REQUEST_CART_PRODUCT",
   REQUEST_CART_PRODUCT_SUCCESS: "REQUEST_CART_PRODUCT_SUCCESS",
   REQUEST_CART_PRODUCT_FAILURE: "REQUEST_CART_PRODUCT_FAILURE",
@@ -74,6 +83,68 @@ const removeAllFailure = (err: unknown) => {
   };
 };
 
+const increaseQuantity = (productId: number, option: string) => {
+  return {
+    type: cartConstants.REQUEST_INCREASE_QUANTITY,
+    productId,
+    option,
+  };
+};
+
+const increaseQuantitySuccess = (productId: number, option: string) => {
+  return { type: cartConstants.SUCCESS_INCREASE_QUANTITY, productId, option };
+};
+
+const increaseQuantityFailure = (err: unknown) => {
+  return { type: cartConstants.FAILURE_INCREASE_QUANTITY, err };
+};
+
+const decreaseQuantity = (productId: number, option: string) => {
+  return {
+    type: cartConstants.REQUEST_DECREASE_QUANTITY,
+    productId,
+    option,
+  };
+};
+
+const decreaseQuantitySuccess = (productId: number, option: string) => {
+  return { type: cartConstants.SUCCESS_DECREASE_QUANTITY, productId, option };
+};
+
+const decreaseQuantityFailure = (err: unknown) => {
+  return { type: cartConstants.FAILURE_DECREASE_QUANTITY, err };
+};
+
+const changeQuantity = (
+  productId: number,
+  option: string,
+  quantity: number,
+) => {
+  return {
+    type: cartConstants.REQUEST_CHANGE_QUANTITY,
+    productId,
+    option,
+    quantity,
+  };
+};
+
+const changeQuantitySuccess = (
+  productId: number,
+  option: string,
+  quantity: number,
+) => {
+  return {
+    type: cartConstants.SUCCESS_CHANGE_QUANTITY,
+    productId,
+    option,
+    quantity,
+  };
+};
+
+const changeQuantityFailure = (err: unknown) => {
+  return { type: cartConstants.FAILURE_CHANGE_QUANTITY, err };
+};
+
 const requestCartProduct = () => {
   return {
     type: cartConstants.REQUEST_CART_PRODUCT,
@@ -86,9 +157,10 @@ const requestCartProductSuccess = () => {
   };
 };
 
-const requestCartProductFailure = () => {
+const requestCartProductFailure = (err: unknown) => {
   return {
     type: cartConstants.REQUEST_CART_PRODUCT_FAILURE,
+    err,
   };
 };
 
@@ -102,6 +174,15 @@ export const cartActions = {
   removeAll,
   removeAllSuccess,
   removeAllFailure,
+  increaseQuantity,
+  increaseQuantitySuccess,
+  increaseQuantityFailure,
+  decreaseQuantity,
+  decreaseQuantitySuccess,
+  decreaseQuantityFailure,
+  changeQuantity,
+  changeQuantitySuccess,
+  changeQuantityFailure,
   requestCartProduct,
   requestCartProductSuccess,
   requestCartProductFailure,

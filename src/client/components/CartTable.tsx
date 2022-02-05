@@ -7,6 +7,9 @@ interface CartTableProps {
   attributes: string[];
   instances: ICartInfo[];
   onRemoveClick: (e: React.MouseEvent) => void;
+  onIncreaseClick: (e: React.MouseEvent) => void;
+  onDecreaseClick: (e: React.MouseEvent) => void;
+  onQuantityChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function CartTable(props: CartTableProps) {
@@ -68,12 +71,28 @@ function CartTable(props: CartTableProps) {
                       </ul>
                     </td>
                     <td className="product-option">
-                      <span className="option__quantity">
-                        <input value={instance.quantity} />
-                        <a className="quantity__increase">
+                      <span
+                        className="option__quantity"
+                        data-id={instance.productId}
+                        data-option={instance.option}
+                        data-quantity={instance.quantity}
+                      >
+                        <input
+                          value={instance.quantity}
+                          onChange={props.onQuantityChange}
+                        />
+                        <a
+                          href=""
+                          className="quantity__increase"
+                          onClick={props.onIncreaseClick}
+                        >
                           <img src={btn_count_up} alt="수량증가" />
                         </a>
-                        <a href="" className="quantity__decrease">
+                        <a
+                          href=""
+                          className="quantity__decrease"
+                          onClick={props.onDecreaseClick}
+                        >
                           <img src={btn_count_down} alt="수량감소" />
                         </a>
                       </span>
