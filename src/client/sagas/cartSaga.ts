@@ -18,6 +18,14 @@ export function* requestRemove(productId: number, option: string) {
   }
 }
 
+export function* requestRemoveAll() {
+  try {
+    yield put(cartActions.removeAllSuccess());
+  } catch (err) {
+    yield put(cartActions.removeAllFailure(err));
+  }
+}
+
 export function* watchRequestAdd() {
   while (true) {
     const { cartInfo } = yield take(cartConstants.REQUEST_ADD);
@@ -32,4 +40,15 @@ export function* watchRequestRemove() {
   }
 }
 
-export const cartSaga = [fork(watchRequestAdd), fork(watchRequestRemove)];
+export function* watchRequestRemoveAll() {
+  while (true) {
+    yield take(cartConstants.REQUEST_REMOVE_ALL);
+    yield call(requestRemoveAll);
+  }
+}
+
+export const cartSaga = [
+  fork(watchRequestAdd),
+  fork(watchRequestRemove),
+  fork(watchRequestRemoveAll),
+];

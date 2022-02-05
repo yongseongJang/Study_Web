@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../actions";
-import { Table } from "../components";
+import { CartTable } from "../components";
 import { RootState } from "../reducers/types";
 
 function CartInfo() {
@@ -43,98 +43,116 @@ function CartInfo() {
     }
   };
 
+  const handleRemoveAllClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    dispatch(cartActions.removeAll());
+  };
+
   return (
     <div className="CartInfo">
-      <section>
-        <Table
-          attributes={cartAttributes}
-          instances={cartInfo}
-          onRemoveClick={handleRemoveClick}
-        ></Table>
-      </section>
-      <section>
-        <div className="section-wrap__remove-product">
-          <span className="remove-product__leftBtn">
-            <strong>선택상품을</strong>
-            <a href="" className="leftBtn__remove">
-              <i className="icon-delete"></i>삭제하기
-            </a>
-          </span>
-          <span className="remove-product__rightBtn">
-            <a href="" className="rightBtn__remove">
-              장바구니비우기
-            </a>
-          </span>
-        </div>
-      </section>
-      <section className="section-wrap__total-summary">
-        <table>
-          <colgroup>
-            <col style={{ width: "17%" }} />
-            <col style={{ width: "19%" }} />
-            <col style={{ width: "17%" }} />
-            <col style={{ width: "auto" }} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th scope="col">
-                <strong>총 상품금액</strong>
-              </th>
-              <th scope="col">
-                <strong>총 배송비</strong>
-              </th>
-              <th
-                scope="col"
-                style={totalSalePrice ? undefined : { display: "none" }}
-              >
-                <strong>총 할인금액</strong>
-              </th>
-              <th scope="col">
-                <strong>결제예정금액</strong>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div>
-                  <strong>
-                    {`KRW `}
-                    <span>{totalPrice}</span>
-                  </strong>
-                </div>
-              </td>
-              <td>
-                <div>
-                  <strong>{`+ `}</strong>
-                  <strong>
-                    {`KRW `}
-                    <span>0</span>
-                  </strong>
-                </div>
-              </td>
-              <td style={totalSalePrice ? undefined : { display: "none" }}>
-                <div>
-                  <strong>{`- `}</strong>
-                  <strong>
-                    {`KRW `}
-                    <span>{totalSalePrice}</span>
-                  </strong>
-                </div>
-              </td>
-              <td>
-                <div>
-                  <strong>{`= `}</strong>
-                  <strong>
-                    {`KRW `}
-                    <span>{totalPrice - totalSalePrice}</span>
-                  </strong>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+      {cartInfo.length > 0 ? (
+        <React.Fragment>
+          <section>
+            <CartTable
+              attributes={cartAttributes}
+              instances={cartInfo}
+              onRemoveClick={handleRemoveClick}
+            ></CartTable>
+          </section>
+          <section>
+            <div className="section-wrap__remove-product">
+              <span className="remove-product__leftBtn">
+                <strong>선택상품을</strong>
+                <a href="" className="leftBtn__remove">
+                  <i className="icon-delete"></i>삭제하기
+                </a>
+              </span>
+              <span className="remove-product__rightBtn">
+                <a
+                  href=""
+                  className="rightBtn__remove"
+                  onClick={handleRemoveAllClick}
+                >
+                  장바구니비우기
+                </a>
+              </span>
+            </div>
+          </section>
+          <section className="section-wrap__total-summary">
+            <table>
+              <colgroup>
+                <col style={{ width: "17%" }} />
+                <col style={{ width: "19%" }} />
+                <col style={{ width: "17%" }} />
+                <col style={{ width: "auto" }} />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <strong>총 상품금액</strong>
+                  </th>
+                  <th scope="col">
+                    <strong>총 배송비</strong>
+                  </th>
+                  <th
+                    scope="col"
+                    style={totalSalePrice ? undefined : { display: "none" }}
+                  >
+                    <strong>총 할인금액</strong>
+                  </th>
+                  <th scope="col">
+                    <strong>결제예정금액</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div>
+                      <strong>
+                        {`KRW `}
+                        <span>{totalPrice}</span>
+                      </strong>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <strong>{`+ `}</strong>
+                      <strong>
+                        {`KRW `}
+                        <span>0</span>
+                      </strong>
+                    </div>
+                  </td>
+                  <td style={totalSalePrice ? undefined : { display: "none" }}>
+                    <div>
+                      <strong>{`- `}</strong>
+                      <strong>
+                        {`KRW `}
+                        <span>{totalSalePrice}</span>
+                      </strong>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <strong>{`= `}</strong>
+                      <strong>
+                        {`KRW `}
+                        <span>{totalPrice - totalSalePrice}</span>
+                      </strong>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </React.Fragment>
+      ) : (
+        <section className="section-wrap__empty-cart">
+          장바구니가 비어 있습니다.
+        </section>
+      )}
       <section className="section-wrap__btn-wrap">
         <a href="" className="btn-wrap__order-all">
           전체상품주문
@@ -143,7 +161,7 @@ function CartInfo() {
           선택상품주문
         </a>
         <span>
-          <a href="" className="btn-wrap__shop">
+          <a href="/products/all_product" className="btn-wrap__shop">
             쇼핑계속하기
           </a>
         </span>

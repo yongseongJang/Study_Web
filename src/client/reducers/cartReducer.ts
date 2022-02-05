@@ -65,6 +65,12 @@ export const cartReducer = (
       return { ...state, isRequesting: false, cartInfo: tmp };
     case cartConstants.FAILURE_REMOVE:
       return { ...state, isRequesting: false };
+    case cartConstants.REQUEST_REMOVE_ALL:
+      return { ...state, isRequesting: true };
+    case cartConstants.SUCCESS_REMOVE_ALL:
+      return { ...state, isRequesting: false, cartInfo: [] };
+    case cartConstants.FAILURE_REMOVE_ALL:
+      return { ...state, isRequesting: false };
     default:
       return state;
   }

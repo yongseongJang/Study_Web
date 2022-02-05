@@ -79,7 +79,7 @@
 
       .button {
         a {
-          width: 90px;
+          width: 80px;
           margin: 1px 0;
           display: inline-block;
           padding: 2px 8px;
@@ -101,6 +101,37 @@
           color: #000;
           background-color: #fff;
           border-color: #d7d7d7;
+
+          .icon-delete {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: -2px 2px 0 0;
+            vertical-align: middle;
+            transform: rotate(45deg);
+          }
+
+          .icon-delete:before {
+            content: "";
+            position: absolute;
+            top: 0px;
+            right: 4px;
+            width: 2px;
+            height: 10px;
+            background: #84868b;
+          }
+
+          .icon-delete:after {
+            content: "";
+            position: absolute;
+            top: 4px;
+            right: 0px;
+            width: 10px;
+            height: 2px;
+            background: #84868b;
+          }
         }
 
         .button__remove:hover {

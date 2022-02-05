@@ -7,6 +7,9 @@ export const cartConstants = {
   REQUEST_REMOVE: "REQUEST_REMOVE",
   SUCCESS_REMOVE: "SUCCESS_REMOVE",
   FAILURE_REMOVE: "FAILURE_REMOVE",
+  REQUEST_REMOVE_ALL: "REQUEST_REMOVE_ALL",
+  SUCCESS_REMOVE_ALL: "SUCCESS_REMOVE_ALL",
+  FAILURE_REMOVE_ALL: "FAILURE_REMOVE_ALL",
   REQUEST_CART_PRODUCT: "REQUEST_CART_PRODUCT",
   REQUEST_CART_PRODUCT_SUCCESS: "REQUEST_CART_PRODUCT_SUCCESS",
   REQUEST_CART_PRODUCT_FAILURE: "REQUEST_CART_PRODUCT_FAILURE",
@@ -56,6 +59,21 @@ const removeFailure = (err: unknown) => {
   };
 };
 
+const removeAll = () => {
+  return { type: cartConstants.REQUEST_REMOVE_ALL };
+};
+
+const removeAllSuccess = () => {
+  return { type: cartConstants.SUCCESS_REMOVE_ALL };
+};
+
+const removeAllFailure = (err: unknown) => {
+  return {
+    type: cartConstants.FAILURE_REMOVE_ALL,
+    err,
+  };
+};
+
 const requestCartProduct = () => {
   return {
     type: cartConstants.REQUEST_CART_PRODUCT,
@@ -81,6 +99,9 @@ export const cartActions = {
   remove,
   removeSuccess,
   removeFailure,
+  removeAll,
+  removeAllSuccess,
+  removeAllFailure,
   requestCartProduct,
   requestCartProductSuccess,
   requestCartProductFailure,

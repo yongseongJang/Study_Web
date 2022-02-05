@@ -1,15 +1,15 @@
 import * as React from "react";
 import btn_count_down from "../../public/img/btn_count_down.gif";
 import btn_count_up from "../../public/img/btn_count_up.gif";
+import { ICartInfo } from "../interfaces";
 
-interface TableProps {
+interface CartTableProps {
   attributes: string[];
-  instances: any[];
+  instances: ICartInfo[];
   onRemoveClick: (e: React.MouseEvent) => void;
 }
 
-function Table(props: TableProps) {
-  console.log(props.instances);
+function CartTable(props: CartTableProps) {
   return (
     <div className="table">
       <table>
@@ -85,7 +85,11 @@ function Table(props: TableProps) {
                     </td>
                     <td>
                       <strong>{`-KRW ${
-                        instance.productInfo.salePrice * instance.quantity
+                        instance.productInfo.salePrice > 0
+                          ? (instance.productInfo.price -
+                              instance.productInfo.salePrice) *
+                            instance.quantity
+                          : 0
                       }`}</strong>
                     </td>
                     <td>
@@ -119,4 +123,4 @@ function Table(props: TableProps) {
   );
 }
 
-export default Table;
+export default CartTable;
