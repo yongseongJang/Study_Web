@@ -7,7 +7,8 @@
       position: relative;
       padding: 35px 0 100px;
       margin: 0 auto;
-      width: 960px;
+      width: 90%;
+      min-width: 600px;
 
       .page-inner_contents {
         position: relative;
@@ -31,6 +32,14 @@
           }
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .cart {
+    .cart__page-outer {
+      padding-left: 0px;
     }
   }
 }

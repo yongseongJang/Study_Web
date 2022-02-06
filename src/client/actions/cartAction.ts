@@ -7,6 +7,9 @@ export const cartConstants = {
   REQUEST_REMOVE: "REQUEST_REMOVE",
   SUCCESS_REMOVE: "SUCCESS_REMOVE",
   FAILURE_REMOVE: "FAILURE_REMOVE",
+  REQUEST_SELECT_REMOVE: "REQUEST_SELECT_REMOVE",
+  SUCCESS_SELECT_REMOVE: "SUCCESS_SELECT_REMOVE",
+  FAILURE_SELECT_REMOVE: "FAILURE_SELECT_REMOVE",
   REQUEST_REMOVE_ALL: "REQUEST_REMOVE_ALL",
   SUCCESS_REMOVE_ALL: "SUCCESS_REMOVE_ALL",
   FAILURE_REMOVE_ALL: "FAILURE_REMOVE_ALL",
@@ -64,6 +67,31 @@ const removeSuccess = (productId: number, option: string) => {
 const removeFailure = (err: unknown) => {
   return {
     type: cartConstants.FAILURE_REMOVE,
+    err,
+  };
+};
+
+const selectRemove = (
+  selectInfo: Pick<ICartInfo, "productId" | "option">[],
+) => {
+  return {
+    type: cartConstants.REQUEST_SELECT_REMOVE,
+    selectInfo,
+  };
+};
+
+const selectRemoveSuccess = (
+  selectInfo: Pick<ICartInfo, "productId" | "option">[],
+) => {
+  return {
+    type: cartConstants.SUCCESS_SELECT_REMOVE,
+    selectInfo,
+  };
+};
+
+const selectRemoveFailure = (err: unknown) => {
+  return {
+    type: cartConstants.FAILURE_SELECT_REMOVE,
     err,
   };
 };
@@ -171,6 +199,9 @@ export const cartActions = {
   remove,
   removeSuccess,
   removeFailure,
+  selectRemove,
+  selectRemoveSuccess,
+  selectRemoveFailure,
   removeAll,
   removeAllSuccess,
   removeAllFailure,

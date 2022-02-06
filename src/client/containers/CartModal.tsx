@@ -8,7 +8,6 @@ import { IPagination } from "../interfaces";
 interface CartModalProps {
   isVisible: boolean;
   onClick: (e: React.MouseEvent) => void;
-  category: string;
 }
 
 function CartModal(props: CartModalProps) {
@@ -63,13 +62,7 @@ function CartModal(props: CartModalProps) {
             ? cartInfo
                 .slice(pagination.startIndex, pagination.endIndex + 1)
                 .map((info, index) => {
-                  return (
-                    <CartItem
-                      key={index}
-                      info={info}
-                      category={props.category}
-                    ></CartItem>
-                  );
+                  return <CartItem key={index} info={info}></CartItem>;
                 })
             : null}
         </ul>

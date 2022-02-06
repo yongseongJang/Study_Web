@@ -67,6 +67,37 @@ export const cartReducer = (
       return { ...state, isRequesting: false, cartInfo: tmp };
     case cartConstants.FAILURE_REMOVE:
       return { ...state, isRequesting: false };
+    case cartConstants.REQUEST_SELECT_REMOVE:
+      return { ...state, isRequesting: true };
+    case cartConstants.SUCCESS_SELECT_REMOVE:
+      tmp = [...state.cartInfo];
+
+      action.selectInfo.forEach(
+        (selectProduct: { productId: number; option: string }) => {
+          let removeIndex = -1;
+
+          tmp.some((info, index) => {
+            if (
+              info.productId === selectProduct.productId &&
+              info.option === selectProduct.option
+            ) {
+              removeIndex = index;
+
+              return true;
+            }
+
+            return false;
+          });
+
+          if (removeIndex !== -1) {
+            tmp.splice(removeIndex, 1);
+          }
+        },
+      );
+
+      return { ...state, isRequesting: false, cartInfo: tmp };
+    case cartConstants.FAILURE_SELECT_REMOVE:
+      return { ...state, isRequesting: false };
     case cartConstants.REQUEST_REMOVE_ALL:
       return { ...state, isRequesting: true };
     case cartConstants.SUCCESS_REMOVE_ALL:

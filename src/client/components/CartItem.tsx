@@ -3,13 +3,12 @@ import { ICartInfo } from "../interfaces";
 
 interface CartItemProps {
   info: ICartInfo;
-  category: string;
 }
 
 function CartItem(props: CartItemProps) {
   return (
     <div className="cartItem">
-      <a href={`/products/${props.category}/${props.info.productId}`}>
+      <a href={`/products/${props.info.category}/${props.info.productId}`}>
         <img
           className="cartItem__image"
           src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${props.info.productInfo.image}`}
@@ -17,7 +16,7 @@ function CartItem(props: CartItemProps) {
       </a>
       <p className="cartItem__name">
         <a
-          href={`/products/${props.category}/${props.info.productId}`}
+          href={`/products/${props.info.category}/${props.info.productId}`}
         >{`${props.info.productInfo.name}`}</a>
       </p>
       <p>{`[옵션: ${props.info.option}]`}</p>

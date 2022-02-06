@@ -8,6 +8,7 @@ import {
   Product,
   Cart,
   Error,
+  Blog,
 } from "./pages";
 import { Header, Footer } from "./components";
 import "./styles/App.scss";
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/products/:category" component={ProductList} />
         <Route path="/products/:category/:productId" component={Product} />
         <Route path="/order/cart" component={Cart} />
+        <Route path="/blog" component={Blog} />
         <Route component={Error} />
       </Switch>
       <Footer />

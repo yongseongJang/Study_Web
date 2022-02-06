@@ -10,11 +10,15 @@ interface CartTableProps {
   onIncreaseClick: (e: React.MouseEvent) => void;
   onDecreaseClick: (e: React.MouseEvent) => void;
   onQuantityChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  selectAllState: boolean;
+  onSelectAllStateChange: () => void;
+  checkBoxState: boolean[];
+  onCheckBoxStateChange: (e: React.ChangeEvent) => void;
 }
 
 function CartTable(props: CartTableProps) {
   return (
-    <div className="table">
+    <div className="cartTable">
       <table>
         <colgroup>
           <col style={{ width: "27px" }} />
@@ -31,7 +35,11 @@ function CartTable(props: CartTableProps) {
         <thead>
           <tr>
             <th scope="col">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onChange={props.onSelectAllStateChange}
+                checked={props.selectAllState}
+              />
             </th>
             {props.attributes
               ? props.attributes.map((attr, index) => {
@@ -50,10 +58,18 @@ function CartTable(props: CartTableProps) {
                 return (
                   <tr key={index}>
                     <td>
-                      <input type="checkbox" data-id={instance.productId} />
+                      <input
+                        type="checkbox"
+                        data-id={instance.productId}
+                        data-index={index}
+                        onChange={props.onCheckBoxStateChange}
+                        checked={props.checkBoxState[index]}
+                      />
                     </td>
                     <td>
-                      <a href="">
+                      <a
+                        href={`/products/${instance.category}/${instance.productId}`}
+                      >
                         <img
                           src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${instance.productInfo.image}`}
                           alt="상품 이미지"
@@ -62,7 +78,9 @@ function CartTable(props: CartTableProps) {
                     </td>
                     <td className="product-info">
                       <strong>
-                        <a href="">{`${instance.productInfo.name}`}</a>
+                        <a
+                          href={`/products/${instance.category}/${instance.productId}`}
+                        >{`${instance.productInfo.name}`}</a>
                       </strong>
                       <ul>
                         <li>

@@ -66,6 +66,7 @@ function ProductInfo(props: ProductInfoProps) {
           productId: product._id,
           option: size,
           quantity: option[size],
+          category: props.category.replace(/ /g, "_"),
           productInfo: {
             name: product.name,
             price: product.price,
@@ -142,7 +143,6 @@ function ProductInfo(props: ProductInfoProps) {
       <CartModal
         isVisible={isVisibleCart}
         onClick={handleRightBtnClick}
-        category={props.category}
       ></CartModal>
     </div>
   );

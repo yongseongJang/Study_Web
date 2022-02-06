@@ -1,7 +1,9 @@
 import * as React from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../actions";
 import { CartTable } from "../components";
+import { ICartInfo } from "../interfaces";
 import { RootState } from "../reducers/types";
 
 function CartInfo() {
@@ -20,6 +22,12 @@ function CartInfo() {
   ];
 
   const { cartInfo } = useSelector((state: RootState) => state.cartReducer);
+
+  const [selectAllState, setSelectAllState] = useState<boolean>(false);
+  const [checkBoxState, setCheckBoxState] = useState<boolean[]>(
+    Array(cartInfo.length).fill(false),
+  );
+
   const totalPrice = cartInfo.reduce((acc, info) => {
     return acc + info.productInfo.price * info.quantity;
   }, 0);
@@ -40,6 +48,23 @@ function CartInfo() {
     if (productId && option) {
       dispatch(cartActions.remove(Number(productId), option));
     }
+  };
+
+  const handleSelectRemoveClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const selectInfo: Pick<ICartInfo, "productId" | "option">[] = [];
+
+    cartInfo.forEach((info, index) => {
+      if (checkBoxState[index]) {
+        selectInfo.push({ productId: info.productId, option: info.option });
+      }
+    });
+
+    dispatch(cartActions.selectRemove(selectInfo));
+
+    setCheckBoxState(Array(cartInfo.length).fill(false));
+    setSelectAllState(false);
   };
 
   const handleRemoveAllClick = (e: React.MouseEvent) => {
@@ -92,6 +117,29 @@ function CartInfo() {
     }
   };
 
+  const handleSelectAllStateChange = () => {
+    setCheckBoxState(Array(cartInfo.length).fill(!selectAllState));
+    setSelectAllState(!selectAllState);
+  };
+
+  const handleCheckBoxStateChange = (e: React.ChangeEvent) => {
+    const index = e.currentTarget.getAttribute("data-index")
+      ? Number(e.currentTarget.getAttribute("data-index"))
+      : null;
+
+    if (index !== null) {
+      if (selectAllState && checkBoxState[Number(index)]) {
+        setSelectAllState(false);
+      }
+
+      setCheckBoxState([
+        ...checkBoxState.slice(0, index),
+        !checkBoxState[index],
+        ...checkBoxState.slice(index + 1),
+      ]);
+    }
+  };
+
   return (
     <div className="CartInfo">
       {cartInfo.length > 0 ? (
@@ -104,13 +152,21 @@ function CartInfo() {
               onIncreaseClick={handleIncreaseQuantityClick}
               onDecreaseClick={handleDecreaseQuantityClick}
               onQuantityChange={handleQuantityChange}
+              selectAllState={selectAllState}
+              onSelectAllStateChange={handleSelectAllStateChange}
+              checkBoxState={checkBoxState}
+              onCheckBoxStateChange={handleCheckBoxStateChange}
             ></CartTable>
           </section>
           <section>
             <div className="section-wrap__remove-product">
               <span className="remove-product__leftBtn">
                 <strong>선택상품을</strong>
-                <a href="" className="leftBtn__remove">
+                <a
+                  href=""
+                  className="leftBtn__remove"
+                  onClick={handleSelectRemoveClick}
+                >
                   <i className="icon-delete"></i>삭제하기
                 </a>
               </span>

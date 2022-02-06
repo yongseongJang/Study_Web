@@ -18,6 +18,16 @@ export function* requestRemove(productId: number, option: string) {
   }
 }
 
+export function* requestSelectRemove(
+  selectInfo: Pick<ICartInfo, "productId" | "option">[],
+) {
+  try {
+    yield put(cartActions.selectRemoveSuccess(selectInfo));
+  } catch (err) {
+    yield put(cartActions.selectRemoveFailure(err));
+  }
+}
+
 export function* requestRemoveAll() {
   try {
     yield put(cartActions.removeAllSuccess());
@@ -68,6 +78,13 @@ export function* watchRequestRemove() {
   }
 }
 
+export function* watchRequestSelectRemove() {
+  while (true) {
+    const { selectInfo } = yield take(cartConstants.REQUEST_SELECT_REMOVE);
+    yield call(requestSelectRemove, selectInfo);
+  }
+}
+
 export function* watchRequestRemoveAll() {
   while (true) {
     yield take(cartConstants.REQUEST_REMOVE_ALL);
@@ -105,6 +122,7 @@ export function* watchRequestChangeQuantity() {
 export const cartSaga = [
   fork(watchRequestAdd),
   fork(watchRequestRemove),
+  fork(watchRequestSelectRemove),
   fork(watchRequestRemoveAll),
   fork(watchRequestIncreaseQuantity),
   fork(watchRequestDecreaseQuantity),
