@@ -1,5 +1,5 @@
 import { Application } from "express";
-import { UserRouter, ProductRouter } from "./api";
+import { UserRouter, ProductRouter, CartRouter } from "./api";
 
 class ApiRouter {
   private static instance: ApiRouter;
@@ -19,6 +19,7 @@ class ApiRouter {
     this.app = app;
     this.app.use("/api/users", UserRouter.getInstance().getRouter());
     this.app.use("/api/products", ProductRouter.getInstance().getRouter());
+    this.app.use("/api/carts", CartRouter.getInstance().getRouter());
   }
 }
 

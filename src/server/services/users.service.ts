@@ -6,7 +6,6 @@ import {
   emailSchema,
 } from "../utils/validation/schemas/userSchema";
 import { User as IUser, LoginInfo as ILoginInfo } from "../interfaces";
-import Errorhandler from "../utils/error";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import ErrorHandler from "../utils/error";
@@ -31,12 +30,25 @@ class UserService {
       );
 
       if (!hash) {
-        throw new Errorhandler(401, "ValidationError", "Invalid Id");
+        throw new ErrorHandler(401, "ValidationError", "Invalid Id");
       }
 
       await this.comparePasswordToHash(password, hash);
 
-      const token = await this.getToken(id);
+      const userPrimaryKey = await this.userRepository.readUserPrimaryKeyById(
+        id,
+      );
+
+      let token;
+      if (userPrimaryKey) {
+        token = await this.getToken(id, userPrimaryKey);
+      } else {
+        throw new ErrorHandler(
+          500,
+          "Internal Server Error",
+          "Internal Server Error",
+        );
+      }
 
       const userName = await this.userRepository.readUserNameById(id);
 
@@ -47,7 +59,7 @@ class UserService {
           userName,
         };
       } else {
-        throw new Errorhandler(
+        throw new ErrorHandler(
           500,
           "Internal Server Error",
           "Internal Server Error",
@@ -105,7 +117,7 @@ class UserService {
         return hash;
       })
       .catch((err: Error) => {
-        return new Errorhandler(500, err.name, err.message);
+        return new ErrorHandler(500, err.name, err.message);
       });
   };
 
@@ -116,22 +128,25 @@ class UserService {
         .then((res: boolean) => {
           if (!res) {
             reject(
-              new Errorhandler(401, "ValidationError", "Invalid Password"),
+              new ErrorHandler(401, "ValidationError", "Invalid Password"),
             );
           } else {
             resolve(res);
           }
         })
         .catch((err: Error) => {
-          reject(new Errorhandler(500, err.name, err.message));
+          reject(new ErrorHandler(500, err.name, err.message));
         });
     });
   };
 
-  private getToken = (id: string): Promise<string | undefined> => {
+  private getToken = (
+    id: string,
+    primaryKey: number,
+  ): Promise<string | undefined> => {
     return new Promise((resolve, reject) => {
       jwt.sign(
-        { id },
+        { id, _id: primaryKey },
         process.env.PRIVATEKEY || "privatekey",
         {
           expiresIn: authExpirationTime,

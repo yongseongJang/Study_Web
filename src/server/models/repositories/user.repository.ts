@@ -41,6 +41,20 @@ class UserRepository extends Repository<User> {
     }
   }
 
+  public async readUserPrimaryKeyById(
+    id: string,
+  ): Promise<null | number | undefined> {
+    try {
+      return await this.manager.transaction(async (transactionEntityManger) => {
+        const user = await transactionEntityManger.findOne(User, { id });
+
+        return user ? user._id : null;
+      });
+    } catch (err: any) {
+      throw new Errorhandler(500, err.name, err.message);
+    }
+  }
+
   public async deleteUserById(id: string): Promise<void> {
     try {
       await this.manager.transaction(async (transactionEntityManger) => {

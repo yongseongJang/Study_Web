@@ -9,3 +9,4 @@ export { default as ProductCaution } from "./productCaution.interface";
 export { default as ProductCategory } from "./productCategory.interface";
 export { default as ProductSize } from "./productSize.interface";
 export { default as Pagination } from "./pagination.interface";
+export { default as Cart } from "./cart.interface";

@@ -6,3 +6,4 @@ export { ProductImage } from "./productImage";
 export { ProductDetail } from "./productDetail";
 export { ProductCaution } from "./productCaution";
 export { ProductSize } from "./productSize";
+export { Cart } from "./cart";
