@@ -23,6 +23,22 @@ class CartService {
       throw err;
     }
   }
+
+  public async readCart(user_id: number) {
+    try {
+      return await this.cartRepository.readCart(user_id);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public async deleteAllCart(user_id: number) {
+    try {
+      await this.cartRepository.deleteAllCart(user_id);
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 export default CartService;

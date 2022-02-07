@@ -23,6 +23,8 @@ class CartRouter {
 
   private initializeRoutes(): void {
     this.router.post("/", authentication, this.cartController.addToCart);
+    this.router.get("/", authentication, this.cartController.readCart);
+    this.router.delete("/", authentication, this.cartController.deleteAllCart);
   }
 
   public getRouter(): Router {

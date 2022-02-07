@@ -19,6 +19,26 @@ class CartController {
       res.status(200).send();
     },
   );
+
+  public readCart: RequestHandler = asyncHandler(
+    async (req: RequestWithUser, res: Response, next: NextFunction) => {
+      const user_id = req.user._id;
+
+      const cart = await this.cartService.readCart(user_id);
+
+      res.status(200).send(cart);
+    },
+  );
+
+  public deleteAllCart: RequestHandler = asyncHandler(
+    async (req: RequestWithUser, res: Response, next: NextFunction) => {
+      const user_id = req.user._id;
+
+      const cart = await this.cartService.deleteAllCart(user_id);
+
+      res.status(200).send();
+    },
+  );
 }
 
 export default CartController;

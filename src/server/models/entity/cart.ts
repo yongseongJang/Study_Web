@@ -10,7 +10,7 @@ import { User, Product } from ".";
 @Entity()
 export class Cart {
   @PrimaryGeneratedColumn()
-  _id?: number;
+  _id!: number;
 
   @Column({
     name: "quantity",

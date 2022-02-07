@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  _id?: number;
+  _id!: number;
 
   @Column({
     type: "varchar",
@@ -41,7 +41,7 @@ export class User {
     nullable: true,
     default: "",
   })
-  regularPhone!: string | null;
+  regularPhone!: string | undefined;
 
   @Column({
     name: "cellular_Phone",
@@ -64,7 +64,7 @@ export class User {
     nullable: true,
     default: false,
   })
-  isForever!: boolean | null;
+  isForever!: boolean | undefined;
 
   @Column({
     type: "char",
