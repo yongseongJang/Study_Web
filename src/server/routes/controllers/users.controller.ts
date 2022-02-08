@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import asyncHandler from "../../utils/asyncHandler";
 import { UserService } from "../../services";
-import { RequestWithUser } from "../../interfaces";
-
+import { LoginDto } from "../../dto";
+import { RegisterUserDto } from "../../dto/user.dto";
 class UserController {
   private userService: UserService;
 
@@ -12,9 +12,9 @@ class UserController {
 
   public login: RequestHandler = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { id, password } = req.body;
+      const loginDto: LoginDto = req.body.loginDto;
 
-      const result = await this.userService.login(id, password);
+      const result = await this.userService.login(loginDto);
 
       res.status(200).send(result);
     },
@@ -22,32 +22,11 @@ class UserController {
 
   public registerUser: RequestHandler = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const userInfo = req.body.userInfo;
+      const registerUserDto: RegisterUserDto = req.body.registerUserDto;
 
-      await this.userService.registerUser(userInfo);
+      await this.userService.registerUser(registerUserDto);
 
       res.status(200).send();
-    },
-  );
-
-  public deleteUserById: RequestHandler = asyncHandler(
-    async (req: RequestWithUser, res: Response, next: NextFunction) => {
-      const id = req.user.id;
-
-      await this.userService.deleteUserById(id);
-
-      res.status(204).send();
-    },
-  );
-
-  public updateUserInfoById: RequestHandler = asyncHandler(
-    async (req: RequestWithUser, res: Response, next: NextFunction) => {
-      const id = req.user.id;
-      const userInfo = req.body.userInfo;
-
-      await this.userService.updateUserInfoById(id, userInfo);
-
-      res.status(204).send();
     },
   );
 }

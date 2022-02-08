@@ -1,5 +1,4 @@
 import { Router } from "express";
-import authentication from "../middlewares/authentication";
 import { UserController } from "../controllers";
 
 class UserRouter {
@@ -25,18 +24,6 @@ class UserRouter {
     this.router.post("/login", this.userController.login);
 
     this.router.post("/", this.userController.registerUser);
-
-    this.router.delete(
-      "/:id",
-      authentication,
-      this.userController.deleteUserById,
-    );
-
-    this.router.put(
-      "/:email",
-      authentication,
-      this.userController.updateUserInfoById,
-    );
   }
 
   public getRouter(): Router {

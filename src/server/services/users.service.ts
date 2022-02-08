@@ -1,17 +1,13 @@
 import { UserRepository } from "../models/repositories";
 import { getConnection } from "typeorm";
 import createValidator from "../utils/validation/createValidator";
-import {
-  userRegistrationSchema,
-  emailSchema,
-} from "../utils/validation/schemas/userSchema";
-import { User as IUser, LoginInfo as ILoginInfo } from "../interfaces";
+import { userRegistrationSchema } from "../utils/validation/schemas/userSchema";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import ErrorHandler from "../utils/error";
+import { LoginDto, RegisterUserDto, LoginSuccessDto } from "../dto";
 
 const validateUserRegistrationInfo = createValidator(userRegistrationSchema);
-const validateEmail = createValidator(emailSchema);
 
 const authExpirationTime = "3600000"; //3600000ms == 1h
 
@@ -23,25 +19,25 @@ class UserService {
     this.userRepository = connection.getCustomRepository(UserRepository);
   }
 
-  public async login(id: string, password: string): Promise<ILoginInfo> {
+  public async login(loginDto: LoginDto): Promise<LoginSuccessDto> {
     try {
       const hash: string | null = await this.userRepository.readPasswordById(
-        id,
+        loginDto.id,
       );
 
       if (!hash) {
         throw new ErrorHandler(401, "ValidationError", "Invalid Id");
       }
 
-      await this.comparePasswordToHash(password, hash);
+      await this.comparePasswordToHash(loginDto.pw, hash);
 
       const userPrimaryKey = await this.userRepository.readUserPrimaryKeyById(
-        id,
+        loginDto.id,
       );
 
       let token;
       if (userPrimaryKey) {
-        token = await this.getToken(id, userPrimaryKey);
+        token = await this.getToken(loginDto.id, userPrimaryKey);
       } else {
         throw new ErrorHandler(
           500,
@@ -50,9 +46,9 @@ class UserService {
         );
       }
 
-      const userName = await this.userRepository.readUserNameById(id);
+      const userName = await this.userRepository.readUserNameById(loginDto.id);
 
-      if (userName) {
+      if (token && userName) {
         return {
           token,
           authExpirationTime: Number(authExpirationTime),
@@ -70,9 +66,11 @@ class UserService {
     }
   }
 
-  public async registerUser(userInfo: IUser) {
+  public async registerUser(registerUserDto: RegisterUserDto) {
     try {
-      const validatedUserInfo = validateUserRegistrationInfo(userInfo);
+      const validatedUserInfo = await validateUserRegistrationInfo(
+        registerUserDto,
+      );
 
       await this.checkIdDuplication(validatedUserInfo.id);
 
@@ -82,29 +80,9 @@ class UserService {
         pw: hash,
       });
 
-      await this.userRepository.createUser(convertedUserInfo);
-    } catch (err) {
-      throw err;
-    }
-  }
+      const user = new RegisterUserDto(convertedUserInfo).toUserEntity();
 
-  public async deleteUserById(id: string) {
-    try {
-      // id validate
-
-      await this.userRepository.deleteUserById(id);
-    } catch (err) {
-      throw err;
-    }
-  }
-
-  public async updateUserInfoById(id: string, userInfo: IUser) {
-    try {
-      // id validate
-
-      const validatedUserInfo = await validateUserRegistrationInfo(userInfo);
-
-      await this.userRepository.updateUserInfoById(id, validatedUserInfo);
+      await this.userRepository.createUser(user);
     } catch (err) {
       throw err;
     }

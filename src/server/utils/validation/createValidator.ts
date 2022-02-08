@@ -3,9 +3,9 @@ import * as Joi from "@hapi/joi";
 
 const createValidator =
   (schema: Joi.Schema): Function =>
-  (payload: object | string): string | object => {
+  async (payload: any): Promise<any> => {
     try {
-      return schema.validate(payload).value;
+      return await schema.validateAsync(payload);
     } catch (err) {
       throw new Errorhandler(400, "ValidationError", "");
     }

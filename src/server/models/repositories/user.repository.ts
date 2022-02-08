@@ -5,10 +5,10 @@ import Errorhandler from "../../utils/error";
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
-  public async createUser(convertedUserInfo: IUser): Promise<void> {
+  public async createUser(user: User): Promise<void> {
     try {
       await this.manager.transaction(async (transactionEntityManager) => {
-        await transactionEntityManager.insert(User, convertedUserInfo);
+        await transactionEntityManager.insert(User, user);
       });
     } catch (err: any) {
       throw new Errorhandler(500, err.name, err.message);
@@ -49,29 +49,6 @@ class UserRepository extends Repository<User> {
         const user = await transactionEntityManger.findOne(User, { id });
 
         return user ? user._id : null;
-      });
-    } catch (err: any) {
-      throw new Errorhandler(500, err.name, err.message);
-    }
-  }
-
-  public async deleteUserById(id: string): Promise<void> {
-    try {
-      await this.manager.transaction(async (transactionEntityManger) => {
-        await transactionEntityManger.delete(User, { id });
-      });
-    } catch (err: any) {
-      throw new Errorhandler(500, err.name, err.message);
-    }
-  }
-
-  public async updateUserInfoById(
-    id: string,
-    validatedUserInfo: IUser,
-  ): Promise<void> {
-    try {
-      await this.manager.transaction(async (transactionEntityManager) => {
-        await transactionEntityManager.update(User, { id }, validatedUserInfo);
       });
     } catch (err: any) {
       throw new Errorhandler(500, err.name, err.message);
