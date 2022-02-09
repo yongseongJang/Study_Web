@@ -1,7 +1,8 @@
 import { ProductRepository } from "../models/repositories";
 import { getConnection } from "typeorm";
-import { Product as IProduct, Pagination as IPagination } from "../interfaces";
-import ErrorHandler from "../utils/error";
+import { Pagination as IPagination } from "../interfaces";
+import { ProductDto, ProductDetailDto } from "../dto";
+import { Product } from "../models/entity";
 
 class ProductService {
   private productRepository: ProductRepository;
@@ -11,9 +12,7 @@ class ProductService {
     this.productRepository = connection.getCustomRepository(ProductRepository);
   }
 
-  public async readAllProduct(
-    page: number,
-  ): Promise<{ pagination: object; paginatedProduct: IProduct[] }> {
+  public async readAllProduct(page: number): Promise<ProductDto> {
     try {
       const productCount = await this.productRepository.countAllProduct();
 
@@ -24,7 +23,9 @@ class ProductService {
         pagination.endIndex - pagination.startIndex + 1,
       );
 
-      return { pagination, paginatedProduct };
+      const productDto = this.productEntitiesToDto(paginatedProduct);
+
+      return { pagination, paginatedProduct: productDto };
     } catch (err) {
       throw err;
     }
@@ -33,7 +34,7 @@ class ProductService {
   public async readProductByCategory(
     category: string,
     page: number,
-  ): Promise<{ pagination: object; paginatedProduct: IProduct[] }> {
+  ): Promise<ProductDto> {
     try {
       const productCount = await this.productRepository.countProductByCategory(
         category,
@@ -48,7 +49,9 @@ class ProductService {
           pagination.endIndex - pagination.startIndex + 1,
         );
 
-      return { pagination, paginatedProduct };
+      const productDto = this.productEntitiesToDto(paginatedProduct);
+
+      return { pagination, paginatedProduct: productDto };
     } catch (err) {
       throw err;
     }
@@ -56,13 +59,13 @@ class ProductService {
 
   public async readProductById(
     _id: string,
-  ): Promise<{ product: object | undefined }> {
+  ): Promise<ProductDetailDto | undefined> {
     try {
       const id = Number(_id);
 
       const product = await this.productRepository.readProductById(id);
 
-      return { product };
+      return product ? product.toDto() : undefined;
     } catch (err) {
       throw err;
     }
@@ -110,6 +113,12 @@ class ProductService {
       endIndex,
     };
   };
+
+  private productEntitiesToDto(entities: Product[]): ProductDetailDto[] {
+    return entities.map((entity) => {
+      return entity.toDto();
+    });
+  }
 }
 
 export default ProductService;

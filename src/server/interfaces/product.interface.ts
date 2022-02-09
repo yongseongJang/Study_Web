@@ -7,7 +7,7 @@ import {
 } from ".";
 
 interface Product {
-  _id?: number;
+  _id: number;
   name: string;
   price: number;
   salePrice: number;

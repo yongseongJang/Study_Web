@@ -6,11 +6,11 @@ import {
   ProductCaution,
   ProductSize,
 } from ".";
-
+import { ProductDetailDto } from "../../dto";
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
-  _id?: number;
+  _id!: number;
 
   @Column({
     type: "varchar",
@@ -81,4 +81,22 @@ export class Product {
 
   @OneToMany(() => ProductSize, (productSize) => productSize.product)
   productSize?: ProductSize[];
+
+  public toDto() {
+    return ProductDetailDto.from(
+      this._id,
+      this.name,
+      this.price,
+      this.salePrice,
+      this.image,
+      this.size,
+      this.stockCount,
+      this.sellCount,
+      this.productCategory,
+      this.productImage,
+      this.productDetail,
+      this.productCaution,
+      this.productSize,
+    );
+  }
 }

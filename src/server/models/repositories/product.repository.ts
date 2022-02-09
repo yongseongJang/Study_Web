@@ -1,6 +1,5 @@
 import { EntityRepository, Repository } from "typeorm";
 import { Product } from "../entity";
-import { Product as IProduct } from "../../interfaces";
 import Errorhandler from "../../utils/error";
 
 @EntityRepository(Product)
@@ -17,7 +16,7 @@ class ProductRepository extends Repository<Product> {
     }
   }
 
-  public async readAllProduct(skip: number, take: number): Promise<IProduct[]> {
+  public async readAllProduct(skip: number, take: number): Promise<Product[]> {
     try {
       return await this.manager.transaction(
         async (transactionEntityManager) => {
@@ -55,7 +54,7 @@ class ProductRepository extends Repository<Product> {
     category: string,
     skip: number,
     take: number,
-  ): Promise<IProduct[]> {
+  ): Promise<Product[]> {
     try {
       return await this.manager.transaction(
         async (transactionEntityManager) => {
@@ -76,7 +75,7 @@ class ProductRepository extends Repository<Product> {
     }
   }
 
-  public async readProductById(_id: number): Promise<IProduct | undefined> {
+  public async readProductById(_id: number): Promise<Product | undefined> {
     try {
       return await this.manager.transaction(
         async (transactionEntityManager) => {

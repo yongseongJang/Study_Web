@@ -48,7 +48,7 @@ export class RegisterUserDto {
     this.membershipLevel = user.membershipLevel;
   }
 
-  public toUserEntity() {
+  public toEntity() {
     return User.from(
       this.id,
       this.pw,

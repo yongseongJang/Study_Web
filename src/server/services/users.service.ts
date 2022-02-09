@@ -80,7 +80,7 @@ class UserService {
         pw: hash,
       });
 
-      const user = new RegisterUserDto(convertedUserInfo).toUserEntity();
+      const user = new RegisterUserDto(convertedUserInfo).toEntity();
 
       await this.userRepository.createUser(user);
     } catch (err) {
