@@ -6,6 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { User, Product } from ".";
+import { ReadCartDto } from "../../dto";
 
 @Entity()
 export class Cart {
@@ -55,4 +56,28 @@ export class Cart {
     referencedColumnName: "_id",
   })
   product!: Product;
+
+  static from(
+    user_id: number,
+    product_id: number,
+    option: string,
+    quantity: number,
+  ) {
+    const cart = new Cart();
+    cart.user_id = user_id;
+    cart.product_id = product_id;
+    cart.option = option;
+    cart.quantity = quantity;
+
+    return cart;
+  }
+
+  public toDto() {
+    return ReadCartDto.from(
+      this.product_id,
+      this.option,
+      this.quantity,
+      this.product,
+    );
+  }
 }

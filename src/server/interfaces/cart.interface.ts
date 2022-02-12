@@ -1,12 +1,11 @@
-import { User, Product } from ".";
+import { Product as IProduct } from "../interfaces";
 interface Cart {
-  _id: number;
   quantity: number;
   option: string;
-  user_id?: number;
-  product_id?: number;
-  user?: User;
-  product?: Product;
+  userId?: number;
+  productId: number;
+  category?: string;
+  productInfo?: Pick<IProduct, "name" | "price" | "salePrice" | "image">;
 }
 
 export default Cart;
