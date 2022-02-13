@@ -1,4 +1,4 @@
-import { ICartInfo, IProduct } from "../interfaces";
+import { ICartInfo } from "../interfaces";
 
 export const cartConstants = {
   REQUEST_ADD: "REQUEST_ADD",
@@ -27,10 +27,11 @@ export const cartConstants = {
   REQUEST_CART_PRODUCT_FAILURE: "REQUEST_CART_PRODUCT_FAILURE",
 };
 
-const add = (cartInfo: ICartInfo[]) => {
+const add = (cartInfo: ICartInfo[], token?: string) => {
   return {
     type: cartConstants.REQUEST_ADD,
     cartInfo,
+    token,
   };
 };
 
@@ -48,7 +49,7 @@ const addFailure = (err: unknown) => {
   };
 };
 
-const remove = (productId: number, option: string) => {
+const remove = (productId: number, option: string, token: string) => {
   return {
     type: cartConstants.REQUEST_REMOVE,
     productId,
@@ -73,6 +74,7 @@ const removeFailure = (err: unknown) => {
 
 const selectRemove = (
   selectInfo: Pick<ICartInfo, "productId" | "option">[],
+  token: string,
 ) => {
   return {
     type: cartConstants.REQUEST_SELECT_REMOVE,
@@ -96,7 +98,7 @@ const selectRemoveFailure = (err: unknown) => {
   };
 };
 
-const removeAll = () => {
+const removeAll = (token: string) => {
   return { type: cartConstants.REQUEST_REMOVE_ALL };
 };
 
@@ -173,15 +175,16 @@ const changeQuantityFailure = (err: unknown) => {
   return { type: cartConstants.FAILURE_CHANGE_QUANTITY, err };
 };
 
-const requestCartProduct = () => {
+const requestCartProduct = (token: string) => {
   return {
     type: cartConstants.REQUEST_CART_PRODUCT,
   };
 };
 
-const requestCartProductSuccess = () => {
+const requestCartProductSuccess = (cartInfo: ICartInfo[]) => {
   return {
     type: cartConstants.REQUEST_CART_PRODUCT_SUCCESS,
+    cartInfo,
   };
 };
 

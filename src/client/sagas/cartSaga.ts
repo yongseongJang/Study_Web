@@ -1,17 +1,30 @@
 import { take, call, put, fork } from "redux-saga/effects";
 import { cartConstants, cartActions } from "../actions";
 import { ICartInfo } from "../interfaces";
+import { cartServices } from "../services";
 
-export function* requestAdd(cartInfo: ICartInfo[]) {
+export function* requestAdd(cartInfo: ICartInfo[], token?: string) {
   try {
+    if (token) {
+      yield call(cartServices.add, cartInfo, token);
+    }
+
     yield put(cartActions.addSuccess(cartInfo));
   } catch (err) {
     yield put(cartActions.addFailure(err));
   }
 }
 
-export function* requestRemove(productId: number, option: string) {
+export function* requestRemove(
+  productId: number,
+  option: string,
+  token?: string,
+) {
   try {
+    if (token) {
+      yield call(cartServices.remove, productId, option, token);
+    }
+
     yield put(cartActions.removeSuccess(productId, option));
   } catch (err) {
     yield put(cartActions.removeFailure(err));
@@ -20,16 +33,24 @@ export function* requestRemove(productId: number, option: string) {
 
 export function* requestSelectRemove(
   selectInfo: Pick<ICartInfo, "productId" | "option">[],
+  token?: string,
 ) {
   try {
+    if (token) {
+      yield call(cartServices.selectRemove, selectInfo, token);
+    }
     yield put(cartActions.selectRemoveSuccess(selectInfo));
   } catch (err) {
     yield put(cartActions.selectRemoveFailure(err));
   }
 }
 
-export function* requestRemoveAll() {
+export function* requestRemoveAll(token?: string) {
   try {
+    if (token) {
+      yield call(cartServices.removeAll, token);
+    }
+
     yield put(cartActions.removeAllSuccess());
   } catch (err) {
     yield put(cartActions.removeAllFailure(err));
@@ -64,31 +85,45 @@ export function* requestChangeQuantity(
   }
 }
 
+export function* requestCartProduct(token: string) {
+  try {
+    const { cartProduct } = yield call(cartServices.requestCartProduct, token);
+
+    yield put(cartActions.requestCartProductSuccess(cartProduct));
+  } catch (err) {
+    yield put(cartActions.requestCartProductFailure(err));
+  }
+}
+
 export function* watchRequestAdd() {
   while (true) {
-    const { cartInfo } = yield take(cartConstants.REQUEST_ADD);
-    yield call(requestAdd, cartInfo);
+    const { cartInfo, token } = yield take(cartConstants.REQUEST_ADD);
+    yield call(requestAdd, cartInfo, token);
   }
 }
 
 export function* watchRequestRemove() {
   while (true) {
-    const { productId, option } = yield take(cartConstants.REQUEST_REMOVE);
-    yield call(requestRemove, productId, option);
+    const { productId, option, token } = yield take(
+      cartConstants.REQUEST_REMOVE,
+    );
+    yield call(requestRemove, productId, option, token);
   }
 }
 
 export function* watchRequestSelectRemove() {
   while (true) {
-    const { selectInfo } = yield take(cartConstants.REQUEST_SELECT_REMOVE);
-    yield call(requestSelectRemove, selectInfo);
+    const { selectInfo, token } = yield take(
+      cartConstants.REQUEST_SELECT_REMOVE,
+    );
+    yield call(requestSelectRemove, selectInfo, token);
   }
 }
 
 export function* watchRequestRemoveAll() {
   while (true) {
-    yield take(cartConstants.REQUEST_REMOVE_ALL);
-    yield call(requestRemoveAll);
+    const { token } = yield take(cartConstants.REQUEST_REMOVE_ALL);
+    yield call(requestRemoveAll, token);
   }
 }
 
@@ -116,6 +151,13 @@ export function* watchRequestChangeQuantity() {
       cartConstants.REQUEST_CHANGE_QUANTITY,
     );
     yield call(requestChangeQuantity, productId, option, quantity);
+  }
+}
+
+export function* watchRequestCartProduct() {
+  while (true) {
+    const { token } = yield take(cartConstants.REQUEST_CART_PRODUCT);
+    yield call(requestCartProduct, token);
   }
 }
 

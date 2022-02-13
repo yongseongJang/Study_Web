@@ -26,6 +26,7 @@ function ProductInfo(props: ProductInfoProps) {
 
   const dispatch = useDispatch();
   const { product } = useSelector((state: RootState) => state.productReducer);
+  const { token } = useSelector((state: RootState) => state.loginReducer);
 
   let resizeTimer = setTimeout(() => {
     return 0;
@@ -76,7 +77,7 @@ function ProductInfo(props: ProductInfoProps) {
         });
       });
 
-      dispatch(cartActions.add(cartInfo));
+      dispatch(cartActions.add(cartInfo, token));
     }
 
     setIsVisibleCart(!isVisibleCart);

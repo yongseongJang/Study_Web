@@ -12,6 +12,7 @@ interface CartModalProps {
 
 function CartModal(props: CartModalProps) {
   const { cartInfo } = useSelector((state: RootState) => state.cartReducer);
+  const { token } = useSelector((state: RootState) => state.loginReducer);
 
   const [pagination, setPagination] = useState<IPagination>(
     paginate(cartInfo.length),

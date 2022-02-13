@@ -22,6 +22,7 @@ function CartInfo() {
   ];
 
   const { cartInfo } = useSelector((state: RootState) => state.cartReducer);
+  const { token } = useSelector((state: RootState) => state.loginReducer);
 
   const [selectAllState, setSelectAllState] = useState<boolean>(false);
   const [checkBoxState, setCheckBoxState] = useState<boolean[]>(
@@ -46,7 +47,7 @@ function CartInfo() {
     const option = target.getAttribute("data-option");
 
     if (productId && option) {
-      dispatch(cartActions.remove(Number(productId), option));
+      dispatch(cartActions.remove(Number(productId), option, token));
     }
   };
 
@@ -61,7 +62,7 @@ function CartInfo() {
       }
     });
 
-    dispatch(cartActions.selectRemove(selectInfo));
+    dispatch(cartActions.selectRemove(selectInfo, token));
 
     setCheckBoxState(Array(cartInfo.length).fill(false));
     setSelectAllState(false);
@@ -70,7 +71,7 @@ function CartInfo() {
   const handleRemoveAllClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    dispatch(cartActions.removeAll());
+    dispatch(cartActions.removeAll(token));
   };
 
   const handleIncreaseQuantityClick = (e: React.MouseEvent) => {
