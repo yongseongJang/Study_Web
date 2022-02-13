@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useInterval } from "../utils/useInterval";
 import "../styles/Banner.scss";
 
@@ -48,14 +48,24 @@ function Banner() {
     { time: 3000 },
   );
 
+  // React.useEffect(() => {
+  //   let id: NodeJS.Timer;
+  //   if (bannerChangeFlag) {
+  //     id = setInterval(
+  //       () => setBannerIndex((bannerIndex + 1) % bannerImage.length),
+  //       3000,
+  //     );
+  //   }
+
+  //   return () => clearInterval(id);
+  // }, [bannerIndex, bannerChangeFlag]);
+
   return (
     <div className="banner">
       {bannerImage.map((image, index) => {
         return (
           <div
-            className={`banner__image ${
-              bannerIndex === index ? "active" : null
-            }`}
+            className={`banner__image${bannerIndex === index ? " active" : ""}`}
             key={index}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
