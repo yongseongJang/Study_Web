@@ -26,7 +26,7 @@ class CartController {
 
       const cart = await this.cartService.readCart(user_id);
 
-      res.status(200).send(cart);
+      res.status(200).send({ cartInfo: cart });
     },
   );
 

@@ -87,9 +87,9 @@ export function* requestChangeQuantity(
 
 export function* requestCartProduct(token: string) {
   try {
-    const { cartProduct } = yield call(cartServices.requestCartProduct, token);
+    const { cartInfo } = yield call(cartServices.requestCartProduct, token);
 
-    yield put(cartActions.requestCartProductSuccess(cartProduct));
+    yield put(cartActions.requestCartProductSuccess(cartInfo));
   } catch (err) {
     yield put(cartActions.requestCartProductFailure(err));
   }
@@ -169,4 +169,5 @@ export const cartSaga = [
   fork(watchRequestIncreaseQuantity),
   fork(watchRequestDecreaseQuantity),
   fork(watchRequestChangeQuantity),
+  fork(watchRequestCartProduct),
 ];

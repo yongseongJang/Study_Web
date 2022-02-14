@@ -179,6 +179,12 @@ export const cartReducer = (
       return { ...state, isRequesting: false, cartInfo: tmp };
     case cartConstants.FAILURE_CHANGE_QUANTITY:
       return { ...state, isRequesting: false };
+    case cartConstants.REQUEST_CART_PRODUCT:
+      return { ...state, isRequesting: true };
+    case cartConstants.REQUEST_CART_PRODUCT_SUCCESS:
+      return { ...state, isRequesting: false, cartInfo: action.cartInfo };
+    case cartConstants.REQUEST_CART_PRODUCT_FAILURE:
+      return { ...state, isRequesting: false };
     default:
       return state;
   }

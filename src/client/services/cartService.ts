@@ -49,8 +49,8 @@ const requestCartProduct = (token: string) => {
   return axios
     .get("/api/carts", { headers: { authorization: "Bearer " + token } })
     .then((res) => {
-      const { cartProduct } = res.data;
-      return cartProduct;
+      const { cartInfo } = res.data;
+      return { cartInfo };
     })
     .catch((err) => {
       throw err;

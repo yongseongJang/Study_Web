@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CartItem, CartPagination } from "../components";
 import { RootState } from "../reducers/types";
 import { paginate } from "../utils/pagination";
 import { IPagination } from "../interfaces";
+import { cartActions } from "../actions";
 interface CartModalProps {
   isVisible: boolean;
   onClick: (e: React.MouseEvent) => void;
@@ -18,8 +19,18 @@ function CartModal(props: CartModalProps) {
     paginate(cartInfo.length),
   );
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    setPagination(paginate(cartInfo.length));
+    if (token) {
+      dispatch(cartActions.requestCartProduct(token));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (cartInfo.length > 0) {
+      setPagination(paginate(cartInfo.length));
+    }
   }, [cartInfo]);
 
   const handleShopBtnClick = (e: React.MouseEvent) => {

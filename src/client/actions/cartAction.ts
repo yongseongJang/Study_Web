@@ -178,6 +178,7 @@ const changeQuantityFailure = (err: unknown) => {
 const requestCartProduct = (token: string) => {
   return {
     type: cartConstants.REQUEST_CART_PRODUCT,
+    token,
   };
 };
 

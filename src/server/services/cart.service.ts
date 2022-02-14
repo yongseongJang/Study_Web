@@ -27,7 +27,7 @@ class CartService {
     }
   }
 
-  public async readCart(user_id: number) {
+  public async readCart(user_id: number): Promise<ReadCartDto[]> {
     try {
       const cart = await this.cartRepository.readCart(user_id);
 

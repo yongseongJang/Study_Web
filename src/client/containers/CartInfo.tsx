@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../actions";
 import { CartTable } from "../components";
@@ -23,6 +23,12 @@ function CartInfo() {
 
   const { cartInfo } = useSelector((state: RootState) => state.cartReducer);
   const { token } = useSelector((state: RootState) => state.loginReducer);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(cartActions.requestCartProduct(token));
+    }
+  }, []);
 
   const [selectAllState, setSelectAllState] = useState<boolean>(false);
   const [checkBoxState, setCheckBoxState] = useState<boolean[]>(
