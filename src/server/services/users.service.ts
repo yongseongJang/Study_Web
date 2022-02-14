@@ -19,25 +19,25 @@ class UserService {
     this.userRepository = connection.getCustomRepository(UserRepository);
   }
 
-  public async login(loginDto: LoginDto): Promise<LoginSuccessDto> {
+  public async login(loginInfo: LoginDto): Promise<LoginSuccessDto> {
     try {
       const hash: string | null = await this.userRepository.readPasswordById(
-        loginDto.id,
+        loginInfo.id,
       );
 
       if (!hash) {
         throw new ErrorHandler(401, "ValidationError", "Invalid Id");
       }
 
-      await this.comparePasswordToHash(loginDto.pw, hash);
+      await this.comparePasswordToHash(loginInfo.pw, hash);
 
       const userPrimaryKey = await this.userRepository.readUserPrimaryKeyById(
-        loginDto.id,
+        loginInfo.id,
       );
 
       let token;
       if (userPrimaryKey) {
-        token = await this.getToken(loginDto.id, userPrimaryKey);
+        token = await this.getToken(loginInfo.id, userPrimaryKey);
       } else {
         throw new ErrorHandler(
           500,
@@ -46,7 +46,7 @@ class UserService {
         );
       }
 
-      const userName = await this.userRepository.readUserNameById(loginDto.id);
+      const userName = await this.userRepository.readUserNameById(loginInfo.id);
 
       if (token && userName) {
         return {
@@ -66,11 +66,9 @@ class UserService {
     }
   }
 
-  public async registerUser(registerUserDto: RegisterUserDto) {
+  public async registerUser(userInfo: RegisterUserDto) {
     try {
-      const validatedUserInfo = await validateUserRegistrationInfo(
-        registerUserDto,
-      );
+      const validatedUserInfo = await validateUserRegistrationInfo(userInfo);
 
       await this.checkIdDuplication(validatedUserInfo.id);
 

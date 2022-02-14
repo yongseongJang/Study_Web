@@ -12,9 +12,9 @@ class UserController {
 
   public login: RequestHandler = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const loginDto: LoginDto = req.body.loginDto;
+      const loginInfo: LoginDto = req.body.loginInfo;
 
-      const result = await this.userService.login(loginDto);
+      const result = await this.userService.login(loginInfo);
 
       res.status(200).send(result);
     },
@@ -22,9 +22,9 @@ class UserController {
 
   public registerUser: RequestHandler = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const registerUserDto: RegisterUserDto = req.body.registerUserDto;
+      const userInfo: RegisterUserDto = req.body.userInfo;
 
-      await this.userService.registerUser(registerUserDto);
+      await this.userService.registerUser(userInfo);
 
       res.status(200).send();
     },
