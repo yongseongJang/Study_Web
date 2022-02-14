@@ -19,10 +19,12 @@ const requestProducts = (category: string, page = 1) => {
 
 const requestProductsSuccess = (
   pagination: IPagination,
-  productList: Omit<
-    IProduct,
-    "productDetail" | "productImage" | "productCaution" | "productSize"
-  >[],
+  productList: {
+    product: Omit<
+      IProduct,
+      "productDetail" | "productImage" | "productCaution" | "productSize"
+    >;
+  }[],
 ) => {
   return {
     type: productConstants.REQUEST_PRODUCTS_SUCCESS,

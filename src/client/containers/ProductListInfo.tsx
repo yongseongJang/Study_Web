@@ -27,7 +27,8 @@ function ProductListInfo(props: ProductListInfoProps) {
   return (
     <div className="productListInfo">
       <div className="productListInfo__item-wrap">
-        {productList.map((product) => {
+        {productList.map((item) => {
+          const product = item.product;
           return (
             <Item
               key={product._id}
