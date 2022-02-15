@@ -24,13 +24,21 @@ interface LoginProps {
 function LoginForm(props: LoginProps) {
   let errorMessage = "";
 
-  const handleSubmitClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleSubmitClick = (
+    e: React.MouseEvent<HTMLElement> | React.KeyboardEvent,
+  ) => {
     e.preventDefault();
 
     if (errorMessage) {
       alert(errorMessage);
     } else {
       props.submit(loginActions.login)();
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSubmitClick(e);
     }
   };
   return (
@@ -52,6 +60,7 @@ function LoginForm(props: LoginProps) {
                   info={formElement.config.info}
                   placeholder={formElement.config.placeholder}
                   onChange={props.onChange}
+                  onKeyPress={handleKeyPress}
                 />
               </div>
             );
