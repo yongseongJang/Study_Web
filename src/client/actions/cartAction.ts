@@ -54,6 +54,7 @@ const remove = (productId: number, option: string, token: string) => {
     type: cartConstants.REQUEST_REMOVE,
     productId,
     option,
+    token,
   };
 };
 
@@ -79,6 +80,7 @@ const selectRemove = (
   return {
     type: cartConstants.REQUEST_SELECT_REMOVE,
     selectInfo,
+    token,
   };
 };
 
@@ -99,7 +101,7 @@ const selectRemoveFailure = (err: unknown) => {
 };
 
 const removeAll = (token: string) => {
-  return { type: cartConstants.REQUEST_REMOVE_ALL };
+  return { type: cartConstants.REQUEST_REMOVE_ALL, token };
 };
 
 const removeAllSuccess = () => {
