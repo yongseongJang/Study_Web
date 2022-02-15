@@ -2,20 +2,18 @@ import { Product as IProduct, Cart as ICart } from "../interfaces";
 import { Cart } from "../models/entity";
 
 export class AddToCartDto {
-  userId: number;
   productId: number;
   option: string;
   quantity: number;
 
   constructor(cart: ICart) {
-    this.userId = cart.userId!;
     this.productId = cart.productId;
     this.option = cart.option;
     this.quantity = cart.quantity;
   }
 
-  public toEntity() {
-    return Cart.from(this.userId, this.productId, this.option, this.quantity);
+  public toEntity(userId: number) {
+    return Cart.from(userId, this.productId, this.option, this.quantity);
   }
 }
 

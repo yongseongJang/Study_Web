@@ -12,9 +12,10 @@ class CartController {
 
   public addToCart: RequestHandler = asyncHandler(
     async (req: RequestWithUser, res: Response, next: NextFunction) => {
-      const cartInfo = { ...req.body.cartInfo, userId: req.user._id };
+      const cartInfo = req.body.cartInfo;
+      const userId = req.user._id;
 
-      await this.cartService.addToCart(cartInfo);
+      await this.cartService.addToCart(cartInfo, userId);
 
       res.status(200).send();
     },

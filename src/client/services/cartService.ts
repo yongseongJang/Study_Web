@@ -2,10 +2,18 @@ import axios from "axios";
 import { ICartInfo } from "../interfaces";
 
 const add = (cartInfo: ICartInfo[], token: string) => {
+  const extractedCartInfo = cartInfo.map((info) => {
+    return {
+      productId: info.productId,
+      option: info.option,
+      quantity: info.quantity,
+    };
+  });
+
   return axios
     .post(
       "/api/carts/",
-      { cartInfo },
+      { cartInfo: extractedCartInfo },
       { headers: { authorization: "Bearer " + token } },
     )
     .catch((err) => {

@@ -15,13 +15,13 @@ class CartService {
     this.cartRepository = connection.getCustomRepository(CartRepository);
   }
 
-  public async addToCart(addToCartDto: AddToCartDto) {
+  public async addToCart(cartInfo: AddToCartDto[], userId: number) {
     try {
-      const validatedCartInfo = await validateCart(addToCartDto);
+      const validatedCartInfo = await validateCart(cartInfo);
 
-      const cart = new AddToCartDto(validatedCartInfo).toEntity();
+      const carts = this.cartDtoToEntity(validatedCartInfo, userId);
 
-      await this.cartRepository.addToCart(cart);
+      await this.cartRepository.addToCart(carts);
     } catch (err) {
       throw err;
     }
@@ -45,6 +45,12 @@ class CartService {
     } catch (err) {
       throw err;
     }
+  }
+
+  private cartDtoToEntity(dtos: AddToCartDto[], userId: number): Cart[] {
+    return dtos.map((dto) => {
+      return new AddToCartDto(dto).toEntity(userId);
+    });
   }
 
   private cartEntitiesToDto(entities: Cart[]): ReadCartDto[] {
