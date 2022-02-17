@@ -61,7 +61,7 @@ export class Cart {
     user_id: number,
     product_id: number,
     option: string,
-    quantity: number,
+    quantity = 0,
   ) {
     const cart = new Cart();
     cart.user_id = user_id;

@@ -74,22 +74,22 @@ const removeFailure = (err: unknown) => {
 };
 
 const selectRemove = (
-  selectInfo: Pick<ICartInfo, "productId" | "option">[],
+  cartInfo: Pick<ICartInfo, "productId" | "option">[],
   token: string,
 ) => {
   return {
     type: cartConstants.REQUEST_SELECT_REMOVE,
-    selectInfo,
+    cartInfo,
     token,
   };
 };
 
 const selectRemoveSuccess = (
-  selectInfo: Pick<ICartInfo, "productId" | "option">[],
+  cartInfo: Pick<ICartInfo, "productId" | "option">[],
 ) => {
   return {
     type: cartConstants.SUCCESS_SELECT_REMOVE,
-    selectInfo,
+    cartInfo,
   };
 };
 

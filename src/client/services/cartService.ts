@@ -32,13 +32,13 @@ const remove = (productId: number, option: string, token: string) => {
 };
 
 const selectRemove = (
-  selectInfo: Pick<ICartInfo, "productId" | "option">[],
+  cartInfo: Pick<ICartInfo, "productId" | "option">[],
   token: string,
 ) => {
   return axios
     .delete("/api/carts/products", {
       headers: { authorization: "Bearer " + token },
-      data: { selectInfo },
+      data: { cartInfo },
     })
     .catch((err) => {
       throw err;

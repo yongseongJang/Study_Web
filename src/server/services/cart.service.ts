@@ -1,11 +1,15 @@
 import { CartRepository } from "../models/repositories";
 import { getConnection } from "typeorm";
 import createValidator from "../utils/validation/createValidator";
-import { cartSchema } from "../utils/validation/schemas/cartSchema";
-import { AddToCartDto, ReadCartDto } from "../dto";
+import {
+  addCartSchema,
+  removeCartSchema,
+} from "../utils/validation/schemas/cartSchema";
+import { AddToCartDto, ReadCartDto, RemoveCartDto } from "../dto";
 import { Cart } from "../models/entity";
 
-const validateCart = createValidator(cartSchema);
+const validateAddToCartDto = createValidator(addCartSchema);
+const validateRemoveCartDto = createValidator(removeCartSchema);
 
 class CartService {
   private cartRepository: CartRepository;
@@ -17,9 +21,9 @@ class CartService {
 
   public async addToCart(cartInfo: AddToCartDto[], userId: number) {
     try {
-      const validatedCartInfo = await validateCart(cartInfo);
+      const validatedCartInfo = await validateAddToCartDto(cartInfo);
 
-      const carts = this.cartDtoToEntity(validatedCartInfo, userId);
+      const carts = this.AddToCartDtoToEntity(validatedCartInfo, userId);
 
       await this.cartRepository.addToCart(carts);
     } catch (err) {
@@ -47,9 +51,37 @@ class CartService {
     }
   }
 
-  private cartDtoToEntity(dtos: AddToCartDto[], userId: number): Cart[] {
+  public async deleteSelectCart(cartInfo: RemoveCartDto[], userId: number) {
+    try {
+      const validatedCartInfo = await validateRemoveCartDto(cartInfo);
+
+      const carts = this.RemoveCartDtoToEntity(validatedCartInfo, userId);
+
+      await this.cartRepository.deleteSelectCart(carts);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public async deleteCart(user_id: number, productId: number, option: string) {
+    try {
+      const cart = Cart.from(user_id, productId, option);
+
+      await this.cartRepository.deleteCart(cart);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  private AddToCartDtoToEntity(dtos: AddToCartDto[], userId: number): Cart[] {
     return dtos.map((dto) => {
       return new AddToCartDto(dto).toEntity(userId);
+    });
+  }
+
+  private RemoveCartDtoToEntity(dtos: RemoveCartDto[], userId: number): Cart[] {
+    return dtos.map((dto) => {
+      return new RemoveCartDto(dto).toEntity(userId);
     });
   }
 

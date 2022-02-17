@@ -32,14 +32,14 @@ export function* requestRemove(
 }
 
 export function* requestSelectRemove(
-  selectInfo: Pick<ICartInfo, "productId" | "option">[],
+  cartInfo: Pick<ICartInfo, "productId" | "option">[],
   token?: string,
 ) {
   try {
     if (token) {
-      yield call(cartServices.selectRemove, selectInfo, token);
+      yield call(cartServices.selectRemove, cartInfo, token);
     }
-    yield put(cartActions.selectRemoveSuccess(selectInfo));
+    yield put(cartActions.selectRemoveSuccess(cartInfo));
   } catch (err) {
     yield put(cartActions.selectRemoveFailure(err));
   }
@@ -113,10 +113,8 @@ export function* watchRequestRemove() {
 
 export function* watchRequestSelectRemove() {
   while (true) {
-    const { selectInfo, token } = yield take(
-      cartConstants.REQUEST_SELECT_REMOVE,
-    );
-    yield call(requestSelectRemove, selectInfo, token);
+    const { cartInfo, token } = yield take(cartConstants.REQUEST_SELECT_REMOVE);
+    yield call(requestSelectRemove, cartInfo, token);
   }
 }
 

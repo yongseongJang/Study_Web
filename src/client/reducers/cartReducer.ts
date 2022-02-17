@@ -72,7 +72,7 @@ export const cartReducer = (
     case cartConstants.SUCCESS_SELECT_REMOVE:
       tmp = [...state.cartInfo];
 
-      action.selectInfo.forEach(
+      action.cartInfo.forEach(
         (selectProduct: { productId: number; option: string }) => {
           let removeIndex = -1;
 

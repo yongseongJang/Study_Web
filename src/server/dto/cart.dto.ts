@@ -6,7 +6,7 @@ export class AddToCartDto {
   option: string;
   quantity: number;
 
-  constructor(cart: ICart) {
+  constructor(cart: Pick<ICart, "productId" | "option" | "quantity">) {
     this.productId = cart.productId;
     this.option = cart.option;
     this.quantity = cart.quantity;
@@ -52,5 +52,19 @@ export class ReadCartDto {
     });
 
     return readCartDto;
+  }
+}
+
+export class RemoveCartDto {
+  productId: number;
+  option: string;
+
+  constructor(cart: Pick<ICart, "productId" | "option">) {
+    this.productId = cart.productId;
+    this.option = cart.option;
+  }
+
+  public toEntity(userId: number) {
+    return Cart.from(userId, this.productId, this.option);
   }
 }

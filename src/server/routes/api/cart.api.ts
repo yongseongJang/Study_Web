@@ -25,6 +25,16 @@ class CartRouter {
     this.router.post("/", authentication, this.cartController.addToCart);
     this.router.get("/", authentication, this.cartController.readCart);
     this.router.delete("/", authentication, this.cartController.deleteAllCart);
+    this.router.delete(
+      "/products",
+      authentication,
+      this.cartController.deleteSelectCart,
+    );
+    this.router.delete(
+      "/:productId/:option",
+      authentication,
+      this.cartController.deleteCart,
+    );
   }
 
   public getRouter(): Router {

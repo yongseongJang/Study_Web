@@ -5,7 +5,7 @@ interface Cart {
   userId?: number;
   productId: number;
   category?: string;
-  productInfo?: Pick<IProduct, "name" | "price" | "salePrice" | "image">;
+  productInfo: Pick<IProduct, "name" | "price" | "salePrice" | "image">;
 }
 
 export default Cart;
