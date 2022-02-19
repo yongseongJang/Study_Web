@@ -8,7 +8,7 @@ interface InputProps {
   info?: string;
   placeholder?: string;
   onChange: () => void;
-  onKeyPress: () => void;
+  onKeyPress?: () => void;
 }
 
 function Input(props: InputProps) {
@@ -21,7 +21,7 @@ function Input(props: InputProps) {
         value={props.value}
         placeholder={props.placeholder}
         onChange={props.onChange}
-        onKeyDown={props.onKeyPress}
+        onKeyPress={props.onKeyPress}
         autoComplete="off"
       />
       {props.info ? <span className="label__info">{props.info}</span> : ""}

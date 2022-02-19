@@ -1,8 +1,9 @@
 import axios from "axios";
+import { ILoginInfo } from "../interfaces";
 
-const login = async (id: string, pw: string): Promise<object> => {
+const login = async (loginInfo: ILoginInfo): Promise<object> => {
   return await axios
-    .post("/api/users/login", { loginInfo: { id, pw } })
+    .post("/api/users/login", { loginInfo })
     .then((res) => {
       const { token, authExpirationTime: expirationTime, userName } = res.data;
       return { token, expirationTime, userName };

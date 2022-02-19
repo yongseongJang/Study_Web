@@ -14,3 +14,4 @@ export { default as Pagination } from "./Pagination";
 export { default as CartTable } from "./CartTable";
 export { default as CartItem } from "./CartItem";
 export { default as CartPagination } from "./CartPagination";
+export { default as PhoneNumber } from "./PhoneNumber";

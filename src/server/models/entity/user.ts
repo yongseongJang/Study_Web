@@ -28,20 +28,12 @@ export class User {
   })
   name!: string;
 
-  @Column({
-    type: "varchar",
-    nullable: false,
-    default: "",
-  })
-  address!: string;
-
-  @Column({
-    name: "regular_phone",
-    type: "varchar",
-    nullable: true,
-    default: "",
-  })
-  regularPhone!: string | undefined;
+  // @Column({
+  //   type: "varchar",
+  //   nullable: false,
+  //   default: "",
+  // })
+  // address!: string;
 
   @Column({
     name: "cellular_Phone",
@@ -58,21 +50,13 @@ export class User {
   })
   email!: string;
 
-  @Column({
-    name: "is_forever",
-    type: "boolean",
-    nullable: true,
-    default: false,
-  })
-  isForever!: boolean | undefined;
-
-  @Column({
-    type: "char",
-    length: 10,
-    nullable: false,
-    default: "",
-  })
-  birthday!: string;
+  // @Column({
+  //   type: "char",
+  //   length: 10,
+  //   nullable: false,
+  //   default: "",
+  // })
+  // birthday!: string;
 
   @Column({
     name: "membership_level",
@@ -87,25 +71,19 @@ export class User {
     id: string,
     pw: string,
     name: string,
-    address: string,
-    regularPhone: string | undefined,
+    // address: string,
     cellularPhone: string,
     email: string,
-    isForever: boolean | undefined,
-    birthday: string,
-    membershipLevel: string,
+    // birthday: string,
   ) {
     const user = new User();
     user.id = id;
     user.pw = pw;
     user.name = name;
-    user.address = address;
-    user.regularPhone = regularPhone;
+    // user.address = address;
     user.cellularPhone = cellularPhone;
     user.email = email;
-    user.isForever = isForever;
-    user.birthday = birthday;
-    user.membershipLevel = membershipLevel;
+    // user.birthday = birthday;
 
     return user;
   }

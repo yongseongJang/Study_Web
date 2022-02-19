@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import withForm from "../hocs/withForm";
 import signUpField from "../utils/fields/signUpField";
-import { Input, Terms } from "../components";
+import { Terms } from "../components";
 import { signUpActions } from "../actions";
 
 import { IFields } from "../utils/fields/types";
@@ -109,30 +109,26 @@ function SignUpForm(props: SignUpProps) {
                   }
 
                   if (formElement.id === "pw") {
-                    password = formElement.config.value;
+                    password = formElement.config.inputElement[0].value;
                   } else if (formElement.id === "pw_check") {
-                    passwordCheck = formElement.config.value;
+                    passwordCheck = formElement.config.inputElement[0].value;
                   }
 
                   return (
                     <tr key={formElement.id}>
                       <th>
                         {`${formElement.config.elementLabel} `}
-                        {formElement.config.validation.required ? (
+                        {formElement.config.required ? (
                           <img src={ico_required_blue} alt="필수" />
                         ) : (
                           ""
                         )}
                       </th>
                       <td>
-                        <Input
-                          id={formElement.id}
-                          label={""}
-                          type={formElement.config.inputType}
-                          value={formElement.config.value}
-                          info={formElement.config.info}
-                          onChange={props.onChange}
-                        />
+                        {formElement.config.getComponent(
+                          formElement,
+                          props.onChange,
+                        )}
                       </td>
                     </tr>
                   );

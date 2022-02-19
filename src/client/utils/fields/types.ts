@@ -1,14 +1,14 @@
-import React = require("react");
+import * as React from "react";
 
 export interface IFields {
-  elementLabel?: string;
-  inputType: string;
-  value: string;
-  validation: IValidation;
+  elementLabel: string;
+  inputElement: { inputType: string; value: string; validation: IValidation }[];
   valid: boolean;
   errorMessage: string | null;
   info?: string;
-  placeholder?: string;
+  placeholder: string;
+  required: boolean;
+  getComponent: Function;
 }
 
 export interface IValidation {
@@ -16,6 +16,7 @@ export interface IValidation {
   id?: boolean;
   pw?: boolean;
   email?: boolean;
+  phoneNumberFront?: boolean;
   phoneNumber?: boolean;
 }
 

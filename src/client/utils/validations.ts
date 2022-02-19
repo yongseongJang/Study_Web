@@ -60,8 +60,16 @@ export const validate = (
     if (!isValid) {
       error = "올바른 이메일 주소를 입력해 주세요.";
     }
+  } else if (rules.phoneNumberFront) {
+    const regExp = /^\d{3}$/;
+
+    isValid = regExp.test(value);
+
+    if (!isValid) {
+      error = "올바른 휴대전화 번호를 입력해 주세요.";
+    }
   } else if (rules.phoneNumber) {
-    const regExp = /^\d{3}-\d{4}-\d{4}$/;
+    const regExp = /^\d{4}$/;
 
     isValid = regExp.test(value);
 

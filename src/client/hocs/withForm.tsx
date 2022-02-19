@@ -41,17 +41,28 @@ const withForm =
         const key = e.target.id;
         const elementLabel = formState[key].elementLabel;
 
+        const index = e.currentTarget.getAttribute("data-index")
+          ? Number(e.currentTarget.getAttribute("data-index"))
+          : 0;
+
         const validation = validate(
           elementLabel,
           inputValue,
-          formState[key].validation,
+          formState[key].inputElement[index].validation,
         );
 
         const formData = {
           ...formState,
           [key]: {
             ...formState[key],
-            value: inputValue,
+            inputElement: [
+              ...formState[key].inputElement.slice(0, index),
+              {
+                ...formState[key].inputElement[index],
+                value: inputValue,
+              },
+              ...formState[key].inputElement.slice(index + 1),
+            ],
             valid: validation.isValid,
             errorMessage: validation.error,
           },
@@ -63,8 +74,15 @@ const withForm =
 
       const getFormValues = (): object => {
         let formValues = {};
+
         for (const key in formState) {
-          formValues = { ...formValues, [key]: formState[key].value };
+          const value = formState[key].inputElement
+            .map((element) => {
+              return element.value;
+            })
+            .join("-");
+
+          formValues = { ...formValues, [key]: value };
         }
         return formValues;
       };

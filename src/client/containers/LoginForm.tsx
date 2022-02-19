@@ -52,16 +52,11 @@ function LoginForm(props: LoginProps) {
             }
             return (
               <div key={formElement.id} className="login-form__input-wrapper">
-                <Input
-                  id={formElement.id}
-                  label={formElement.config.elementLabel}
-                  type={formElement.config.inputType}
-                  value={formElement.config.value}
-                  info={formElement.config.info}
-                  placeholder={formElement.config.placeholder}
-                  onChange={props.onChange}
-                  onKeyPress={handleKeyPress}
-                />
+                {formElement.config.getComponent(
+                  formElement,
+                  props.onChange,
+                  handleKeyPress,
+                )}
               </div>
             );
           })}

@@ -5,16 +5,14 @@ export const userRegistrationSchema = Joi.object()
     _id: Joi.any(),
     id: Joi.string().required(),
     pw: Joi.string().required(),
+    pw_check: Joi.string().required(),
     name: Joi.string().required(),
-    address: Joi.string().required(),
-    regularPhone: Joi.string(),
+    // address: Joi.string().required(),
     cellularPhone: Joi.string().required(),
     email: Joi.string()
       .email({ tlds: { allow: ["com", "kr"] } })
       .required(),
-    isForever: Joi.boolean(),
-    birthday: Joi.string().required(),
-    membershipLevel: Joi.string().required(),
+    // birthday: Joi.string().required(),
   })
   .required();
 

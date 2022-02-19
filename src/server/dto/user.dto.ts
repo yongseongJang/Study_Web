@@ -27,25 +27,19 @@ export class RegisterUserDto {
   id: string;
   pw: string;
   name: string;
-  address: string;
-  regularPhone: string | undefined;
+  // address: string;
   cellularPhone: string;
   email: string;
-  isForever: boolean | undefined;
-  birthday: string;
-  membershipLevel: string;
+  // birthday: string;
 
   constructor(user: IUser) {
     this.id = user.id;
     this.pw = user.pw;
     this.name = user.name;
-    this.address = user.address;
-    this.regularPhone = user.regularPhone;
+    // this.address = user.address;
     this.cellularPhone = user.cellularPhone;
     this.email = user.email;
-    this.isForever = user.isForever;
-    this.birthday = user.birthday;
-    this.membershipLevel = user.membershipLevel;
+    // this.birthday = user.birthday;
   }
 
   public toEntity() {
@@ -53,13 +47,10 @@ export class RegisterUserDto {
       this.id,
       this.pw,
       this.name,
-      this.address,
-      this.regularPhone,
+      // this.address,
       this.cellularPhone,
       this.email,
-      this.isForever,
-      this.birthday,
-      this.membershipLevel,
+      // this.birthday,
     );
   }
 }

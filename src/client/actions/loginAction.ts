@@ -11,8 +11,7 @@ export const loginConstants = {
 const login = (loginInfo: ILoginInfo) => {
   return {
     type: loginConstants.LOGIN_REQUEST,
-    id: loginInfo.id,
-    password: loginInfo.password,
+    loginInfo,
   };
 };
 
