@@ -20,8 +20,8 @@ const authentication: RequestHandler = (
     jwt.verify(
       token,
       process.env.PRIVATEKEY || "privatekey",
-      undefined,
-      (err: any, payload: jwt.JwtPayload | undefined) => {
+      { complete: true },
+      (err: jwt.VerifyErrors | null, payload: jwt.JwtPayload | undefined) => {
         if (err) {
           return next(
             new Errorhandler(401, "ValidationError", "Invalid token"),

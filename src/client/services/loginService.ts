@@ -3,7 +3,9 @@ import { ILoginInfo } from "../interfaces";
 
 const login = async (loginInfo: ILoginInfo): Promise<object> => {
   return await axios
-    .post("/api/users/login", { loginInfo })
+    .post(`${process.env.REACT_APP_API_URI}/api/users/login`, {
+      loginInfo,
+    })
     .then((res) => {
       const { token, authExpirationTime: expirationTime, userName } = res.data;
       return { token, expirationTime, userName };

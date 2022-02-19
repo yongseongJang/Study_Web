@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getAllProducts = async (page: number) => {
   return await axios
-    .get(`/api/products?page=${page}`)
+    .get(`${process.env.REACT_APP_API_URI}/api/products?page=${page}`)
     .then((res) => {
       const { pagination, paginatedProduct: productList } = res.data;
       return { pagination, productList };
@@ -14,7 +14,9 @@ const getAllProducts = async (page: number) => {
 
 const getProductsByCategory = async (category: string, page: number) => {
   return await axios
-    .get(`/api/products/${category}?page=${page}`)
+    .get(
+      `${process.env.REACT_APP_API_URI}/api/products/${category}?page=${page}`,
+    )
     .then((res) => {
       const { pagination, paginatedProduct: productList } = res.data;
       return { pagination, productList };
@@ -26,7 +28,9 @@ const getProductsByCategory = async (category: string, page: number) => {
 
 const getProductDetail = async (category: string, productId: number) => {
   return await axios
-    .get(`/api/products/${category}/${productId}`)
+    .get(
+      `${process.env.REACT_APP_API_URI}/api/products/${category}/${productId}`,
+    )
     .then((res) => {
       const { product } = res.data;
       return { product };

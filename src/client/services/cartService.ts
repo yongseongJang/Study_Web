@@ -12,7 +12,7 @@ const add = (cartInfo: ICartInfo[], token: string) => {
 
   return axios
     .post(
-      "/api/carts/",
+      `${process.env.REACT_APP_API_URI}/api/carts/`,
       { cartInfo: extractedCartInfo },
       { headers: { authorization: "Bearer " + token } },
     )
@@ -23,9 +23,12 @@ const add = (cartInfo: ICartInfo[], token: string) => {
 
 const remove = (productId: number, option: string, token: string) => {
   return axios
-    .delete(`/api/carts/${productId}/${option}`, {
-      headers: { authorization: "Bearer " + token },
-    })
+    .delete(
+      `${process.env.REACT_APP_API_URI}/api/carts/${productId}/${option}`,
+      {
+        headers: { authorization: "Bearer " + token },
+      },
+    )
     .catch((err) => {
       throw err;
     });
@@ -36,7 +39,7 @@ const selectRemove = (
   token: string,
 ) => {
   return axios
-    .delete("/api/carts/products", {
+    .delete(`${process.env.REACT_APP_API_URI}/api/carts/products`, {
       headers: { authorization: "Bearer " + token },
       data: { cartInfo },
     })
@@ -47,7 +50,9 @@ const selectRemove = (
 
 const removeAll = (token: string) => {
   return axios
-    .delete("/api/carts", { headers: { authorization: "Bearer " + token } })
+    .delete(`${process.env.REACT_APP_API_URI}/api/carts`, {
+      headers: { authorization: "Bearer " + token },
+    })
     .catch((err) => {
       throw err;
     });
@@ -55,7 +60,9 @@ const removeAll = (token: string) => {
 
 const requestCartProduct = (token: string) => {
   return axios
-    .get("/api/carts", { headers: { authorization: "Bearer " + token } })
+    .get(`${process.env.REACT_APP_API_URI}/api/carts`, {
+      headers: { authorization: "Bearer " + token },
+    })
     .then((res) => {
       const { cartInfo } = res.data;
       return { cartInfo };
