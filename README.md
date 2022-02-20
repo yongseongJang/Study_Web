@@ -1,6 +1,6 @@
 # Web Application Study
 
-- [http://15.164.103.246](http://15.164.103.246)
+- [https://dm3z2i9vp8bc9.cloudfront.net/](https://dm3z2i9vp8bc9.cloudfront.net/)
 
 ## DB ERD
 
