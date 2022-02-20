@@ -14,7 +14,7 @@
     "start": "node ./build/server/app.js",
     "start:background": "nohup node ./build/server/app.js &",
     "deploy": "aws s3 sync ./build/client s3://onlineshop.com --profile=yongseong",
-    "invalidate": "aws cloudfront create-invalidation --profile=yongseong --distribution-id EAMPBCES4Y7T1 --paths /*",
+    "invalidate": "aws cloudfront create-invalidation --profile=yongseong --distribution-id EAMPBCES4Y7T1 --paths \"/*\"",
     "lint:client": "eslint \"./src/client/**/*.{ts,tsx}\"",
     "lint:server": "eslint ./src/server/**/*.ts"
   },
