@@ -28,7 +28,8 @@ const authentication: RequestHandler = (
           );
         }
 
-        req.user = payload;
+        req.user = payload ? payload.payload : null;
+
         return next();
       },
     );
