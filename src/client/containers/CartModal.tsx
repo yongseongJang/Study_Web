@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CartItem, CartPagination } from "../components";
+import { CartItem, CartPagination, Spinner } from "../components";
 import { RootState } from "../reducers/types";
 import { paginate } from "../utils/pagination";
 import { IPagination } from "../interfaces";
@@ -12,8 +12,13 @@ interface CartModalProps {
 }
 
 function CartModal(props: CartModalProps) {
-  const { cartInfo } = useSelector((state: RootState) => state.cartReducer);
-  const { token } = useSelector((state: RootState) => state.loginReducer);
+  const isRequesting = useSelector(
+    (state: RootState) => state.cartReducer.isRequesting,
+  );
+  const cartInfo = useSelector(
+    (state: RootState) => state.cartReducer.cartInfo,
+  );
+  const token = useSelector((state: RootState) => state.loginReducer.token);
 
   const [pagination, setPagination] = useState<IPagination>(
     paginate(cartInfo.length),
@@ -64,24 +69,30 @@ function CartModal(props: CartModalProps) {
         </span>
       </div>
       <div className="cartModal__content">
-        <div className="content__count">
-          {`총 `}
-          <strong>{cartInfo.length}</strong>
-          {` 개`}
-        </div>
-        <ul className="content__item-list">
-          {cartInfo && Array.isArray(cartInfo)
-            ? cartInfo
-                .slice(pagination.startIndex, pagination.endIndex + 1)
-                .map((info, index) => {
-                  return <CartItem key={index} info={info}></CartItem>;
-                })
-            : null}
-        </ul>
-        <CartPagination
-          pagination={pagination}
-          onClick={handlePageClick}
-        ></CartPagination>
+        {isRequesting ? (
+          <Spinner></Spinner>
+        ) : (
+          <>
+            <div className="content__count">
+              {`총 `}
+              <strong>{cartInfo.length}</strong>
+              {` 개`}
+            </div>
+            <ul className="content__item-list">
+              {cartInfo && Array.isArray(cartInfo)
+                ? cartInfo
+                    .slice(pagination.startIndex, pagination.endIndex + 1)
+                    .map((info, index) => {
+                      return <CartItem key={index} info={info}></CartItem>;
+                    })
+                : null}
+            </ul>
+            <CartPagination
+              pagination={pagination}
+              onClick={handlePageClick}
+            ></CartPagination>
+          </>
+        )}
       </div>
       <div className="cartModal__button">
         <a href="/order/order" className="button__order">

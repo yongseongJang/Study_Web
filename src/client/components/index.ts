@@ -15,3 +15,4 @@ export { default as CartTable } from "./CartTable";
 export { default as CartItem } from "./CartItem";
 export { default as CartPagination } from "./CartPagination";
 export { default as PhoneNumber } from "./PhoneNumber";
+export { default as Spinner } from "./Spinner";
