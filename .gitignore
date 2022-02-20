@@ -4,3 +4,4 @@ build
 .env
 .vscode
 ormconfig.env
+dev.env1

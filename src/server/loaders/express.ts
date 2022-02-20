@@ -73,10 +73,6 @@ class ExpressLoader {
 
     ApiRouter.getInstance().init(this.app);
 
-    this.app.get("*", (req: Request, res: Response) => {
-      res.sendFile(join(__dirname, "../../client/index.html"));
-    });
-
     this.app.use(
       (
         err: Error | ErrorHandler,

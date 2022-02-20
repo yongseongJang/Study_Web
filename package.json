@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:client": "webpack serve",
     "clean": "rm -rf build",
+    "dev:client": "webpack serve --env dev",
     "build:client:dev": "webpack --env dev",
     "build:client": "webpack",
     "build:server": "tsc -p tsconfig.server.json",
