@@ -155,7 +155,9 @@ function CartInfo() {
   return (
     <div className="CartInfo">
       {isRequesting ? (
-        <Spinner></Spinner>
+        <div className="CartInfo__Spinner">
+          <Spinner></Spinner>
+        </div>
       ) : (
         <>
           {cartInfo.length > 0 ? (

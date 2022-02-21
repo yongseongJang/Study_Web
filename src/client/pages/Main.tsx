@@ -22,7 +22,7 @@ function Main() {
 
   const dispatch = useDispatch();
 
-  const { token } = useSelector((state: RootState) => state.loginReducer);
+  const token = useSelector((state: RootState) => state.loginReducer.token);
 
   const thirdSectionTitle = [
     "UNIFORM BRIDGE 21-22 WINTER",

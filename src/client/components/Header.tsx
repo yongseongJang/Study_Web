@@ -1,12 +1,13 @@
 import * as React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "../reducers/types";
 import logo from "../../public/img/UniformBridge_logo.png";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const { token } = useSelector((state: RootState) => state.loginReducer);
+  const token = useSelector((state: RootState) => state.loginReducer.token);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();

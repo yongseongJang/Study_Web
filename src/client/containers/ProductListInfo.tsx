@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers/types";
-import { Item, Pagination } from "../components";
+import { Item, Pagination, Spinner } from "../components";
 import { productActions } from "../actions";
 
 interface ProductListInfoProps {
@@ -12,8 +12,15 @@ interface ProductListInfoProps {
 
 function ProductListInfo(props: ProductListInfoProps) {
   const dispatch = useDispatch();
-  const { pagination, productList } = useSelector(
-    (state: RootState) => state.productReducer,
+
+  const isRequesting = useSelector(
+    (state: RootState) => state.productReducer.isRequesting,
+  );
+  const pagination = useSelector(
+    (state: RootState) => state.productReducer.pagination,
+  );
+  const productList = useSelector(
+    (state: RootState) => state.productReducer.productList,
   );
 
   React.useEffect(() => {
@@ -26,30 +33,36 @@ function ProductListInfo(props: ProductListInfoProps) {
 
   return (
     <div className="productListInfo">
-      <div className="productListInfo__item-wrap">
-        {productList.map((item) => {
-          const product = item.product;
-          return (
-            <Item
-              key={product._id}
-              id={product._id}
-              name={product.name}
-              image={product.image}
-              category={props.category}
-              price={product.price}
-              salePrice={product.salePrice}
-              soldOut={product.stockCount > 0 ? true : false}
-              width={props.itemWidth}
-            />
-          );
-        })}
-      </div>
+      {isRequesting ? (
+        <Spinner></Spinner>
+      ) : (
+        <>
+          <div className="productListInfo__item-wrap">
+            {productList.map((item) => {
+              const product = item.product;
+              return (
+                <Item
+                  key={product._id}
+                  id={product._id}
+                  name={product.name}
+                  image={product.image}
+                  category={props.category}
+                  price={product.price}
+                  salePrice={product.salePrice}
+                  soldOut={product.stockCount > 0 ? true : false}
+                  width={props.itemWidth}
+                />
+              );
+            })}
+          </div>
 
-      <Pagination
-        pagination={pagination}
-        category={props.category}
-        page="products"
-      ></Pagination>
+          <Pagination
+            pagination={pagination}
+            category={props.category}
+            page="products"
+          ></Pagination>
+        </>
+      )}
     </div>
   );
 }

@@ -25,8 +25,10 @@ function ProductInfo(props: ProductInfoProps) {
   const [option, setOption] = useState<IOption>({});
 
   const dispatch = useDispatch();
-  const { product } = useSelector((state: RootState) => state.productReducer);
-  const { token } = useSelector((state: RootState) => state.loginReducer);
+  const product = useSelector(
+    (state: RootState) => state.productReducer.product,
+  );
+  const token = useSelector((state: RootState) => state.loginReducer.token);
 
   let resizeTimer = setTimeout(() => {
     return 0;

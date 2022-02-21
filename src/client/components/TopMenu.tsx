@@ -5,7 +5,7 @@ import { RootState } from "../reducers/types";
 
 function TopMenu() {
   const dispatch = useDispatch();
-  const { token } = useSelector((state: RootState) => state.loginReducer);
+  const token = useSelector((state: RootState) => state.loginReducer.token);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
