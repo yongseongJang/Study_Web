@@ -1,9 +1,8 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers/types";
-import { loginActions } from "../actions";
+import { cartActions, loginActions } from "../actions";
 import mainBanner from "../../public/img/mainbanner.jpg";
-import search from "../../public/img/search.png";
 import coat from "../../public/img/coat.jpg";
 import knit from "../../public/img/knit.jpg";
 import still_by_hand from "../../public/img/still_by_hand.jpg";
@@ -44,6 +43,8 @@ function Main() {
     e.preventDefault();
 
     dispatch(loginActions.logout());
+
+    dispatch(cartActions.removeAll(""));
   };
 
   return (
@@ -86,7 +87,12 @@ function Main() {
                               </React.Fragment>
                             )}
                             <li>
-                              <a href="/order/order">Order</a>
+                              <a
+                                href="javascript:;"
+                                style={{ cursor: "default" }}
+                              >
+                                Order
+                              </a>
                             </li>
                             <li>
                               <a

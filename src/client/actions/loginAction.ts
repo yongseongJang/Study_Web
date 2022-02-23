@@ -6,6 +6,7 @@ export const loginConstants = {
   LOGIN_FAILURE: "LOGIN_FAILURE",
   LOGOUT_REQUEST: "LOGOUT_REQUEST",
   LOGOUT_SUCCESS: "LOGOUT_SUCCESS",
+  RESET_ERROR: "RESET_ERROR",
 };
 
 const login = (loginInfo: ILoginInfo) => {
@@ -34,10 +35,15 @@ const logoutSuccess = () => {
   return { type: loginConstants.LOGOUT_SUCCESS };
 };
 
+const resetError = () => {
+  return { type: loginConstants.RESET_ERROR };
+};
+
 export const loginActions = {
   login,
   loginSuccess,
   loginFailure,
   logout,
   logoutSuccess,
+  resetError,
 };

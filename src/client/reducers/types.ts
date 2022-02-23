@@ -14,7 +14,7 @@ export interface signupReducerState {
 export interface loginReducerState {
   isRequesting: boolean;
   loginStatus: boolean;
-  error: null;
+  error: null | Error;
   token: string;
   email: string;
   userName: string;

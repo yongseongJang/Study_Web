@@ -34,7 +34,9 @@ function ProductListInfo(props: ProductListInfoProps) {
   return (
     <div className="productListInfo">
       {isRequesting ? (
-        <Spinner></Spinner>
+        <div className="productListInfo__spinner">
+          <Spinner></Spinner>
+        </div>
       ) : (
         <>
           <div className="productListInfo__item-wrap">

@@ -76,11 +76,6 @@ function Header() {
                 <span>UNIFORM BRIDGE</span>
               </a>
             </li>
-            <li>
-              <a href="/products/brand">
-                <span>BRAND</span>
-              </a>
-            </li>
             <div className="navigation__shortSpacer"></div>
             <div className="navigation__boardMenu">
               <ul>

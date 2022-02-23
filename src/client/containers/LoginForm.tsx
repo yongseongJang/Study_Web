@@ -1,11 +1,11 @@
 import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import withForm from "../hocs/withForm";
 import loginField from "../utils/fields/loginField";
-import { Input } from "../components";
 import { loginActions } from "../actions";
-
 import { IFields } from "../utils/fields/types";
 import { ILoginInfo } from "../interfaces";
+import { RootState } from "../reducers/types";
 import "../styles/Login.scss";
 
 interface LoginProps {
@@ -15,14 +15,16 @@ interface LoginProps {
   submit: (
     action: (loginInfo: ILoginInfo) => {
       type: string;
-      id: string;
-      password: string;
+      loginInfo: ILoginInfo;
     },
   ) => () => void;
 }
 
 function LoginForm(props: LoginProps) {
+  const dispatch = useDispatch();
   let errorMessage = "";
+
+  const error = useSelector((state: RootState) => state.loginReducer.error);
 
   const handleSubmitClick = (
     e: React.MouseEvent<HTMLElement> | React.KeyboardEvent,
@@ -41,8 +43,16 @@ function LoginForm(props: LoginProps) {
       handleSubmitClick(e);
     }
   };
+
+  const handleLoginError = () => {
+    alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+
+    dispatch(loginActions.resetError());
+  };
+
   return (
     <div className="login-form">
+      {error ? handleLoginError() : null}
       <form>
         {props
           .renderElements()

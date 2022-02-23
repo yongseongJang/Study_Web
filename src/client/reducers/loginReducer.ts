@@ -15,7 +15,7 @@ export const loginReducer = (
 ) => {
   switch (action.type) {
     case loginConstants.LOGIN_REQUEST:
-      return { ...state, isRequesting: true };
+      return { ...state, isRequesting: true, error: null };
     case loginConstants.LOGIN_SUCCESS:
       return {
         ...state,
@@ -39,6 +39,11 @@ export const loginReducer = (
         token: "",
         id: "",
         userName: "",
+      };
+    case loginConstants.RESET_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

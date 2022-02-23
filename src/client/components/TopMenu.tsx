@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loginActions } from "../actions";
+import { loginActions, cartActions } from "../actions";
 import { RootState } from "../reducers/types";
 
 function TopMenu() {
@@ -11,6 +11,8 @@ function TopMenu() {
     e.preventDefault();
 
     dispatch(loginActions.logout());
+
+    dispatch(cartActions.removeAll(""));
   };
   return (
     <section className="top-menu">
@@ -32,7 +34,9 @@ function TopMenu() {
           </>
         )}
         <li>
-          <a href="/order/order">Order</a>
+          <a href="javascript:;" style={{ cursor: "default" }}>
+            Order
+          </a>
         </li>
         <li>
           <a href="javascript:;" style={{ cursor: "default" }}>{`Q&A`}</a>
