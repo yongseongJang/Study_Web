@@ -1,24 +1,28 @@
 .banner {
   position: relative;
   height: 300px;
-  min-width: 1200px;
+  width: 100%;
   padding-left: 70px;
+  overflow-x: hidden;
 
-  .banner__image {
-    position: absolute;
-    width: 100%;
+  .banner__wrap {
+    display: flex;
     height: 100%;
-    display: none;
-    animation: bannerOpacity 0.7s;
 
-    a {
-      display: block;
+    .wrap__image {
+      width: 100%;
       height: 100%;
-    }
-  }
+      padding: 0 10px 0 10px;
 
-  .active {
-    display: block;
+      a {
+        display: block;
+        height: 100%;
+      }
+    }
+
+    .active {
+      display: block;
+    }
   }
 
   .banner__leftBtn {
@@ -47,7 +51,7 @@
   .banner__rightBtn {
     position: absolute;
     top: 135px;
-    right: 80px;
+    right: 130px;
     cursor: pointer;
   }
 
@@ -65,42 +69,5 @@
   .banner__rightBtn:hover:after {
     border-top: 5px solid #000;
     border-right: 5px solid #000;
-  }
-
-  .banner__dots {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 10px;
-    text-align: center;
-    padding-left: 70px;
-
-    li {
-      display: inline-block;
-      margin: 0px 3px;
-
-      button {
-        height: 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        background-color: #d7d7d7;
-        border-color: #d7d7d7;
-      }
-
-      .active {
-        background-color: #000;
-        border-color: #000;
-      }
-    }
-  }
-}
-
-@keyframes bannerOpacity {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
   }
 }
