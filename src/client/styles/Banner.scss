@@ -7,10 +7,10 @@
 
   .banner__wrap {
     display: flex;
+    width: fit-content;
     height: 100%;
 
     .wrap__image {
-      width: 100%;
       height: 100%;
       padding: 0 10px 0 10px;
 
@@ -28,7 +28,7 @@
   .banner__leftBtn {
     position: absolute;
     top: 135px;
-    left: 150px;
+    left: 100px;
     cursor: pointer;
   }
 
@@ -51,7 +51,7 @@
   .banner__rightBtn {
     position: absolute;
     top: 135px;
-    right: 130px;
+    right: 160px;
     cursor: pointer;
   }
 

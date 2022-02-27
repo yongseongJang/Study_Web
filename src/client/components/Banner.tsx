@@ -14,14 +14,42 @@ function Banner() {
     "https://edit-edition.com/web/upload/NNEditor/20211111/07_shop1_110000.jpg",
   ];
 
+  const [browserWidth, setBrowserWidth] = useState<number>(
+    window.innerHeight ? window.innerWidth : document.body.clientWidth,
+  );
   const [direction, setDirection] = useState<string>("right");
-  const [bannerIndex, setBannerIndex] = useState<number>(4);
+  const [bannerIndex, setBannerIndex] = useState<number>(
+    bannerImage.length - 3,
+  );
   const [bannerChangeFlag, setBannerChangeFlag] = useState<boolean>(true);
   const time =
     (bannerIndex === 1 && direction === "right") ||
-    (bannerIndex === 3 && direction === "left")
+    (bannerIndex === bannerImage.length - 4 && direction === "left")
       ? 0
       : 3000;
+
+  let resizeTimer = setTimeout(() => {
+    return 0;
+  }, 0);
+  const handleResize = () => {
+    if (resizeTimer) {
+      clearTimeout(resizeTimer);
+    }
+
+    resizeTimer = setTimeout(() => {
+      setBrowserWidth(
+        window.innerHeight ? window.innerWidth : document.body.clientWidth,
+      );
+    }, 100);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (bannerIndex === bannerImage.length - 2) {
@@ -30,7 +58,7 @@ function Banner() {
   }, [bannerIndex]);
 
   const handleLeftBtnClick = (e: React.MouseEvent) => {
-    if (bannerIndex === 4) {
+    if (bannerIndex === bannerImage.length - 3) {
       setDirection("right"); // bannerIndex === 3 & direction === left 인 경우 interval time 0 이 되므로 (0에서 3이 된 경우와 4에서 3이 된 경우 분리)
     } else {
       setDirection("left");
@@ -45,7 +73,8 @@ function Banner() {
   const handleRightBtnClick = (e: React.MouseEvent) => {
     setDirection("right");
     setBannerIndex(
-      (bannerIndex === 4 ? 1 : bannerIndex + 1) % bannerImage.length,
+      (bannerIndex === bannerImage.length - 3 ? 1 : bannerIndex + 1) %
+        bannerImage.length,
     );
   };
 
@@ -61,7 +90,7 @@ function Banner() {
     () => {
       if (bannerChangeFlag) {
         setBannerIndex(
-          bannerIndex === 3 && direction === "left" // 상단의 주석과 동일한 이유
+          bannerIndex === bannerImage.length - 4 && direction === "left" // 상단의 주석과 동일한 이유
             ? (bannerIndex - 1) % bannerImage.length
             : (bannerIndex + 1) % bannerImage.length,
         );
@@ -85,17 +114,20 @@ function Banner() {
 
   //   return () => clearInterval(id);
   // }, [bannerIndex, bannerChangeFlag]);
-  console.log(window.innerWidth);
+
   return (
     <div className="banner">
       <div
         className="banner__wrap"
         style={{
-          width: `${1100 * bannerImage.length}px`,
-          transform: `translateX(-${900 + 1100 * bannerIndex}px)`,
+          transform: `translateX(${
+            -1 *
+            ((100 / bannerImage.length) * 0.9 +
+              (100 / bannerImage.length) * bannerIndex)
+          }%)`,
           transition:
             (bannerIndex === 1 && direction === "right") ||
-            (bannerIndex === 3 && direction === "left")
+            (bannerIndex === bannerImage.length - 4 && direction === "left")
               ? "0s"
               : "0.5s",
         }}
@@ -107,8 +139,15 @@ function Banner() {
               key={index}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
+              style={{ width: `${(browserWidth * 3) / 4}px` }}
             >
-              <a href="" style={{ background: `url(${image})` }} />
+              <a
+                href=""
+                style={{
+                  background: `url(${image})`,
+                  opacity: bannerIndex === index - 1 ? 1 : 0.75,
+                }}
+              />
             </div>
           );
         })}

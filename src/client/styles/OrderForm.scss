@@ -1,0 +1,59 @@
+.orderForm {
+  padding-top: 114px;
+  width: 900px;
+  margin: 0 auto;
+  border-left: 1px solid #d7d5d5;
+  border-right: 1px solid #d7d5d5;
+  box-sizing: border-box;
+
+  .orderForm__recipientInfo {
+  }
+
+  .orderForm__product {
+  }
+
+  .orderForm__payment {
+  }
+
+  .orderForm__agreement {
+    border: 1px solid #d7d5d5;
+    border-width: 1px 0;
+
+    .agreement__allAgree {
+      padding: 13px 14px 12px;
+      border-bottom: 1px solid #eaeaea;
+      font-size: 18px;
+      color: #333;
+
+      input {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        vertical-align: middle;
+      }
+
+      label {
+        margin: 0 20px 0 7px;
+        display: inline-block;
+        min-height: 29px;
+        line-height: 29px;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .orderForm__submitBtn {
+    margin: 14px 14px 18px;
+
+    button {
+      width: 100%;
+      line-height: 48px;
+      background: #000;
+      margin: 0 0 7px;
+      font-size: 18px;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+}
