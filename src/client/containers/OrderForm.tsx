@@ -4,6 +4,8 @@ import withForm from "../hocs/withForm";
 import orderField from "../utils/fields/orderField";
 import { Terms2 } from "../components";
 import OrderTermsField from "../utils/fields/orderTermsField";
+import { IFields } from "../utils/fields/types";
+import ico_required_blue from "../../public/img/ico_required_blue.gif";
 
 interface OrderProps {
   renderElements: () => [];
@@ -18,6 +20,8 @@ function OrderForm(props: OrderProps) {
   );
   const [agreeAllState, setAgreeAllState] = useState<boolean>(false);
 
+  let errorMessage = "";
+
   const handleChange = (e: React.ChangeEvent) => {
     setCheckBoxState(Array(OrderTermsField.length).fill(!agreeAllState));
 
@@ -26,7 +30,41 @@ function OrderForm(props: OrderProps) {
 
   return (
     <div className="orderForm">
-      <div className="orderForm__recipientInfo"></div>
+      <div className="orderForm__recipientInfo">
+        <div className="recipientInfo__title">
+          <h2>배송지</h2>
+        </div>
+        <div className="recipientInfo__contents">
+          <table>
+            <tbody>
+              {props
+                .renderElements()
+                .map((formElement: { id: string; config: IFields }) => {
+                  if (formElement.config.errorMessage) {
+                    errorMessage = formElement.config.errorMessage;
+                  }
+
+                  return (
+                    <tr key={formElement.id}>
+                      <th>
+                        {`${formElement.config.elementLabel}`}
+                        {formElement.config.required && (
+                          <img src={ico_required_blue} alt="필수" />
+                        )}
+                      </th>
+                      <td>
+                        {formElement.config.getComponent(
+                          formElement,
+                          props.onChange,
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div className="orderForm__product">
         <div className="product__title">
           <h2>주문상품</h2>

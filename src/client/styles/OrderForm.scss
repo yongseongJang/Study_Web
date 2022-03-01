@@ -7,6 +7,36 @@
   box-sizing: border-box;
 
   .orderForm__recipientInfo {
+    .recipientInfo__title {
+      padding: 16px 14px;
+      display: flex;
+      justify-content: space-between;
+
+      h2 {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+
+    .recipientInfo__contents {
+      margin: 7px 0;
+
+      table {
+        width: 100%;
+
+        th {
+          font-size: 13px;
+          padding: 14px 0 14px 14px;
+          text-align: left;
+          vertical-align: top;
+        }
+
+        td {
+          padding: 8px 14px 7px 8px;
+          vertical-align: middle;
+        }
+      }
+    }
   }
 
   .orderForm__product {
