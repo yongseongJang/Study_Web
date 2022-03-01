@@ -10,9 +10,132 @@
   }
 
   .orderForm__product {
+    .product__title {
+      padding: 16px 14px;
+      display: flex;
+      justify-content: space-between;
+
+      h2 {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+
+    .product__contents {
+      padding: 20px 14px 15px;
+
+      .contents__wrap {
+        display: flex;
+
+        .wrap__thumbnail {
+          width: 90px;
+          height: 90px;
+          margin-right: 20px;
+          border: 1px solid #d7d5d5;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .wrap__description {
+          flex: 1;
+
+          strong {
+            display: block;
+            margin: 0 0 5px;
+          }
+
+          ul {
+            margin: 0 0 14px;
+
+            li {
+              margin: 0 0 2px;
+              font-size: 14px;
+              color: #666;
+            }
+          }
+        }
+
+        .wrap__removeBtn {
+          position: relative;
+          width: 24px;
+          height: 24px;
+          order: 1px solid #b5b5b5;
+          border-radius: 2px;
+          margin: 0 0 0 4px;
+          background-color: #fff;
+          cursor: pointer;
+        }
+        .wrap__removeBtn::before {
+          position: absolute;
+          top: 50%;
+          left: 3px;
+          content: "";
+          width: 14px;
+          height: 1px;
+          background: #7b7d8a;
+          transform: rotate(-45deg);
+        }
+        .wrap__removeBtn::after {
+          position: absolute;
+          top: 50%;
+          left: 3px;
+          content: "";
+          width: 14px;
+          height: 1px;
+          background: #7b7d8a;
+          transform: rotate(-135deg);
+        }
+      }
+    }
   }
 
   .orderForm__payment {
+    .payment__title {
+      padding: 16px 14px;
+      display: flex;
+      justify-content: space-between;
+
+      h2 {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+
+    .payment__contents {
+      padding: 14px;
+      height: auto;
+      border-top: 1px solid #eaeaea;
+
+      .contents__details {
+        table {
+          width: 100%;
+          th {
+            font-size: 13px;
+            padding: 5px 0 5px 14px;
+            text-align: left;
+            vertical-align: top;
+          }
+
+          td {
+            font-size: 13px;
+            padding: 5px 14px 5px 0;
+            text-align: right;
+            vertical-align: top;
+          }
+        }
+      }
+
+      .contents__total {
+        display: flex;
+        justify-content: space-between;
+        padding: 13px 15px;
+        font-size: 18px;
+        color: #333;
+        background: #eff1f4;
+      }
+    }
   }
 
   .orderForm__agreement {

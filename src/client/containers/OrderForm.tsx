@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import withForm from "../hocs/withForm";
 import orderField from "../utils/fields/orderField";
 import { Terms2 } from "../components";
@@ -12,14 +13,100 @@ interface OrderProps {
 }
 
 function OrderForm(props: OrderProps) {
+  const [checkBoxState, setCheckBoxState] = useState<boolean[]>(
+    Array(OrderTermsField.length).fill(false),
+  );
+  const [agreeAllState, setAgreeAllState] = useState<boolean>(false);
+
+  const handleChange = (e: React.ChangeEvent) => {
+    setCheckBoxState(Array(OrderTermsField.length).fill(!agreeAllState));
+
+    setAgreeAllState(!agreeAllState);
+  };
+
   return (
     <div className="orderForm">
       <div className="orderForm__recipientInfo"></div>
-      <div className="orderForm__product"></div>
-      <div className="orderForm__payment"></div>
+      <div className="orderForm__product">
+        <div className="product__title">
+          <h2>주문상품</h2>
+        </div>
+        <div className="product__contents">
+          <div className="contents__wrap">
+            <div className="wrap__thumbnail">
+              <a href="">
+                <img src="" alt="" />
+              </a>
+            </div>
+            <div className="wrap__description">
+              <strong></strong>
+              <ul>
+                <li>
+                  <span>{`[옵션: ]`}</span>
+                </li>
+                <li>
+                  <span>{`수량: 개`}</span>
+                </li>
+                <li>
+                  <span>{`상품구매금액: KRW`}</span>
+                </li>
+              </ul>
+            </div>
+            <button className="wrap__removeBtn"></button>
+          </div>
+        </div>
+      </div>
+      <div className="orderForm__payment">
+        <div className="payment__title">
+          <h2>결제정보</h2>
+        </div>
+        <div className="payment__contents">
+          <div className="contents__details">
+            <table>
+              <colgroup>
+                <col style={{ width: "122px" }} />
+                <col style={{ width: "auto" }} />
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th>주문상품</th>
+                  <td>
+                    <span>KRW</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>할인/부가결제</th>
+                  <td>
+                    {`+KRW`}
+                    <span>0</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>배송비</th>
+                  <td>
+                    {`+KRW`}
+                    <span>0</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="contents__total">
+            <h3>결제금액</h3>
+            <strong>
+              {`KRW `} <span></span>
+            </strong>
+          </div>
+        </div>
+      </div>
       <div className="orderForm__agreement">
         <div className="agreement__allAgree">
-          <input type="checkbox" id="allAgree" />
+          <input
+            type="checkbox"
+            id="allAgree"
+            checked={agreeAllState}
+            onChange={handleChange}
+          />
           <label htmlFor="allAgree">
             <strong>모든 약관 동의</strong>
           </label>
@@ -29,7 +116,16 @@ function OrderForm(props: OrderProps) {
             {OrderTermsField.map((term, index) => {
               return (
                 <li key={index}>
-                  <Terms2></Terms2>
+                  <Terms2
+                    index={index}
+                    head={term.head}
+                    content={term.content}
+                    required={term.required}
+                    checkBoxState={checkBoxState}
+                    setCheckBoxState={setCheckBoxState}
+                    agreeAllState={agreeAllState}
+                    setAgreeAllState={setAgreeAllState}
+                  ></Terms2>
                 </li>
               );
             })}
