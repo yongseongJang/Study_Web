@@ -17,7 +17,7 @@ function PhoneNumber(props: PhoneNumberProps) {
   return (
     <>
       <label htmlFor={props.id} className="input__label">
-        {props.label ? <span>{props.label}</span> : ""}
+        {props.label && <span>{props.label}</span>}
         <input
           id={props.id}
           data-index={0}
@@ -47,7 +47,7 @@ function PhoneNumber(props: PhoneNumberProps) {
           autoComplete="off"
           maxLength={4}
         />
-        {props.info ? <span className="label__info">{props.info}</span> : ""}
+        {props.info && <span className="label__info">{props.info}</span>}
       </label>
     </>
   );

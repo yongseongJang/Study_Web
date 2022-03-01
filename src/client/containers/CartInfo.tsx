@@ -278,10 +278,10 @@ function CartInfo() {
         </>
       )}
       <section className="section-wrap__btn-wrap">
-        <a href="" className="btn-wrap__order-all">
+        <a href="/order/payment" className="btn-wrap__order-all">
           전체상품주문
         </a>
-        <a href="" className="btn-wrap__order-selected">
+        <a href="/order/payment" className="btn-wrap__order-selected">
           선택상품주문
         </a>
         <span>

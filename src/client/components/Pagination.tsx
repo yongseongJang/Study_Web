@@ -24,25 +24,24 @@ function Pagination(props: PaginationProps) {
             {"<"}
           </a>
         </li>
-        {pages
-          ? pages.map((page, index) => {
-              return (
-                <li key={index}>
-                  <a
-                    href={`/${props.page}/${props.category}?page=${page}`}
-                    data-page={page}
-                    className={
-                      props.pagination.currentPage == page
-                        ? "currentPage"
-                        : "page"
-                    }
-                  >
-                    {page}
-                  </a>
-                </li>
-              );
-            })
-          : null}
+        {pages &&
+          pages.map((page, index) => {
+            return (
+              <li key={index}>
+                <a
+                  href={`/${props.page}/${props.category}?page=${page}`}
+                  data-page={page}
+                  className={
+                    props.pagination.currentPage == page
+                      ? "currentPage"
+                      : "page"
+                  }
+                >
+                  {page}
+                </a>
+              </li>
+            );
+          })}
         <li>
           <a
             href={`/${props.page}/${props.category}?page=${props.pagination.endPage}`}

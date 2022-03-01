@@ -26,7 +26,7 @@ function Popup(props: PopupProps) {
 
   return (
     <>
-      {isVisible ? (
+      {isVisible && (
         <div className="popup">
           <div className="popup__dimmed"></div>
           <div className="popup__modal">
@@ -43,7 +43,7 @@ function Popup(props: PopupProps) {
             </div>
           </div>
         </div>
-      ) : null}
+      )}
     </>
   );
 }

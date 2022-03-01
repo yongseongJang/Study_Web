@@ -35,7 +35,7 @@ function Terms2(props: Terms2Props) {
             onChange={handleChange}
           />
           <label htmlFor={`term_${props.index}`}>
-            <span>{props.required ? "[필수]" : ""} </span>
+            <span>{props.required && "[필수]"} </span>
             {props.head}
           </label>
         </span>

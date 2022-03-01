@@ -109,12 +109,12 @@ function ProductOption(props: productOptionProps) {
           </tr>
           <tr>
             <td>
-              {props.salePrice ? (
+              {props.salePrice && (
                 <span>
                   {`KRW ${props.salePrice}`}
                   <span>{` ( KRW ${props.price - props.salePrice} 할인)`}</span>
                 </span>
-              ) : null}
+              )}
             </td>
           </tr>
         </tbody>
@@ -125,21 +125,20 @@ function ProductOption(props: productOptionProps) {
             <th scope="row">SIZE</th>
             <td>
               <ul>
-                {props.productSize
-                  ? props.productSize.map((size, index) => {
-                      return (
-                        <li key={index}>
-                          <a
-                            data-size={size.size}
-                            href=""
-                            onClick={handleSizeClick}
-                          >
-                            <span>{size.size}</span>
-                          </a>
-                        </li>
-                      );
-                    })
-                  : null}
+                {props.productSize &&
+                  props.productSize.map((size, index) => {
+                    return (
+                      <li key={index}>
+                        <a
+                          data-size={size.size}
+                          href=""
+                          onClick={handleSizeClick}
+                        >
+                          <span>{size.size}</span>
+                        </a>
+                      </li>
+                    );
+                  })}
               </ul>
             </td>
           </tr>
@@ -152,49 +151,49 @@ function ProductOption(props: productOptionProps) {
             <col style={{ width: "60px" }} />
           </colgroup>
           <tbody>
-            {props.option && Object.keys(props.option)
-              ? Object.keys(props.option).map((size, index) => {
-                  return (
-                    <tr className="selectedOption__product" key={index}>
-                      <td>
-                        <p>
-                          {props.productName}
-                          <span>{` - ${size}`}</span>
-                        </p>
-                      </td>
-                      <td className="product__wrap">
-                        <span className="wrap__quantity" data-size={size}>
-                          <input
-                            value={props.option[size]}
-                            onChange={handleQuantityChange}
-                          />
-                          <a
-                            className="quantity__increase"
-                            href=""
-                            onClick={handleIncreaseClick}
-                          >
-                            <img src={btn_count_up} alt="수량증가" />
-                          </a>
-                          <a
-                            href=""
-                            className="quantity__decrease"
-                            onClick={handleDecreaseClick}
-                          >
-                            <img src={btn_count_down} alt="수량감소" />
-                          </a>
-                        </span>
-                        <a href="" data-size={size} onClick={handleRemoveClick}>
-                          <img
-                            className="wrap__delete-img"
-                            src={btn_price_delete}
-                            alt="삭제"
-                          />
+            {props.option &&
+              Object.keys(props.option) &&
+              Object.keys(props.option).map((size, index) => {
+                return (
+                  <tr className="selectedOption__product" key={index}>
+                    <td>
+                      <p>
+                        {props.productName}
+                        <span>{` - ${size}`}</span>
+                      </p>
+                    </td>
+                    <td className="product__wrap">
+                      <span className="wrap__quantity" data-size={size}>
+                        <input
+                          value={props.option[size]}
+                          onChange={handleQuantityChange}
+                        />
+                        <a
+                          className="quantity__increase"
+                          href=""
+                          onClick={handleIncreaseClick}
+                        >
+                          <img src={btn_count_up} alt="수량증가" />
                         </a>
-                      </td>
-                    </tr>
-                  );
-                })
-              : null}
+                        <a
+                          href=""
+                          className="quantity__decrease"
+                          onClick={handleDecreaseClick}
+                        >
+                          <img src={btn_count_down} alt="수량감소" />
+                        </a>
+                      </span>
+                      <a href="" data-size={size} onClick={handleRemoveClick}>
+                        <img
+                          className="wrap__delete-img"
+                          src={btn_price_delete}
+                          alt="삭제"
+                        />
+                      </a>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>

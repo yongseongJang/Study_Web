@@ -85,17 +85,16 @@ function ProductGuide(props: productGuideProps) {
           style={activeTab === 1 ? undefined : { display: "none" }}
         >
           <p>
-            {props.productCaution
-              ? props.productCaution.map((caution, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      {caution.caution}
-                      <br />
-                      <br />
-                    </React.Fragment>
-                  );
-                })
-              : null}
+            {props.productCaution &&
+              props.productCaution.map((caution, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    {caution.caution}
+                    <br />
+                    <br />
+                  </React.Fragment>
+                );
+              })}
           </p>
         </div>
         <div

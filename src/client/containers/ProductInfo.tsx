@@ -87,7 +87,7 @@ function ProductInfo(props: ProductInfoProps) {
   return (
     <div className="productInfo">
       <TopMenu />
-      {product ? (
+      {product && (
         <>
           <section className="productInfo__image">
             <img
@@ -142,7 +142,7 @@ function ProductInfo(props: ProductInfoProps) {
             </div>
           </section>
         </>
-      ) : null}
+      )}
       <CartModal
         isVisible={isVisibleCart}
         onClick={handleRightBtnClick}

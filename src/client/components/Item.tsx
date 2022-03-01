@@ -36,12 +36,10 @@ function Item(props: Item) {
                 className={props.salePrice ? "invalid-price" : undefined}
               >{`KRW ${props.price}`}</span>
             </li>
-            {props.salePrice ? (
+            {props.salePrice && (
               <li>
                 <span>{`KRW ${props.salePrice}`}</span>
               </li>
-            ) : (
-              ""
             )}
           </ul>
         </div>

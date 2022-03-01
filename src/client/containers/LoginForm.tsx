@@ -52,7 +52,7 @@ function LoginForm(props: LoginProps) {
 
   return (
     <div className="login-form">
-      {error ? handleLoginError() : null}
+      {error && handleLoginError()}
       <form>
         {props
           .renderElements()

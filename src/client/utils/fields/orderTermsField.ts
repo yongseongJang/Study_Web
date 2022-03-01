@@ -2,7 +2,7 @@ import { ITerms } from "../../utils/fields/types";
 
 const orderTermsField: Array<Omit<ITerms, "tail">> = [
   {
-    head: "[필수] 쇼핑몰 이용약관 동의",
+    head: "쇼핑몰 이용약관 동의",
     content: [
       "표준약관 제10023호",
       "부칙",
@@ -12,7 +12,7 @@ const orderTermsField: Array<Omit<ITerms, "tail">> = [
     errorMessage: "쇼핑몰 이용약관에 동의하세요",
   },
   {
-    head: "[필수] 비회원 구매시 개인정보 처리방침 동의",
+    head: "비회원 구매시 개인정보 처리방침 동의",
     content: ["1. 개인정보 수집목적 및 이용목적 : 비회원 구매 서비스 제공"],
     required: true,
     errorMessage: "비회원 구매시 개인정보 처리방침에 동의하세요",

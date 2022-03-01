@@ -79,13 +79,13 @@ function CartModal(props: CartModalProps) {
               {` 개`}
             </div>
             <ul className="content__item-list">
-              {cartInfo && Array.isArray(cartInfo)
-                ? cartInfo
-                    .slice(pagination.startIndex, pagination.endIndex + 1)
-                    .map((info, index) => {
-                      return <CartItem key={index} info={info}></CartItem>;
-                    })
-                : null}
+              {cartInfo &&
+                Array.isArray(cartInfo) &&
+                cartInfo
+                  .slice(pagination.startIndex, pagination.endIndex + 1)
+                  .map((info, index) => {
+                    return <CartItem key={index} info={info}></CartItem>;
+                  })}
             </ul>
             <CartPagination
               pagination={pagination}
@@ -95,7 +95,7 @@ function CartModal(props: CartModalProps) {
         )}
       </div>
       <div className="cartModal__button">
-        <a href="/order/order" className="button__order">
+        <a href="/order/payment" className="button__order">
           바로 구매하기
         </a>
         <a href="/order/cart" className="button__cart">

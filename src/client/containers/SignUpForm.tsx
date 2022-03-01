@@ -118,10 +118,8 @@ function SignUpForm(props: SignUpProps) {
                     <tr key={formElement.id}>
                       <th>
                         {`${formElement.config.elementLabel} `}
-                        {formElement.config.required ? (
+                        {formElement.config.required && (
                           <img src={ico_required_blue} alt="필수" />
-                        ) : (
-                          ""
                         )}
                       </th>
                       <td>

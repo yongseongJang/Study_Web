@@ -27,16 +27,15 @@ function ProductDetail(props: productDetailProps) {
             <br />
             <br />
             Detail
-            {props.productDetail
-              ? props.productDetail.map((detail, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <br />
-                      {`■ ${detail.detail}`}
-                    </React.Fragment>
-                  );
-                })
-              : null}
+            {props.productDetail &&
+              props.productDetail.map((detail, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <br />
+                    {`■ ${detail.detail}`}
+                  </React.Fragment>
+                );
+              })}
             <br />
           </div>
         </div>
