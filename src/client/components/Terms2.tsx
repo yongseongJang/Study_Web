@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 
 interface Terms2Props {
   index: number;
@@ -12,6 +13,8 @@ interface Terms2Props {
 }
 
 function Terms2(props: Terms2Props) {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
   const handleChange = (e: React.ChangeEvent) => {
     if (props.agreeAllState && props.checkBoxState[props.index]) {
       props.setAgreeAllState(false);
@@ -24,8 +27,37 @@ function Terms2(props: Terms2Props) {
     ]);
   };
 
+  const handleClick = () => {
+    setIsVisible(!isVisible);
+  };
+
   return (
     <div className="terms2">
+      {isVisible && (
+        <div className="terms2__popup">
+          <div className="popup__modal">
+            <div className="modal__header">
+              <h3>{props.head}</h3>
+              <span className="header__closeBtn" onClick={handleClick}>
+                <span className="closeBtn__wrap">
+                  <span className="wrap__line1"></span>
+                  <span className="wrap__line2"></span>
+                </span>
+              </span>
+            </div>
+            <div className="modal__content">
+              <div className="content__wrap">
+                {props.content.map((value, index) => {
+                  return <p key={index}>{value}</p>;
+                })}
+              </div>
+            </div>
+            <div className="modal__bottom">
+              <button onClick={handleClick}>확인</button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="agree">
         <span className="agree__check">
           <input
@@ -39,7 +71,7 @@ function Terms2(props: Terms2Props) {
             {props.head}
           </label>
         </span>
-        <a className="btnAgree"></a>
+        <a className="showTerm" onClick={handleClick}></a>
       </div>
     </div>
   );

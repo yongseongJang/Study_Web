@@ -1,4 +1,91 @@
 .terms2 {
+  .terms2__popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    max-height: 450px;
+    border: 1px solid #757575;
+    z-index: 100;
+    background-color: #fff;
+    font: 11px/20px sans-serif;
+
+    .popup__modal {
+      .modal__header {
+        padding: 12px 35px 12px 19px;
+        background: #000;
+        color: #fff;
+
+        h3 {
+          font-size: 14px;
+          line-height: 1.5;
+          color: #fff;
+        }
+        .header__closeBtn {
+          position: absolute;
+          top: 5px;
+          right: 2px;
+          padding: 6px 20px 11px;
+          cursor: pointer;
+
+          .closeBtn__wrap {
+            position: relative;
+            display: block;
+            width: 24px;
+            height: 24px;
+
+            span {
+              position: absolute;
+              left: 0;
+              width: 100%;
+              height: 3px;
+            }
+
+            .wrap__line1 {
+              top: 9px;
+              transform: rotate(45deg);
+              background-color: #fff;
+            }
+            .wrap__line2 {
+              top: 9px;
+              transform: rotate(-45deg);
+              background-color: #fff;
+            }
+          }
+        }
+      }
+      .modal__content {
+        .content__wrap {
+          overflow: auto;
+          height: 110px;
+          padding: 20px;
+          border: 1px solid #d5d5d5;
+          background: #fff;
+        }
+
+        p {
+          padding: 0 0 17px;
+        }
+      }
+      .modal__bottom {
+        padding: 9px;
+        border-top: 1px solid #d7d5d5;
+        text-align: center;
+        background: #fbfafa;
+
+        button {
+          padding: 2px 8px;
+          border: 2px solid #757575;
+          border-radius: 2px;
+          font-size: 12px;
+          line-height: 18px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
   .agree {
     display: flex;
     justify-content: space-between;
@@ -28,7 +115,7 @@
         }
       }
     }
-    .btnAgree::after {
+    .showTerm::after {
       content: "";
       width: 10px;
       height: 10px;

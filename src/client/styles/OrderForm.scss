@@ -34,6 +34,15 @@
         td {
           padding: 8px 14px 7px 8px;
           vertical-align: middle;
+
+          input {
+            width: 100%;
+            padding-right: 0px;
+          }
+
+          input[class="phoneNumber"] {
+            width: 27%;
+          }
         }
       }
     }

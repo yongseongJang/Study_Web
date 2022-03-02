@@ -20,6 +20,7 @@ function PhoneNumber(props: PhoneNumberProps) {
         {props.label && <span>{props.label}</span>}
         <input
           id={props.id}
+          className="phoneNumber"
           data-index={0}
           type="text"
           value={props.element[0].value}
@@ -30,6 +31,7 @@ function PhoneNumber(props: PhoneNumberProps) {
         {" - "}
         <input
           id={props.id}
+          className="phoneNumber"
           data-index={1}
           type="text"
           value={props.element[1].value}
@@ -40,6 +42,7 @@ function PhoneNumber(props: PhoneNumberProps) {
         {" - "}
         <input
           id={props.id}
+          className="phoneNumber"
           data-index={2}
           type="text"
           value={props.element[2].value}
