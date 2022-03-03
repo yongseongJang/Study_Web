@@ -4,6 +4,7 @@ export interface RootState {
   signupReducer: signupReducerState;
   productReducer: productReducerState;
   cartReducer: cartReducerState;
+  orderReducer: orderReducerState;
 }
 
 export interface signupReducerState {
@@ -35,4 +36,10 @@ export interface productReducerState {
 export interface cartReducerState {
   isRequesting: boolean;
   cartInfo: ICartInfo[];
+}
+
+export interface orderReducerState {
+  isRequesting: boolean;
+  isAllProduct: boolean;
+  cartList: number[];
 }

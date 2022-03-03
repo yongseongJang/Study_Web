@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions } from "../actions";
+import { cartActions, orderActions } from "../actions";
 import { CartTable, Spinner } from "../components";
 import { ICartInfo } from "../interfaces";
 import { RootState } from "../reducers/types";
+import { history } from "../utils/history";
 
 function CartInfo() {
   const dispatch = useDispatch();
@@ -152,6 +153,14 @@ function CartInfo() {
     }
   };
 
+  const handleOrderAllBtnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    dispatch(orderActions.add(true));
+
+    history.replace("/order/payment");
+  };
+
   return (
     <div className="CartInfo">
       {isRequesting ? (
@@ -278,7 +287,11 @@ function CartInfo() {
         </>
       )}
       <section className="section-wrap__btn-wrap">
-        <a href="/order/payment" className="btn-wrap__order-all">
+        <a
+          href="/order/payment"
+          className="btn-wrap__order-all"
+          onClick={handleOrderAllBtnClick}
+        >
           전체상품주문
         </a>
         <a href="/order/payment" className="btn-wrap__order-selected">

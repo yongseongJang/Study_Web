@@ -5,7 +5,8 @@ import { CartItem, CartPagination, Spinner } from "../components";
 import { RootState } from "../reducers/types";
 import { paginate } from "../utils/pagination";
 import { IPagination } from "../interfaces";
-import { cartActions } from "../actions";
+import { cartActions, orderActions } from "../actions";
+import { history } from "../utils/history";
 interface CartModalProps {
   isVisible: boolean;
   onClick: (e: React.MouseEvent) => void;
@@ -54,6 +55,14 @@ function CartModal(props: CartModalProps) {
     }
   };
 
+  const handleOrderBtnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    dispatch(orderActions.add(true));
+
+    history.replace("/order/payment");
+  };
+
   return (
     <div
       className="cartModal"
@@ -95,7 +104,11 @@ function CartModal(props: CartModalProps) {
         )}
       </div>
       <div className="cartModal__button">
-        <a href="/order/payment" className="button__order">
+        <a
+          href="/order/payment"
+          className="button__order"
+          onClick={handleOrderBtnClick}
+        >
           바로 구매하기
         </a>
         <a href="/order/cart" className="button__cart">

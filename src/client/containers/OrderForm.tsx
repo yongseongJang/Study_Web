@@ -1,10 +1,12 @@
 import * as React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import withForm from "../hocs/withForm";
 import orderField from "../utils/fields/orderField";
 import { Terms2 } from "../components";
 import OrderTermsField from "../utils/fields/orderTermsField";
 import { IFields } from "../utils/fields/types";
+import { RootState } from "../reducers/types";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
 
 interface OrderProps {
@@ -21,6 +23,16 @@ function OrderForm(props: OrderProps) {
   const [agreeAllState, setAgreeAllState] = useState<boolean>(false);
 
   let errorMessage = "";
+
+  const cartInfo = useSelector(
+    (state: RootState) => state.cartReducer.cartInfo,
+  );
+  const isAllProduct = useSelector(
+    (state: RootState) => state.orderReducer.isAllProduct,
+  );
+  const cartList = useSelector(
+    (state: RootState) => state.orderReducer.cartList,
+  );
 
   const handleChange = (e: React.ChangeEvent) => {
     setCheckBoxState(Array(OrderTermsField.length).fill(!agreeAllState));
@@ -70,28 +82,84 @@ function OrderForm(props: OrderProps) {
           <h2>주문상품</h2>
         </div>
         <div className="product__contents">
-          <div className="contents__wrap">
-            <div className="wrap__thumbnail">
-              <a href="">
-                <img src="" alt="" />
-              </a>
-            </div>
-            <div className="wrap__description">
-              <strong></strong>
-              <ul>
-                <li>
-                  <span>{`[옵션: ]`}</span>
-                </li>
-                <li>
-                  <span>{`수량: 개`}</span>
-                </li>
-                <li>
-                  <span>{`상품구매금액: KRW`}</span>
-                </li>
-              </ul>
-            </div>
-            <button className="wrap__removeBtn"></button>
-          </div>
+          {isAllProduct
+            ? cartInfo.map((info, index) => {
+                return (
+                  <div className="contents__wrap" key={index}>
+                    <div className="wrap__thumbnail">
+                      <a href={`/products/${info.category}/${info.productId}`}>
+                        <img
+                          src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${info.productInfo.image}`}
+                        />
+                      </a>
+                    </div>
+                    <div className="wrap__description">
+                      <a href={`/products/${info.category}/${info.productId}`}>
+                        <strong>{info.productInfo.name}</strong>
+                      </a>
+                      <ul>
+                        <li>
+                          <span>{`[옵션: ${info.option}]`}</span>
+                        </li>
+                        <li>
+                          <span>{`수량: ${info.quantity}개`}</span>
+                        </li>
+                        <li>
+                          <span>{`상품구매금액: KRW ${info.productInfo.price}`}</span>
+                        </li>
+                        <li>
+                          <span>{`할인금액: -KRW ${
+                            info.productInfo.price - info.productInfo.salePrice
+                          }`}</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <button className="wrap__removeBtn"></button>
+                  </div>
+                );
+              })
+            : cartInfo.map((info, index) => {
+                return (
+                  cartList.indexOf(index) !== -1 && (
+                    <div className="contents__wrap" key={index}>
+                      <div className="wrap__thumbnail">
+                        <a
+                          href={`/products/${info.category}/${info.productId}`}
+                        >
+                          <img
+                            src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${info.productInfo.image}`}
+                          />
+                        </a>
+                      </div>
+                      <div className="wrap__description">
+                        <a
+                          href={`/products/${info.category}/${info.productId}`}
+                        >
+                          <strong>{info.productInfo.name}</strong>
+                        </a>
+                        <ul>
+                          <li>
+                            <span>{`[옵션: ${info.option}]`}</span>
+                          </li>
+                          <li>
+                            <span>{`수량: ${info.quantity}개`}</span>
+                          </li>
+                          <li>
+                            <span>{`상품구매금액: KRW ${info.productInfo.price}`}</span>
+                          </li>
+                          <li>
+                            <span>{`할인금액: -KRW ${
+                              info.productInfo.price -
+                              info.productInfo.salePrice
+                            }`}</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <button className="wrap__removeBtn"></button>
+                    </div>
+                  )
+                );
+              })}
         </div>
       </div>
       <div className="orderForm__payment">

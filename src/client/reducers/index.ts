@@ -3,6 +3,7 @@ import { signUpReducer } from "./signUpReducer";
 import { loginReducer } from "./loginReducer";
 import { productReducer } from "./productReducer";
 import { cartReducer } from "./cartReducer";
+import { orderReducer } from "./orderReducer";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   signUpReducer,
   productReducer,
   cartReducer,
+  orderReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
