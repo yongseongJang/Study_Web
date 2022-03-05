@@ -1,0 +1,25 @@
+.main {
+  .content {
+    section:nth-child(odd) {
+      color: #000;
+      background-color: #fff;
+    }
+
+    section:nth-child(even) {
+      color: #fff;
+      background-color: #000;
+    }
+
+    section {
+      display: flex;
+      align-items: center;
+
+      span {
+        padding-left: 70px;
+        font-size: 200px;
+        font-weight: bold;
+        color: inherit;
+      }
+    }
+  }
+}

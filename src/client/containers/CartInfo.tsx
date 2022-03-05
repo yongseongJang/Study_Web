@@ -161,6 +161,25 @@ function CartInfo() {
     history.replace("/order/payment");
   };
 
+  const handleSelectedOrderBtnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (selectAllState) {
+      dispatch(orderActions.add(true));
+    } else {
+      const cartList: number[] = [];
+      checkBoxState.forEach((state, index) => {
+        if (state) {
+          cartList.push(index);
+        }
+      });
+
+      dispatch(orderActions.add(false, cartList));
+    }
+
+    history.replace("/order/payment");
+  };
+
   return (
     <div className="CartInfo">
       {isRequesting ? (
@@ -294,7 +313,11 @@ function CartInfo() {
         >
           전체상품주문
         </a>
-        <a href="/order/payment" className="btn-wrap__order-selected">
+        <a
+          href="/order/payment"
+          className="btn-wrap__order-selected"
+          onClick={handleSelectedOrderBtnClick}
+        >
           선택상품주문
         </a>
         <span>

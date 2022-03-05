@@ -10,7 +10,7 @@ import storage from "redux-persist/lib/storage/session";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["loginReducer", "cartReducer"],
+  whitelist: ["loginReducer", "cartReducer", "orderReducer"],
 };
 
 const rootReducer = combineReducers({

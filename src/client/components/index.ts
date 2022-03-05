@@ -17,3 +17,4 @@ export { default as CartPagination } from "./CartPagination";
 export { default as PhoneNumber } from "./PhoneNumber";
 export { default as Spinner } from "./Spinner";
 export { default as Terms2 } from "./Terms2";
+export { default as Message } from "./Message";

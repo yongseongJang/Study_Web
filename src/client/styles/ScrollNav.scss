@@ -1,0 +1,23 @@
+.scrollNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid #d7d5d5;
+  background-color: #fff;
+  opacity: 2;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    float: right;
+
+    li {
+      padding: 10px 30px 10px 0px;
+      a {
+        color: #000;
+        font-size: 25px;
+      }
+    }
+  }
+}

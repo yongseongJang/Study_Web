@@ -1,14 +1,14 @@
 import * as React from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import withForm from "../hocs/withForm";
 import orderField from "../utils/fields/orderField";
-import { AddressForm } from ".";
 import { Terms2 } from "../components";
 import OrderTermsField from "../utils/fields/orderTermsField";
 import { IFields } from "../utils/fields/types";
 import { RootState } from "../reducers/types";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
+import orderTermsField from "../utils/fields/orderTermsField";
 
 interface OrderProps {
   renderElements: () => [];
@@ -24,6 +24,12 @@ function OrderForm(props: OrderProps) {
   const [agreeAllState, setAgreeAllState] = useState<boolean>(false);
 
   let errorMessage = "";
+  let password = "";
+  let passwordCheck = "";
+
+  const dispatch = useDispatch();
+
+  const token = useSelector((state: RootState) => state.loginReducer.token);
 
   const cartInfo = useSelector(
     (state: RootState) => state.cartReducer.cartInfo,
@@ -35,10 +41,46 @@ function OrderForm(props: OrderProps) {
     (state: RootState) => state.orderReducer.cartList,
   );
 
+  const totalPrice = cartInfo.reduce((acc, info, index) => {
+    return isAllProduct || cartList.indexOf(index) !== -1
+      ? acc + info.productInfo.price * info.quantity
+      : acc;
+  }, 0);
+
+  const totalSalePrice = cartInfo.reduce((acc, info, index) => {
+    return isAllProduct || cartList.indexOf(index) !== -1
+      ? acc +
+          (info.productInfo.price - info.productInfo.salePrice) * info.quantity
+      : acc;
+  }, 0);
+
   const handleChange = (e: React.ChangeEvent) => {
     setCheckBoxState(Array(OrderTermsField.length).fill(!agreeAllState));
 
     setAgreeAllState(!agreeAllState);
+  };
+
+  const handleSubmitClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (errorMessage) {
+      alert(errorMessage);
+      return;
+    }
+
+    if (password !== passwordCheck) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    for (let i = 0; i < orderTermsField.length; i++) {
+      if (!orderTermsField[i].required) continue;
+
+      if (!checkBoxState[i]) {
+        alert(orderTermsField[i].errorMessage);
+        return;
+      }
+    }
   };
 
   return (
@@ -52,6 +94,7 @@ function OrderForm(props: OrderProps) {
             <tbody>
               {props
                 .renderElements()
+                .slice(0, -2)
                 .map((formElement: { id: string; config: IFields }) => {
                   if (formElement.config.errorMessage) {
                     errorMessage = formElement.config.errorMessage;
@@ -78,6 +121,45 @@ function OrderForm(props: OrderProps) {
           </table>
         </div>
       </div>
+      {!token && (
+        <div className="orderForm__password">
+          <div className="password__title">
+            <h2>비회원 주문조회 비밀번호</h2>
+          </div>
+          <div className="password__contents">
+            <table>
+              <tbody>
+                {props
+                  .renderElements()
+                  .slice(-2)
+                  .map((formElement: { id: string; config: IFields }) => {
+                    if (formElement.config.errorMessage) {
+                      errorMessage = formElement.config.errorMessage;
+                    }
+
+                    if (formElement.id === "pw") {
+                      password = formElement.config.inputElement[0].value;
+                    } else if (formElement.id === "pw_check") {
+                      passwordCheck = formElement.config.inputElement[0].value;
+                    }
+
+                    return (
+                      <tr key={formElement.id}>
+                        <th>{`${formElement.config.elementLabel} `}</th>
+                        <td>
+                          {formElement.config.getComponent(
+                            formElement,
+                            props.onChange,
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
       <div className="orderForm__product">
         <div className="product__title">
           <h2>주문상품</h2>
@@ -115,7 +197,6 @@ function OrderForm(props: OrderProps) {
                         </li>
                       </ul>
                     </div>
-                    <button className="wrap__removeBtn"></button>
                   </div>
                 );
               })
@@ -156,7 +237,6 @@ function OrderForm(props: OrderProps) {
                           </li>
                         </ul>
                       </div>
-                      <button className="wrap__removeBtn"></button>
                     </div>
                   )
                 );
@@ -178,20 +258,21 @@ function OrderForm(props: OrderProps) {
                 <tr>
                   <th>주문상품</th>
                   <td>
-                    <span>KRW</span>
+                    {`KRW `}
+                    <span>{totalPrice}</span>
                   </td>
                 </tr>
                 <tr>
                   <th>할인/부가결제</th>
                   <td>
-                    {`+KRW`}
-                    <span>0</span>
+                    {`-KRW `}
+                    <span>{totalSalePrice}</span>
                   </td>
                 </tr>
                 <tr>
                   <th>배송비</th>
                   <td>
-                    {`+KRW`}
+                    {`+KRW `}
                     <span>0</span>
                   </td>
                 </tr>
@@ -201,7 +282,7 @@ function OrderForm(props: OrderProps) {
           <div className="contents__total">
             <h3>결제금액</h3>
             <strong>
-              {`KRW `} <span></span>
+              KRW <span>{totalPrice - totalSalePrice}</span>
             </strong>
           </div>
         </div>
@@ -240,7 +321,7 @@ function OrderForm(props: OrderProps) {
         </div>
       </div>
       <div className="orderForm__submitBtn">
-        <button>
+        <button onClick={handleSubmitClick}>
           KRW
           <span className="">140,000</span>
           <span className="">결제하기</span>

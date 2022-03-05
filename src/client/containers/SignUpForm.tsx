@@ -39,6 +39,11 @@ function SignUpForm(props: SignUpProps) {
       return;
     }
 
+    if (password !== passwordCheck) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
     for (let i = 0; i < termsLen; i++) {
       if (!signUpTermsField[i].required) continue;
 
@@ -46,11 +51,6 @@ function SignUpForm(props: SignUpProps) {
         alert(signUpTermsField[i].errorMessage);
         return;
       }
-    }
-
-    if (password !== passwordCheck) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
     }
 
     props.submit(signUpActions.signUp)();
