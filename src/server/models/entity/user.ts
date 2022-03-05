@@ -28,12 +28,12 @@ export class User {
   })
   name!: string;
 
-  // @Column({
-  //   type: "varchar",
-  //   nullable: false,
-  //   default: "",
-  // })
-  // address!: string;
+  @Column({
+    type: "varchar",
+    nullable: false,
+    default: "",
+  })
+  address!: string;
 
   @Column({
     name: "cellular_Phone",
@@ -71,7 +71,7 @@ export class User {
     id: string,
     pw: string,
     name: string,
-    // address: string,
+    address: string,
     cellularPhone: string,
     email: string,
     // birthday: string,
@@ -80,7 +80,7 @@ export class User {
     user.id = id;
     user.pw = pw;
     user.name = name;
-    // user.address = address;
+    user.address = address;
     user.cellularPhone = cellularPhone;
     user.email = email;
     // user.birthday = birthday;

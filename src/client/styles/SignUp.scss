@@ -78,6 +78,16 @@
                       width: 50px;
                     }
 
+                    input.addressForm__postcode,
+                    .addressForm__searchBtn {
+                      width: 80px;
+                    }
+
+                    input.addressForm__address,
+                    input.addressForm__detailAddress {
+                      display: block;
+                    }
+
                     .label__info {
                       margin-left: 3px;
                     }

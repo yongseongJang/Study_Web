@@ -16,6 +16,8 @@ function AddressForm(props: AddressFormProps) {
   const addressRef = useRef<HTMLInputElement>(null);
 
   const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
     setIsVisible(true);
   };
 
@@ -38,44 +40,46 @@ function AddressForm(props: AddressFormProps) {
   };
 
   return (
-    <div className="addressForm">
-      {isVisible && (
-        <div className="addressForm__popup">
-          <DaumPostCode onComplete={handleComplete}></DaumPostCode>
-        </div>
-      )}
-      <input
-        type="text"
-        id={props.id}
-        data-index="0"
-        className="addressForm__postcode"
-        onChange={props.onChange}
-        ref={postCodeRef}
-        placeholder="우편번호"
-        readOnly
-      />
-      <button className="addressForm__searchBtn" onClick={handleClick}>
-        주소검색
-      </button>
-      <input
-        type="text"
-        id={props.id}
-        data-index="1"
-        className="addressForm__address"
-        onChange={props.onChange}
-        ref={addressRef}
-        placeholder="기본주소"
-        readOnly
-      />
-      <input
-        type="text"
-        id={props.id}
-        data-index="2"
-        className="addressForm__detailAddress"
-        onChange={props.onChange}
-        placeholder="나머지 주소"
-      />
-    </div>
+    <label className="input__label">
+      <div className="addressForm">
+        {isVisible && (
+          <div className="addressForm__popup">
+            <DaumPostCode onComplete={handleComplete}></DaumPostCode>
+          </div>
+        )}
+        <input
+          type="text"
+          id={props.id}
+          data-index="0"
+          className="addressForm__postcode"
+          onChange={props.onChange}
+          ref={postCodeRef}
+          placeholder="우편번호"
+          readOnly
+        />
+        <button className="addressForm__searchBtn" onClick={handleClick}>
+          주소검색
+        </button>
+        <input
+          type="text"
+          id={props.id}
+          data-index="1"
+          className="addressForm__address"
+          onChange={props.onChange}
+          ref={addressRef}
+          placeholder="기본주소"
+          readOnly
+        />
+        <input
+          type="text"
+          id={props.id}
+          data-index="2"
+          className="addressForm__detailAddress"
+          onChange={props.onChange}
+          placeholder="나머지 주소"
+        />
+      </div>
+    </label>
   );
 }
 

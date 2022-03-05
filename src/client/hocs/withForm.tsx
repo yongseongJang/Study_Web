@@ -68,8 +68,6 @@ const withForm =
           },
         };
 
-        console.log(formData);
-
         setFormState(formData);
         setFormValidation(isFormValid(formData));
       };
@@ -78,11 +76,21 @@ const withForm =
         let formValues = {};
 
         for (const key in formState) {
+          let delemeter = " ";
+          switch (key) {
+            case "cellularPhone":
+              delemeter = "-";
+              break;
+            default:
+              delemeter = " ";
+              break;
+          }
+
           const value = formState[key].inputElement
             .map((element) => {
               return element.value;
             })
-            .join("-");
+            .join(delemeter);
 
           formValues = { ...formValues, [key]: value };
         }

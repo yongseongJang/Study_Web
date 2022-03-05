@@ -7,7 +7,7 @@ export const userRegistrationSchema = Joi.object()
     pw: Joi.string().required(),
     pw_check: Joi.string().required(),
     name: Joi.string().required(),
-    // address: Joi.string().required(),
+    address: Joi.string().required(),
     cellularPhone: Joi.string().required(),
     email: Joi.string()
       .email({ tlds: { allow: ["com", "kr"] } })

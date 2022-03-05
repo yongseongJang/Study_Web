@@ -27,7 +27,7 @@ export class RegisterUserDto {
   id: string;
   pw: string;
   name: string;
-  // address: string;
+  address: string;
   cellularPhone: string;
   email: string;
   // birthday: string;
@@ -36,7 +36,7 @@ export class RegisterUserDto {
     this.id = user.id;
     this.pw = user.pw;
     this.name = user.name;
-    // this.address = user.address;
+    this.address = user.address;
     this.cellularPhone = user.cellularPhone;
     this.email = user.email;
     // this.birthday = user.birthday;
@@ -47,7 +47,7 @@ export class RegisterUserDto {
       this.id,
       this.pw,
       this.name,
-      // this.address,
+      this.address,
       this.cellularPhone,
       this.email,
       // this.birthday,
