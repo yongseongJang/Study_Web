@@ -1,6 +1,7 @@
 import * as React from "react";
 import { IFields } from "../../utils/fields/types";
 import { Input, PhoneNumber } from "../../components";
+import { AddressForm } from "../../containers";
 
 const orderField: { [key: string]: Omit<IFields, "placeholder"> } = {
   recipient: {
@@ -18,6 +19,36 @@ const orderField: { [key: string]: Omit<IFields, "placeholder"> } = {
     errorMessage: "받는 사람 항목은 필수 입력값입니다.",
     required: true,
     getComponent: getInputComponent,
+  },
+  address: {
+    elementLabel: "주소",
+    inputElement: [
+      {
+        inputType: "text",
+        value: "",
+        validation: {
+          required: true,
+        },
+      },
+      {
+        inputType: "text",
+        value: "",
+        validation: {
+          required: true,
+        },
+      },
+      {
+        inputType: "text",
+        value: "",
+        validation: {
+          required: true,
+        },
+      },
+    ],
+    valid: false,
+    errorMessage: "주소 항목은 필수 입력값입니다.",
+    required: true,
+    getComponent: getAddressComponent,
   },
   cellularPhone: {
     elementLabel: "휴대전화",
@@ -71,6 +102,19 @@ const orderField: { [key: string]: Omit<IFields, "placeholder"> } = {
     getComponent: getInputComponent,
   },
 };
+
+function getAddressComponent(
+  formElement: { id: string; config: IFields },
+  onChange: () => void,
+) {
+  return (
+    <AddressForm
+      id={formElement.id}
+      info={formElement.config.info}
+      onChange={onChange}
+    ></AddressForm>
+  );
+}
 
 function getInputPhoneNumberComponent(
   formElement: { id: string; config: IFields },

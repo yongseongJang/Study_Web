@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import withForm from "../hocs/withForm";
 import orderField from "../utils/fields/orderField";
+import { AddressForm } from ".";
 import { Terms2 } from "../components";
 import OrderTermsField from "../utils/fields/orderTermsField";
 import { IFields } from "../utils/fields/types";
@@ -59,7 +60,7 @@ function OrderForm(props: OrderProps) {
                   return (
                     <tr key={formElement.id}>
                       <th>
-                        {`${formElement.config.elementLabel}`}
+                        {`${formElement.config.elementLabel} `}
                         {formElement.config.required && (
                           <img src={ico_required_blue} alt="필수" />
                         )}

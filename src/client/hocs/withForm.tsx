@@ -68,6 +68,8 @@ const withForm =
           },
         };
 
+        console.log(formData);
+
         setFormState(formData);
         setFormValidation(isFormValid(formData));
       };
