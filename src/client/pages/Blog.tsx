@@ -1,13 +1,36 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { default as ScrollNav } from "../components/ScrollNav";
 import { default as Banner } from "../components/Banner";
 import "../styles/Blog.scss";
 
 function Blog() {
-  const [browserHeight, setBrowserHeight] = useState<number>(
-    window.innerWidth ? window.innerHeight : document.body.clientHeight,
+  const [browserWidth, setBrowserWidth] = useState<number>(
+    window.innerHeight ? window.innerWidth : document.body.clientWidth,
   );
+  const sectionRefArray = Array(4)
+    .fill(null)
+    .map((v) => useRef<HTMLElement>(null));
+  const [sectionRef, setSectionRef] =
+    useState<React.RefObject<HTMLElement>[]>(sectionRefArray);
+
+  const [sectionHeight, setSectionHeight] = useState<number[]>([]);
+
+  useEffect(() => {
+    setSectionHeight(
+      sectionRef.map((ref) => {
+        if (ref.current) {
+          return ref.current.offsetTop;
+        }
+
+        return 0;
+      }),
+    );
+  }, [sectionRef]);
+
+  useEffect(() => {
+    setSectionRef(sectionRefArray);
+  }, [browserWidth]);
 
   let resizeTimer = setTimeout(() => {
     return 0;
@@ -19,8 +42,8 @@ function Blog() {
     }
 
     resizeTimer = setTimeout(() => {
-      setBrowserHeight(
-        window.innerWidth ? window.innerHeight : document.body.clientHeight,
+      setBrowserWidth(
+        window.innerHeight ? window.innerWidth : document.body.clientWidth,
       );
     }, 100);
   };
@@ -33,25 +56,21 @@ function Blog() {
     };
   }, []);
 
-  const sectionStyle = {
-    height: browserHeight,
-  };
-
   return (
     <div className="main">
       {/* <Banner></Banner> */}
-      <ScrollNav browserHeight={browserHeight}></ScrollNav>
+      <ScrollNav sectionHeight={sectionHeight}></ScrollNav>
       <div className="content">
-        <section style={sectionStyle}>
+        <section ref={sectionRef[0]}>
           <span>section1</span>
         </section>
-        <section style={sectionStyle}>
+        <section ref={sectionRef[1]}>
           <span>section2</span>
         </section>
-        <section style={sectionStyle}>
+        <section ref={sectionRef[2]}>
           <span>section3</span>
         </section>
-        <section style={sectionStyle}>
+        <section ref={sectionRef[3]}>
           <span>section4</span>
         </section>
       </div>

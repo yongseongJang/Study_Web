@@ -2,7 +2,7 @@ import * as React from "react";
 import "../styles/ScrollNav.scss";
 
 interface ScrollNavProps {
-  browserHeight: number;
+  sectionHeight: number[];
 }
 
 function ScrollNav(props: ScrollNavProps) {
@@ -10,9 +10,9 @@ function ScrollNav(props: ScrollNavProps) {
     e.preventDefault();
 
     window.scrollTo({
-      top:
-        props.browserHeight *
-        Number(e.currentTarget.getAttribute("data-index")),
+      top: props.sectionHeight[
+        Number(e.currentTarget.getAttribute("data-index"))
+      ],
       behavior: "smooth",
     });
   };

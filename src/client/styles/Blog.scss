@@ -10,6 +10,19 @@
       background-color: #000;
     }
 
+    section:nth-child(1) {
+      height: 800px;
+    }
+
+    section:nth-child(2) {
+      height: 1200px;
+    }
+    section:nth-child(3) {
+      height: 900px;
+    }
+    section:nth-child(4) {
+      height: 1300px;
+    }
     section {
       display: flex;
       align-items: center;
@@ -19,6 +32,25 @@
         font-size: 200px;
         font-weight: bold;
         color: inherit;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .main {
+    .content {
+      section:nth-child(1) {
+        height: 1200px;
+      }
+      section:nth-child(2) {
+        height: 2200px;
+      }
+      section:nth-child(3) {
+        height: 3200px;
+      }
+      section:nth-child(4) {
+        height: 4200px;
       }
     }
   }

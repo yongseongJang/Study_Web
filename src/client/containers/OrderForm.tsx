@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import withForm from "../hocs/withForm";
 import orderField from "../utils/fields/orderField";
-import { Terms2 } from "../components";
+import { Payment, Terms2 } from "../components";
 import OrderTermsField from "../utils/fields/orderTermsField";
 import { IFields } from "../utils/fields/types";
 import { RootState } from "../reducers/types";
@@ -94,7 +94,7 @@ function OrderForm(props: OrderProps) {
             <tbody>
               {props
                 .renderElements()
-                .slice(0, -2)
+                .slice(0, -3)
                 .map((formElement: { id: string; config: IFields }) => {
                   if (formElement.config.errorMessage) {
                     errorMessage = formElement.config.errorMessage;
@@ -131,7 +131,7 @@ function OrderForm(props: OrderProps) {
               <tbody>
                 {props
                   .renderElements()
-                  .slice(-2)
+                  .slice(-3, -1)
                   .map((formElement: { id: string; config: IFields }) => {
                     if (formElement.config.errorMessage) {
                       errorMessage = formElement.config.errorMessage;
@@ -285,6 +285,27 @@ function OrderForm(props: OrderProps) {
               KRW <span>{totalPrice - totalSalePrice}</span>
             </strong>
           </div>
+        </div>
+      </div>
+      <div className="orderForm__payment-method">
+        <div className="payment-method__title">
+          <h2>결제수단</h2>
+        </div>
+        <div className="payment-method__contents">
+          {props
+            .renderElements()
+            .slice(-1)
+            .map((formElement: { id: string; config: IFields }) => {
+              if (formElement.config.errorMessage) {
+                errorMessage = formElement.config.errorMessage;
+              }
+
+              return (
+                <>
+                  {formElement.config.getComponent(formElement, props.onChange)}
+                </>
+              );
+            })}
         </div>
       </div>
       <div className="orderForm__agreement">

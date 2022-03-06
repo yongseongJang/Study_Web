@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IFields } from "../../utils/fields/types";
 import { Input, PhoneNumber, Message } from "../../components";
-import { AddressForm } from "../../containers";
+import { AddressForm, Payment } from "../../components";
 import { message } from "../message/deliveryMessage";
 
 const orderField: { [key: string]: Omit<IFields, "placeholder"> } = {
@@ -150,7 +150,36 @@ const orderField: { [key: string]: Omit<IFields, "placeholder"> } = {
     required: true,
     getComponent: getInputComponent,
   },
+  payment: {
+    elementLabel: "결제수단",
+    inputElement: [
+      {
+        inputType: "radio",
+        value: "",
+        validation: {
+          required: true,
+        },
+      },
+    ],
+    valid: false,
+    errorMessage: "결제수단 항목은 필수 입력값입니다.",
+    required: true,
+    getComponent: getPaymentComponent,
+  },
 };
+
+function getPaymentComponent(
+  formElement: { id: string; config: IFields },
+  onChange: () => void,
+) {
+  return (
+    <Payment
+      id={formElement.id}
+      info={formElement.config.info}
+      onChange={onChange}
+    ></Payment>
+  );
+}
 
 function getMessageComponent(
   formElement: { id: string; config: IFields },

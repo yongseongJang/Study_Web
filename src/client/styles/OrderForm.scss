@@ -204,6 +204,24 @@
     }
   }
 
+  .orderForm__payment-method {
+    .payment-method__title {
+      padding: 16px 14px;
+      display: flex;
+      justify-content: space-between;
+
+      h2 {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+
+    .payment-method__contents {
+      border-top: 1px solid #d7d5d5;
+      padding: 14px;
+    }
+  }
+
   .orderForm__agreement {
     border: 1px solid #d7d5d5;
     border-width: 1px 0;

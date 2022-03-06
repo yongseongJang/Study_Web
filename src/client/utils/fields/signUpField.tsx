@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IFields } from "../../utils/fields/types";
 import { Input, PhoneNumber } from "../../components";
-import { AddressForm } from "../../containers";
+import { AddressForm } from "../../components";
 
 const signUpField: { [key: string]: Omit<IFields, "placeholder"> } = {
   id: {
