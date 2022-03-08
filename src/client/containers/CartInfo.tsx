@@ -155,10 +155,11 @@ function CartInfo() {
 
   const handleOrderAllBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (cartInfo.length > 0) {
+      dispatch(orderActions.add(true));
 
-    dispatch(orderActions.add(true));
-
-    history.replace("/order/payment");
+      history.replace("/order/payment");
+    }
   };
 
   const handleSelectedOrderBtnClick = (e: React.MouseEvent) => {

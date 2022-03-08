@@ -59,7 +59,9 @@ function AddressForm(props: AddressFormProps) {
                 </span>
               </span>
             </div>
-            <DaumPostCode onComplete={handleComplete}></DaumPostCode>
+            <div className="popup__content">
+              <DaumPostCode onComplete={handleComplete}></DaumPostCode>
+            </div>
           </div>
         )}
         <input
