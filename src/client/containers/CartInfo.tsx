@@ -164,10 +164,10 @@ function CartInfo() {
   const handleSelectedOrderBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
+    const cartList: number[] = [];
     if (selectAllState) {
       dispatch(orderActions.add(true));
     } else {
-      const cartList: number[] = [];
       checkBoxState.forEach((state, index) => {
         if (state) {
           cartList.push(index);
@@ -177,7 +177,9 @@ function CartInfo() {
       dispatch(orderActions.add(false, cartList));
     }
 
-    history.replace("/order/payment");
+    if (selectAllState || cartList.length > 0) {
+      history.replace("/order/payment");
+    }
   };
 
   return (

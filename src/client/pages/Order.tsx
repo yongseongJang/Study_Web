@@ -1,7 +1,11 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../reducers/types";
 import { OrderForm } from "../containers";
 
 function Order() {
+  const token = useSelector((state: RootState) => state.loginReducer.token);
+
   return (
     <div className="order">
       <div className="order__header">
@@ -19,7 +23,7 @@ function Order() {
               </a>
             </div>
             <div className="material-icons">
-              <a href="/member/login">
+              <a href={token ? "javascript:;" : "/member/login"}>
                 <span className="material-icons-outlined">person</span>
               </a>
             </div>
