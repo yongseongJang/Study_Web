@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import withForm from "../hocs/withForm";
 import orderField from "../utils/fields/orderField";
-import { Payment, Terms2 } from "../components";
+import { Terms2 } from "../components";
 import OrderTermsField from "../utils/fields/orderTermsField";
 import { IFields } from "../utils/fields/types";
 import { RootState } from "../reducers/types";

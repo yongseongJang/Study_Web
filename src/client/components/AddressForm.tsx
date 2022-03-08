@@ -37,6 +37,12 @@ function AddressForm(props: AddressFormProps) {
       addressRef.current.setAttribute("value", addr);
       addressRef.current.dispatchEvent(new Event("input", { bubbles: true }));
     }
+
+    setIsVisible(false);
+  };
+
+  const handleCloseBtnClick = (e: React.MouseEvent) => {
+    setIsVisible(false);
   };
 
   return (
@@ -44,6 +50,15 @@ function AddressForm(props: AddressFormProps) {
       <div className="addressForm">
         {isVisible && (
           <div className="addressForm__popup">
+            <div className="popup__header">
+              <h3>주소 검색</h3>
+              <span className="header__closeBtn" onClick={handleCloseBtnClick}>
+                <span className="closeBtn__wrap">
+                  <span className="wrap__line1"></span>
+                  <span className="wrap__line2"></span>
+                </span>
+              </span>
+            </div>
             <DaumPostCode onComplete={handleComplete}></DaumPostCode>
           </div>
         )}
