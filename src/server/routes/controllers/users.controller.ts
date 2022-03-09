@@ -3,6 +3,7 @@ import asyncHandler from "../../utils/asyncHandler";
 import { UserService } from "../../services";
 import { LoginDto } from "../../dto";
 import { RegisterUserDto } from "../../dto/user.dto";
+import { RequestWithUser } from "../../interfaces";
 class UserController {
   private userService: UserService;
 
@@ -27,6 +28,18 @@ class UserController {
       await this.userService.registerUser(userInfo);
 
       res.status(200).send();
+    },
+  );
+
+  public readShippingInfoByPrimaryKey: RequestHandler = asyncHandler(
+    async (req: RequestWithUser, res: Response, next: NextFunction) => {
+      const user_id = req.user._id;
+
+      const shippingInfo = await this.userService.readShippingInfoByPrimaryKey(
+        user_id,
+      );
+
+      res.status(200).send({ shippingInfo });
     },
   );
 }

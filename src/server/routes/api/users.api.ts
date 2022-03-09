@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../controllers";
+import authentication from "../middlewares/authentication";
 
 class UserRouter {
   private static instance: UserRouter;
@@ -24,6 +25,12 @@ class UserRouter {
     this.router.post("/login", this.userController.login);
 
     this.router.post("/", this.userController.registerUser);
+
+    this.router.get(
+      "/shipping",
+      authentication,
+      this.userController.readShippingInfoByPrimaryKey,
+    );
   }
 
   public getRouter(): Router {

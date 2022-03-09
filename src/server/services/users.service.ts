@@ -86,6 +86,14 @@ class UserService {
     }
   }
 
+  public async readShippingInfoByPrimaryKey(user_id: number) {
+    const shippingInfo = await this.userRepository.readShippingInfoByPrimaryKey(
+      user_id,
+    );
+
+    return shippingInfo ? shippingInfo.toDto() : undefined;
+  }
+
   private stringPasswordToHash = (password: string): string | object => {
     return bcrypt
       .hash(password, 10)

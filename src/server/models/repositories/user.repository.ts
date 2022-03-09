@@ -53,6 +53,25 @@ class UserRepository extends Repository<User> {
       throw new Errorhandler(500, err.name, err.message);
     }
   }
+
+  public async readShippingInfoByPrimaryKey(
+    _id: number,
+  ): Promise<User | undefined> {
+    try {
+      return await this.manager.transaction(
+        async (transactionEntityManager) => {
+          const user = await transactionEntityManager.findOne(User, {
+            select: ["name", "address", "cellularPhone", "email"],
+            where: { _id },
+          });
+
+          return user;
+        },
+      );
+    } catch (err: any) {
+      throw new Errorhandler(500, err.name, err.message);
+    }
+  }
 }
 
 export default UserRepository;

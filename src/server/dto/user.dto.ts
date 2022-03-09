@@ -54,3 +54,38 @@ export class RegisterUserDto {
     );
   }
 }
+
+export class ShippingInfoDto {
+  name: string;
+  address: string;
+  cellularPhone: string;
+  email: string;
+
+  constructor(
+    name: string,
+    address: string,
+    cellularPhone: string,
+    email: string,
+  ) {
+    this.name = name;
+    this.address = address;
+    this.cellularPhone = cellularPhone;
+    this.email = email;
+  }
+
+  static from(
+    name: string,
+    address: string,
+    cellularPhone: string,
+    email: string,
+  ) {
+    const shippingInfo = new ShippingInfoDto(
+      name,
+      address,
+      cellularPhone,
+      email,
+    );
+
+    return shippingInfo;
+  }
+}

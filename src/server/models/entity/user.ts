@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-
+import { ShippingInfoDto } from "../../dto";
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -86,5 +86,14 @@ export class User {
     // user.birthday = birthday;
 
     return user;
+  }
+
+  public toDto() {
+    return ShippingInfoDto.from(
+      this.name,
+      this.address,
+      this.cellularPhone,
+      this.email,
+    );
   }
 }
