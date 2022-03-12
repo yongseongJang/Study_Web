@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers/types";
-import { productActions, cartActions } from "../actions";
+import { productActions, cartActions, orderActions } from "../actions";
 import {
   ProductDetail,
   ProductImage,
@@ -12,6 +12,7 @@ import {
 } from "../components";
 import { CartModal } from "../containers";
 import { IOption, ICartInfo } from "../interfaces";
+import { history } from "../utils/history";
 interface ProductInfoProps {
   category: string;
   productId: number;
@@ -29,6 +30,10 @@ function ProductInfo(props: ProductInfoProps) {
     (state: RootState) => state.productReducer.product,
   );
   const token = useSelector((state: RootState) => state.loginReducer.token);
+
+  const cartInfo = useSelector(
+    (state: RootState) => state.cartReducer.cartInfo,
+  );
 
   let resizeTimer = setTimeout(() => {
     return 0;
@@ -57,32 +62,49 @@ function ProductInfo(props: ProductInfoProps) {
     };
   }, []);
 
+  const handleLeftBtnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const sizes = Object.keys(option);
+    if (sizes.length > 0) {
+      addToCart(sizes, token);
+
+      dispatch(orderActions.add(false, [cartInfo.length]));
+
+      history.replace("/order/payment");
+    }
+  };
+
   const handleRightBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
     const sizes = Object.keys(option);
     if (!isVisibleCart && sizes.length > 0) {
-      const cartInfo: ICartInfo[] = [];
-
-      sizes.forEach((size) => {
-        cartInfo.push({
-          productId: product._id,
-          option: size,
-          quantity: option[size],
-          category: props.category.replace(/ /g, "_"),
-          productInfo: {
-            name: product.name,
-            price: product.price,
-            salePrice: product.salePrice,
-            image: product.image,
-          },
-        });
-      });
-
-      dispatch(cartActions.add(cartInfo, token));
+      addToCart(sizes, token);
     }
 
     setIsVisibleCart(!isVisibleCart);
+  };
+
+  const addToCart = (sizes: string[], token: string) => {
+    const cartInfo: ICartInfo[] = [];
+
+    sizes.forEach((size) => {
+      cartInfo.push({
+        productId: product._id,
+        option: size,
+        quantity: option[size],
+        category: props.category.replace(/ /g, "_"),
+        productInfo: {
+          name: product.name,
+          price: product.price,
+          salePrice: product.salePrice,
+          image: product.image,
+        },
+      });
+    });
+
+    dispatch(cartActions.add(cartInfo, token));
   };
   return (
     <div className="productInfo">
@@ -121,7 +143,11 @@ function ProductInfo(props: ProductInfoProps) {
                     setOption={setOption}
                   ></ProductOption>
                   <div className="box__order-wrap">
-                    <a className="order-wrap__leftBtn" href="">
+                    <a
+                      className="order-wrap__leftBtn"
+                      href=""
+                      onClick={handleLeftBtnClick}
+                    >
                       BUY NOW
                     </a>
                     <a

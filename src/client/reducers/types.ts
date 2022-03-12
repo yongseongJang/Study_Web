@@ -1,4 +1,4 @@
-import { IPagination, IProduct, ICartInfo } from "../interfaces";
+import { IPagination, IProduct, ICartInfo, IShippingInfo } from "../interfaces";
 export interface RootState {
   loginReducer: loginReducerState;
   signupReducer: signupReducerState;
@@ -42,4 +42,6 @@ export interface orderReducerState {
   isRequesting: boolean;
   isAllProduct: boolean;
   cartList: number[];
+  shippingInfo: IShippingInfo;
+  error: Error;
 }

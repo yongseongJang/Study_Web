@@ -1,12 +1,25 @@
 import { take, call, put, fork } from "redux-saga/effects";
 import { orderConstants, orderActions } from "../actions";
+import { orderServices } from "../services/orderService";
 
 export function* requestAdd(isAllProduct: boolean, cartList: number[]) {
   try {
-    console.log(isAllProduct, cartList);
     yield put(orderActions.addSuccess(isAllProduct, cartList));
   } catch (err) {
     yield put(orderActions.addFailure(err));
+  }
+}
+
+export function* requestShippingInfo(token: string) {
+  try {
+    const { shippingInfo } = yield call(
+      orderServices.requestShippingInfo,
+      token,
+    );
+
+    yield put(orderActions.requestShippingInfoSuccess(shippingInfo));
+  } catch (err) {
+    yield put(orderActions.requestShippingInfoFailure(err));
   }
 }
 
@@ -20,4 +33,15 @@ export function* watchRequestAdd() {
   }
 }
 
-export const orderSaga = [fork(watchRequestAdd)];
+export function* watchRequestShippingInfo() {
+  while (true) {
+    const { token } = yield take(orderConstants.REQUEST_SHIPPING_INFO);
+
+    yield call(requestShippingInfo, token);
+  }
+}
+
+export const orderSaga = [
+  fork(watchRequestAdd),
+  fork(watchRequestShippingInfo),
+];
