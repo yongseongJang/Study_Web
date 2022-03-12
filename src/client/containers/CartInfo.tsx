@@ -76,13 +76,17 @@ function CartInfo() {
 
     dispatch(cartActions.selectRemove(selectInfo, token));
 
-    setCheckBoxState(Array(cartInfo.length).fill(false));
+    setCheckBoxState(Array(cartInfo.length - selectInfo.length).fill(false));
     setSelectAllState(false);
   };
 
   const handleRemoveAllClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
+    if (selectAllState) {
+      setSelectAllState(false);
+      setCheckBoxState([]);
+    }
     dispatch(cartActions.removeAll(token));
   };
 
@@ -168,14 +172,16 @@ function CartInfo() {
     const cartList: number[] = [];
     if (selectAllState) {
       dispatch(orderActions.add(true));
-    } else {
+    } else if (checkBoxState.length > 0) {
       checkBoxState.forEach((state, index) => {
         if (state) {
           cartList.push(index);
         }
       });
 
-      dispatch(orderActions.add(false, cartList));
+      if (cartList.length > 0) {
+        dispatch(orderActions.add(false, cartList));
+      }
     }
 
     if (selectAllState || cartList.length > 0) {
