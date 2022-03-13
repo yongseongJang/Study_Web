@@ -7,3 +7,7 @@ export { ProductDetail } from "./productDetail";
 export { ProductCaution } from "./productCaution";
 export { ProductSize } from "./productSize";
 export { Cart } from "./cart";
+export { MemberOrder } from "./memberOrder";
+export { MemberOrderDetail } from "./memberOrderDetail";
+export { NonMemberOrder } from "./nonMemberOrder";
+export { NonMemberOrderDetail } from "./nonMemberOrderDetail";

@@ -9,3 +9,5 @@ export { default as ProductCategory } from "./productCategory.interface";
 export { default as ProductSize } from "./productSize.interface";
 export { default as Pagination } from "./pagination.interface";
 export { default as Cart } from "./cart.interface";
+export { default as Order } from "./order.interface";
+export { default as OrderDetail } from "./orderDetail.interface";
