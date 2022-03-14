@@ -7,10 +7,10 @@ interface Order {
   email: string;
   message?: string;
   price: number;
-  payment: string;
+  payment: number;
   date: Date;
-  pw?: string;
-  orderDetail?: IOrderDetail[];
+  pw: string;
+  orderDetail: IOrderDetail[];
 }
 
 export default Order;

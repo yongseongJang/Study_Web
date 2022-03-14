@@ -14,7 +14,7 @@ export class MemberOrderDetail {
 
   @Column({
     name: "quantity",
-    type: "number",
+    type: "int",
     nullable: false,
     default: 0,
   })
@@ -22,7 +22,7 @@ export class MemberOrderDetail {
 
   @Column({
     name: "price",
-    type: "number",
+    type: "int",
     nullable: false,
     default: 0,
   })
@@ -32,13 +32,13 @@ export class MemberOrderDetail {
     name: "order_detail_option",
     type: "varchar",
     nullable: false,
-    default: 0,
+    default: "",
   })
   orderDetailOption!: string;
 
   @Column({
     name: "status",
-    type: "number",
+    type: "int",
     nullable: false,
     default: 0,
   })
@@ -51,10 +51,45 @@ export class MemberOrderDetail {
   })
   order!: MemberOrder;
 
+  @Column({
+    name: "order_id",
+    type: "int",
+    nullable: false,
+    default: 0,
+  })
+  orderId!: number;
+
   @ManyToOne(() => Product)
   @JoinColumn({
     name: "product_id",
     referencedColumnName: "_id",
   })
   product!: Product;
+
+  @Column({
+    name: "product_id",
+    type: "int",
+    nullable: false,
+    default: 0,
+  })
+  productId!: number;
+
+  static from(
+    quantity: number,
+    price: number,
+    orderDetailOption: string,
+    status: number,
+    productId: number,
+  ) {
+    const memberOrderDetail = new MemberOrderDetail();
+    memberOrderDetail.quantity = quantity;
+    memberOrderDetail.price = price;
+    memberOrderDetail.orderDetailOption = orderDetailOption;
+    memberOrderDetail.status = status;
+    memberOrderDetail.productId = productId;
+  }
+
+  public setOrderId(orderId: number) {
+    this.orderId = orderId;
+  }
 }

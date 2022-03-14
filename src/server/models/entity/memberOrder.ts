@@ -29,7 +29,7 @@ export class MemberOrder {
     nullable: false,
     default: "",
   })
-  address!: "";
+  address!: string;
 
   @Column({
     name: "cellular_phone",
@@ -57,19 +57,19 @@ export class MemberOrder {
 
   @Column({
     name: "price",
-    type: "number",
+    type: "int",
     nullable: false,
-    default: "",
+    default: 0,
   })
   price!: number;
 
   @Column({
     name: "payment",
-    type: "varchar",
+    type: "int",
     nullable: false,
-    default: "",
+    default: 0,
   })
-  payment!: string;
+  payment!: number;
 
   @CreateDateColumn({
     name: "date",
@@ -89,4 +89,28 @@ export class MemberOrder {
     (memberOrderDetail) => memberOrderDetail.order,
   )
   memberOrderDetail!: MemberOrderDetail[];
+
+  static from(
+    recipient: string,
+    address: string,
+    cellularPhone: string,
+    email: string,
+    price: number,
+    payment: number,
+    message?: string,
+  ) {
+    const memberOrder = new MemberOrder();
+    memberOrder.recipient = recipient;
+    memberOrder.address = address;
+    memberOrder.cellularPhone = cellularPhone;
+    memberOrder.email = email;
+    memberOrder.price = price;
+    memberOrder.payment = payment;
+
+    if (message) {
+      memberOrder.message = message;
+    }
+
+    return memberOrder;
+  }
 }

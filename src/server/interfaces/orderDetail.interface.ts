@@ -2,7 +2,7 @@ interface OrderDetail {
   quantity: number;
   price: number;
   orderDetailOption: string;
-  status: string;
+  status: number;
   productId: number;
 }
 

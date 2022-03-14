@@ -14,7 +14,7 @@ export class NonMemberOrderDetail {
 
   @Column({
     name: "quantity",
-    type: "number",
+    type: "int",
     nullable: false,
     default: 0,
   })
@@ -22,7 +22,7 @@ export class NonMemberOrderDetail {
 
   @Column({
     name: "price",
-    type: "number",
+    type: "int",
     nullable: false,
     default: 0,
   })
@@ -32,13 +32,13 @@ export class NonMemberOrderDetail {
     name: "order_detail_option",
     type: "varchar",
     nullable: false,
-    default: 0,
+    default: "",
   })
   orderDetailOption!: string;
 
   @Column({
     name: "status",
-    type: "number",
+    type: "int",
     nullable: false,
     default: 0,
   })

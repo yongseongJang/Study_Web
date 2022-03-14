@@ -55,19 +55,19 @@ export class NonMemberOrder {
 
   @Column({
     name: "price",
-    type: "number",
+    type: "int",
     nullable: false,
-    default: "",
+    default: 0,
   })
   price!: number;
 
   @Column({
     name: "payment",
-    type: "varchar",
+    type: "int",
     nullable: false,
-    default: "",
+    default: 0,
   })
-  payment!: string;
+  payment!: number;
 
   @CreateDateColumn({
     name: "date",
