@@ -87,6 +87,8 @@ export class MemberOrderDetail {
     memberOrderDetail.orderDetailOption = orderDetailOption;
     memberOrderDetail.status = status;
     memberOrderDetail.productId = productId;
+
+    return memberOrderDetail;
   }
 
   public setOrderId(orderId: number) {

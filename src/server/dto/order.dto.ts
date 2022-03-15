@@ -26,9 +26,12 @@ export class MemberOrderDto {
     this.orderDetail = order.orderDetail;
   }
 
-  public toEntity() {
-    return [
-      MemberOrder.from(
+  public toEntity(): {
+    memberOrder: MemberOrder;
+    memberOrderDetail: MemberOrderDetail[];
+  } {
+    return {
+      memberOrder: MemberOrder.from(
         this.recipient,
         this.address,
         this.cellularPhone,
@@ -36,7 +39,7 @@ export class MemberOrderDto {
         this.price,
         this.payment,
       ),
-      this.orderDetail.map((detail) =>
+      memberOrderDetail: this.orderDetail.map((detail) =>
         MemberOrderDetail.from(
           detail.quantity,
           detail.price,
@@ -45,7 +48,7 @@ export class MemberOrderDto {
           detail.productId,
         ),
       ),
-    ];
+    };
   }
 }
 
