@@ -84,6 +84,14 @@ export class MemberOrder {
   })
   user!: User;
 
+  @Column({
+    name: "user_id",
+    type: "int",
+    nullable: false,
+    default: 0,
+  })
+  userId!: number;
+
   @OneToMany(
     () => MemberOrderDetail,
     (memberOrderDetail) => memberOrderDetail.order,
@@ -112,5 +120,9 @@ export class MemberOrder {
     }
 
     return memberOrder;
+  }
+
+  public setUserId(userId: number) {
+    this.userId = userId;
   }
 }

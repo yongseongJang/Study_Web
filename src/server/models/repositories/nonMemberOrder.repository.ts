@@ -10,10 +10,16 @@ class NonMemberOrderRepository extends Repository<NonMemberOrder> {
   ): Promise<void> {
     try {
       await this.manager.transaction(async (transactionEntityManager) => {
-        await transactionEntityManager.insert(NonMemberOrder, order);
+        const result = await transactionEntityManager.insert(
+          NonMemberOrder,
+          order,
+        );
+
+        const orderId = result.identifiers[0]._id;
 
         await Promise.all(
           orderDetails.map(async (detail) => {
+            detail.setOrderId(orderId);
             await transactionEntityManager.insert(NonMemberOrderDetail, detail);
           }),
         );

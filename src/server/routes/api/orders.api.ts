@@ -27,6 +27,8 @@ class OrderRouter {
       authentication,
       this.orderController.memberOrder,
     );
+
+    this.router.post("/", this.orderController.nonMemberOrder);
   }
 
   public getRouter(): Router {

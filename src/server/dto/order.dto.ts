@@ -52,4 +52,51 @@ export class MemberOrderDto {
   }
 }
 
-export class NonMemberOrderDto {}
+export class NonMemberOrderDto {
+  recipient: string;
+  address: string;
+  cellularPhone: string;
+  email: string;
+  message?: string;
+  price: number;
+  payment: number;
+  pw: string;
+  orderDetail: IOrderDetail[];
+
+  constructor(order: Omit<IOrder, "date">) {
+    this.recipient = order.recipient;
+    this.address = order.address;
+    this.cellularPhone = order.cellularPhone;
+    this.email = order.email;
+    this.price = order.price;
+    this.payment = order.payment;
+    this.pw = order.pw;
+    this.orderDetail = order.orderDetail;
+  }
+
+  public toEntity(): {
+    nonMemberOrder: NonMemberOrder;
+    nonMemberOrderDetail: NonMemberOrderDetail[];
+  } {
+    return {
+      nonMemberOrder: NonMemberOrder.from(
+        this.recipient,
+        this.address,
+        this.cellularPhone,
+        this.email,
+        this.price,
+        this.payment,
+        this.pw,
+      ),
+      nonMemberOrderDetail: this.orderDetail.map((detail) =>
+        NonMemberOrderDetail.from(
+          detail.quantity,
+          detail.price,
+          detail.orderDetailOption,
+          detail.status,
+          detail.productId,
+        ),
+      ),
+    };
+  }
+}

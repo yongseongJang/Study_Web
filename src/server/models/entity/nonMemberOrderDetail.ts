@@ -51,10 +51,47 @@ export class NonMemberOrderDetail {
   })
   order!: NonMemberOrder;
 
+  @Column({
+    name: "order_id",
+    type: "int",
+    nullable: false,
+    default: 0,
+  })
+  orderId!: number;
+
   @ManyToOne(() => Product)
   @JoinColumn({
     name: "product_id",
     referencedColumnName: "_id",
   })
   product!: Product;
+
+  @Column({
+    name: "product_id",
+    type: "int",
+    nullable: false,
+    default: 0,
+  })
+  productId!: number;
+
+  static from(
+    quantity: number,
+    price: number,
+    orderDetailOption: string,
+    status: number,
+    productId: number,
+  ) {
+    const memberOrderDetail = new NonMemberOrderDetail();
+    memberOrderDetail.quantity = quantity;
+    memberOrderDetail.price = price;
+    memberOrderDetail.orderDetailOption = orderDetailOption;
+    memberOrderDetail.status = status;
+    memberOrderDetail.productId = productId;
+
+    return memberOrderDetail;
+  }
+
+  public setOrderId(orderId: number) {
+    this.orderId = orderId;
+  }
 }
