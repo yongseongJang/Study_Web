@@ -1,4 +1,5 @@
 import {
+  MemberOrderDetailRepository,
   MemberOrderRepository,
   NonMemberOrderRepository,
 } from "../models/repositories";
@@ -6,9 +7,10 @@ import { getConnection } from "typeorm";
 import createValidator from "../utils/validation/createValidator";
 import { memberOrderSchema } from "../utils/validation/schemas/memberOrderSchema";
 import { nonMemberOrderSchema } from "../utils/validation/schemas/nonMemberOrderSchema";
-import { MemberOrderDto, NonMemberOrderDto } from "../dto";
+import { MemberOrderDto, NonMemberOrderDto, ReadOrderDetailDto } from "../dto";
 import * as bcrypt from "bcrypt";
 import ErrorHandler from "../utils/error";
+import { MemberOrderDetail } from "../models/entity";
 
 const validatedMemberOrderDto = createValidator(memberOrderSchema);
 const validatedNonMemberOrderDto = createValidator(nonMemberOrderSchema);
@@ -16,6 +18,7 @@ const validatedNonMemberOrderDto = createValidator(nonMemberOrderSchema);
 class OrderService {
   private memberOrderRepository: MemberOrderRepository;
   private nonMemberOrderRepository: NonMemberOrderRepository;
+  private memberOrderDetailRepository: MemberOrderDetailRepository;
 
   constructor() {
     const connection = getConnection();
@@ -24,6 +27,9 @@ class OrderService {
     );
     this.nonMemberOrderRepository = connection.getCustomRepository(
       NonMemberOrderRepository,
+    );
+    this.memberOrderDetailRepository = connection.getCustomRepository(
+      MemberOrderDetailRepository,
     );
   }
 
@@ -66,6 +72,22 @@ class OrderService {
     }
   }
 
+  public async readMemberOrderDetail(
+    userId: number,
+  ): Promise<ReadOrderDetailDto[]> {
+    try {
+      const orderDetail =
+        await this.memberOrderDetailRepository.readOrderDetail(userId);
+
+      const readOrderDetailDto =
+        this.memberOrderDetailEntitiesToDto(orderDetail);
+
+      return readOrderDetailDto;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   private stringPasswordToHash = (password: string): string | object => {
     return bcrypt
       .hash(password, 10)
@@ -76,6 +98,14 @@ class OrderService {
         return new ErrorHandler(500, err.name, err.message);
       });
   };
+
+  private memberOrderDetailEntitiesToDto(
+    entities: MemberOrderDetail[],
+  ): ReadOrderDetailDto[] {
+    return entities.map((entity) => {
+      return entity.toDto();
+    });
+  }
 }
 
 export default OrderService;

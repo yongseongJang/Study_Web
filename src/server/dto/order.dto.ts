@@ -100,3 +100,41 @@ export class NonMemberOrderDto {
     };
   }
 }
+
+export class ReadOrderDetailDto {
+  quantity: number;
+  price: number;
+  orderDetailOption: string;
+  status: number;
+  orderId: number;
+  productId: number;
+
+  constructor(orderDetail: IOrderDetail) {
+    this.quantity = orderDetail.quantity;
+    this.price = orderDetail.price;
+    this.orderDetailOption = orderDetail.orderDetailOption;
+    this.status = orderDetail.status;
+    this.orderId = orderDetail.orderId;
+    this.productId = orderDetail.productId;
+  }
+
+  static from(
+    quantity: number,
+    price: number,
+    orderDetailOption: string,
+    status: number,
+    orderId: number,
+    productId: number,
+  ) {
+    const readOrderDto = new ReadOrderDetailDto({
+      quantity,
+      price,
+      orderDetailOption,
+      status,
+      orderId,
+      productId,
+    });
+
+    return readOrderDto;
+  }
+}

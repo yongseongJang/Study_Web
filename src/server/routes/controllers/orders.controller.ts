@@ -30,6 +30,16 @@ class OrderController {
       res.status(200).send();
     },
   );
+
+  public readMemberOrderDetail: RequestHandler = asyncHandler(
+    async (req: RequestWithUser, res: Response, next: NextFunction) => {
+      const userId = req.user._id;
+
+      const result = await this.orderService.readMemberOrderDetail(userId);
+
+      res.status(200).send(result);
+    },
+  );
 }
 
 export default OrderController;

@@ -3,6 +3,7 @@ interface OrderDetail {
   price: number;
   orderDetailOption: string;
   status: number;
+  orderId: number;
   productId: number;
 }
 
