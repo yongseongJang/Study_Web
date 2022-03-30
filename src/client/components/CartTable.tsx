@@ -41,119 +41,117 @@ function CartTable(props: CartTableProps) {
                 checked={props.selectAllState}
               />
             </th>
-            {props.attributes
-              ? props.attributes.map((attr, index) => {
-                  return (
-                    <th scope="col" key={index}>
-                      {attr}
-                    </th>
-                  );
-                })
-              : null}
+            {props.attributes &&
+              props.attributes.map((attr, index) => {
+                return (
+                  <th scope="col" key={index}>
+                    {attr}
+                  </th>
+                );
+              })}
           </tr>
         </thead>
         <tbody>
-          {props.instances
-            ? props.instances.map((instance, index) => {
-                return (
-                  <tr key={index}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        data-id={instance.productId}
-                        data-index={index}
-                        onChange={props.onCheckBoxStateChange}
-                        checked={props.checkBoxState[index]}
+          {props.instances &&
+            props.instances.map((instance, index) => {
+              return (
+                <tr key={index}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      data-id={instance.productId}
+                      data-index={index}
+                      onChange={props.onCheckBoxStateChange}
+                      checked={props.checkBoxState[index]}
+                    />
+                  </td>
+                  <td>
+                    <a
+                      href={`/products/${instance.category}/${instance.productId}`}
+                    >
+                      <img
+                        src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${instance.productInfo.image}`}
+                        alt="상품 이미지"
                       />
-                    </td>
-                    <td>
+                    </a>
+                  </td>
+                  <td className="product-info">
+                    <strong>
                       <a
                         href={`/products/${instance.category}/${instance.productId}`}
+                      >{`${instance.productInfo.name}`}</a>
+                    </strong>
+                    <ul>
+                      <li>
+                        <strong>{`[옵션: ${instance.option}]`}</strong>
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="product-option">
+                    <span
+                      className="option__quantity"
+                      data-id={instance.productId}
+                      data-option={instance.option}
+                      data-quantity={instance.quantity}
+                    >
+                      <input
+                        value={instance.quantity}
+                        onChange={props.onQuantityChange}
+                      />
+                      <a
+                        href=""
+                        className="quantity__increase"
+                        onClick={props.onIncreaseClick}
                       >
-                        <img
-                          src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${instance.productInfo.image}`}
-                          alt="상품 이미지"
-                        />
-                      </a>
-                    </td>
-                    <td className="product-info">
-                      <strong>
-                        <a
-                          href={`/products/${instance.category}/${instance.productId}`}
-                        >{`${instance.productInfo.name}`}</a>
-                      </strong>
-                      <ul>
-                        <li>
-                          <strong>{`[옵션: ${instance.option}]`}</strong>
-                        </li>
-                      </ul>
-                    </td>
-                    <td className="product-option">
-                      <span
-                        className="option__quantity"
-                        data-id={instance.productId}
-                        data-option={instance.option}
-                        data-quantity={instance.quantity}
-                      >
-                        <input
-                          value={instance.quantity}
-                          onChange={props.onQuantityChange}
-                        />
-                        <a
-                          href=""
-                          className="quantity__increase"
-                          onClick={props.onIncreaseClick}
-                        >
-                          <img src={btn_count_up} alt="수량증가" />
-                        </a>
-                        <a
-                          href=""
-                          className="quantity__decrease"
-                          onClick={props.onDecreaseClick}
-                        >
-                          <img src={btn_count_down} alt="수량감소" />
-                        </a>
-                      </span>
-                    </td>
-                    <td>
-                      <strong>{`KRW ${
-                        instance.productInfo.price * instance.quantity
-                      }`}</strong>
-                    </td>
-                    <td>
-                      <strong>{`-KRW ${
-                        instance.productInfo.salePrice > 0
-                          ? (instance.productInfo.price -
-                              instance.productInfo.salePrice) *
-                            instance.quantity
-                          : 0
-                      }`}</strong>
-                    </td>
-                    <td>
-                      <span>-</span>
-                    </td>
-                    <td>
-                      <div>기본배송</div>
-                    </td>
-                    <td>무료</td>
-                    <td className="button">
-                      <a href="" className="button__order">
-                        주문하기
+                        <img src={btn_count_up} alt="수량증가" />
                       </a>
                       <a
                         href=""
-                        className="button__remove"
-                        data-id={instance.productId}
-                        data-option={instance.option}
-                        onClick={props.onRemoveClick}
+                        className="quantity__decrease"
+                        onClick={props.onDecreaseClick}
                       >
-                        <i className="icon-delete"></i>삭제
+                        <img src={btn_count_down} alt="수량감소" />
                       </a>
-                    </td>
-                  </tr>
-                );
-              })
-            : null}
+                    </span>
+                  </td>
+                  <td>
+                    <strong>{`KRW ${
+                      instance.productInfo.price * instance.quantity
+                    }`}</strong>
+                  </td>
+                  <td>
+                    <strong>{`-KRW ${
+                      instance.productInfo.salePrice > 0
+                        ? (instance.productInfo.price -
+                            instance.productInfo.salePrice) *
+                          instance.quantity
+                        : 0
+                    }`}</strong>
+                  </td>
+                  <td>
+                    <span>-</span>
+                  </td>
+                  <td>
+                    <div>기본배송</div>
+                  </td>
+                  <td>무료</td>
+                  <td className="button">
+                    <a href="" className="button__order">
+                      주문하기
+                    </a>
+                    <a
+                      href=""
+                      className="button__remove"
+                      data-id={instance.productId}
+                      data-option={instance.option}
+                      onClick={props.onRemoveClick}
+                    >
+                      <i className="icon-delete"></i>삭제
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

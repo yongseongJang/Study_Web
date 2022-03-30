@@ -8,6 +8,7 @@ import {
   Product,
   Cart,
   Order,
+  OrderList,
   Error,
   Blog,
 } from "./pages";
@@ -26,6 +27,7 @@ function App() {
         <Route path="/products/:category/:productId" component={Product} />
         <Route path="/order/cart" component={Cart} />
         <Route path="/order/payment" component={Order} />
+        <Route path="/order/list" component={OrderList} />
         <Route path="/blog" component={Blog} />
         <Route component={Error} />
       </Switch>
