@@ -28,6 +28,22 @@ class NonMemberOrderRepository extends Repository<NonMemberOrder> {
       throw new ErrorHandler(500, err.name, err.message);
     }
   }
+
+  public async readPasswordByOrderId(order_id: number): Promise<null | string> {
+    try {
+      return await this.manager.transaction(
+        async (transactionEntityManager) => {
+          const order = await transactionEntityManager.findOne(NonMemberOrder, {
+            _id: order_id,
+          });
+
+          return order ? order.pw : null;
+        },
+      );
+    } catch (err: any) {
+      throw new ErrorHandler(500, err.name, err.message);
+    }
+  }
 }
 
 export default NonMemberOrderRepository;

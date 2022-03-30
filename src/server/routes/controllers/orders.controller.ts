@@ -40,6 +40,18 @@ class OrderController {
       res.status(200).send(result);
     },
   );
+
+  public readNonMemberOrderDetail: RequestHandler = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const nonMemberInfo = req.body.nonMemberInfo;
+
+      const result = await this.orderService.readNonMemberOrderDetail(
+        nonMemberInfo,
+      );
+
+      res.status(200).send(result);
+    },
+  );
 }
 
 export default OrderController;

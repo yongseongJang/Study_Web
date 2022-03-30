@@ -2,6 +2,7 @@ import {
   MemberOrderDetailRepository,
   MemberOrderRepository,
   NonMemberOrderRepository,
+  NonMemberOrderDetailRepository,
 } from "../models/repositories";
 import { getConnection } from "typeorm";
 import createValidator from "../utils/validation/createValidator";
@@ -10,7 +11,8 @@ import { nonMemberOrderSchema } from "../utils/validation/schemas/nonMemberOrder
 import { MemberOrderDto, NonMemberOrderDto, ReadOrderDetailDto } from "../dto";
 import * as bcrypt from "bcrypt";
 import ErrorHandler from "../utils/error";
-import { MemberOrderDetail } from "../models/entity";
+import { MemberOrderDetail, NonMemberOrderDetail } from "../models/entity";
+import { NonMemberOrderInfo } from "../dto/order.dto";
 
 const validatedMemberOrderDto = createValidator(memberOrderSchema);
 const validatedNonMemberOrderDto = createValidator(nonMemberOrderSchema);
@@ -19,6 +21,7 @@ class OrderService {
   private memberOrderRepository: MemberOrderRepository;
   private nonMemberOrderRepository: NonMemberOrderRepository;
   private memberOrderDetailRepository: MemberOrderDetailRepository;
+  private nonMemberOrderDetailRepository: NonMemberOrderDetailRepository;
 
   constructor() {
     const connection = getConnection();
@@ -30,6 +33,9 @@ class OrderService {
     );
     this.memberOrderDetailRepository = connection.getCustomRepository(
       MemberOrderDetailRepository,
+    );
+    this.nonMemberOrderDetailRepository = connection.getCustomRepository(
+      NonMemberOrderDetailRepository,
     );
   }
 
@@ -79,8 +85,35 @@ class OrderService {
       const orderDetail =
         await this.memberOrderDetailRepository.readOrderDetail(userId);
 
-      const readOrderDetailDto =
-        this.memberOrderDetailEntitiesToDto(orderDetail);
+      const readOrderDetailDto = this.orderDetailEntitiesToDto(orderDetail);
+
+      return readOrderDetailDto;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public async readNonMemberOrderDetail(
+    nonMemberInfo: NonMemberOrderInfo,
+  ): Promise<ReadOrderDetailDto[]> {
+    try {
+      const hash: string | null =
+        await this.nonMemberOrderRepository.readPasswordByOrderId(
+          nonMemberInfo.orderId,
+        );
+
+      if (!hash) {
+        throw new ErrorHandler(401, "ValidationError", "Invalid Id");
+      }
+
+      await this.comparePasswordToHash(nonMemberInfo.pw, hash);
+
+      const orderDetail =
+        await this.nonMemberOrderDetailRepository.readOrderDetail(
+          nonMemberInfo.orderId,
+        );
+
+      const readOrderDetailDto = this.orderDetailEntitiesToDto(orderDetail);
 
       return readOrderDetailDto;
     } catch (err) {
@@ -99,13 +132,32 @@ class OrderService {
       });
   };
 
-  private memberOrderDetailEntitiesToDto(
-    entities: MemberOrderDetail[],
+  private orderDetailEntitiesToDto(
+    entities: MemberOrderDetail[] | NonMemberOrderDetail[],
   ): ReadOrderDetailDto[] {
     return entities.map((entity) => {
       return entity.toDto();
     });
   }
+
+  private comparePasswordToHash = (password: string, hash: string) => {
+    return new Promise((resolve, reject) => {
+      bcrypt
+        .compare(password, hash)
+        .then((res: boolean) => {
+          if (!res) {
+            reject(
+              new ErrorHandler(401, "ValidationError", "Invalid Password"),
+            );
+          } else {
+            resolve(res);
+          }
+        })
+        .catch((err: Error) => {
+          reject(new ErrorHandler(500, err.name, err.message));
+        });
+    });
+  };
 }
 
 export default OrderService;

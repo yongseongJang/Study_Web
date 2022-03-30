@@ -6,6 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { NonMemberOrder, Product } from ".";
+import { ReadOrderDetailDto } from "../../dto";
 
 @Entity()
 export class NonMemberOrderDetail {
@@ -89,6 +90,17 @@ export class NonMemberOrderDetail {
     memberOrderDetail.productId = productId;
 
     return memberOrderDetail;
+  }
+
+  public toDto() {
+    return ReadOrderDetailDto.from(
+      this.quantity,
+      this.price,
+      this.orderDetailOption,
+      this.status,
+      this.orderId,
+      this.productId,
+    );
   }
 
   public setOrderId(orderId: number) {

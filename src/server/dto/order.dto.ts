@@ -138,3 +138,13 @@ export class ReadOrderDetailDto {
     return readOrderDto;
   }
 }
+
+export class NonMemberOrderInfo {
+  orderId: number;
+  pw: string;
+
+  constructor(orderId: number, pw: string) {
+    this.orderId = orderId;
+    this.pw = pw;
+  }
+}
