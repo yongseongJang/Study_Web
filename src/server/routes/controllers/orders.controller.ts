@@ -37,7 +37,7 @@ class OrderController {
 
       const result = await this.orderService.readMemberOrderDetail(userId);
 
-      res.status(200).send(result);
+      res.status(200).send({ orderInfo: result });
     },
   );
 

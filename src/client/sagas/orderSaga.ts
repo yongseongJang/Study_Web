@@ -23,6 +23,19 @@ export function* requestShippingInfo(token: string) {
   }
 }
 
+export function* requestMemberOrderInfo(token: string) {
+  try {
+    const { orderInfo } = yield call(
+      orderServices.requestMemberOrderInfo,
+      token,
+    );
+
+    yield put(orderActions.requestMemberOrderInfoSuccess(orderInfo));
+  } catch (err) {
+    yield put(orderActions.requestMemberOrderInfoFailure(err));
+  }
+}
+
 export function* watchRequestAdd() {
   while (true) {
     const { isAllProduct, cartList } = yield take(
@@ -41,7 +54,16 @@ export function* watchRequestShippingInfo() {
   }
 }
 
+export function* watchRequestMemberOrderInfo() {
+  while (true) {
+    const { token } = yield take(orderConstants.REQUEST_MEMBER_ORDER_INFO);
+
+    yield call(requestMemberOrderInfo, token);
+  }
+}
+
 export const orderSaga = [
   fork(watchRequestAdd),
   fork(watchRequestShippingInfo),
+  fork(watchRequestMemberOrderInfo),
 ];

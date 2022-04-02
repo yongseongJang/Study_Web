@@ -100,6 +100,9 @@ export class NonMemberOrderDetail {
       this.status,
       this.orderId,
       this.productId,
+      this.product.name,
+      this.product.productCategory![0].category!.name,
+      this.product.image,
     );
   }
 

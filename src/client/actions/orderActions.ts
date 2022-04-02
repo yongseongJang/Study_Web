@@ -8,6 +8,9 @@ export const orderConstants = {
   REQUEST_SHIPPING_INFO: "REQUEST_SHIPPING_INFO",
   REQUEST_SHIPPING_INFO_SUCCESS: "REQUEST_SHIPPING_INFO_SUCCESS",
   REQUEST_SHIPPING_INFO_FAILURE: "REQUEST_SHIPPING_INFO_FAILURE",
+  REQUEST_MEMBER_ORDER_INFO: "REQUEST_MEMBER_ORDER_INFO",
+  REQUEST_MEMBER_ORDER_INFO_SUCCESS: "REQUEST_MEMBER_ORDER_INFO_SUCCESS",
+  REQUEST_MEMBER_ORDER_INFO_FAILURE: "REQUEST_MEMBER_ORDER_INFO_FAILURE",
 };
 
 const add = (isAllProduct: boolean, cartList?: number[]) => {
@@ -54,6 +57,27 @@ const requestShippingInfoFailure = (err: unknown) => {
   };
 };
 
+const requestMemberOrderInfo = (token: string) => {
+  return {
+    type: orderConstants.REQUEST_MEMBER_ORDER_INFO,
+    token,
+  };
+};
+
+const requestMemberOrderInfoSuccess = (orderInfo: IOrderInfo[]) => {
+  return {
+    type: orderConstants.REQUEST_MEMBER_ORDER_INFO_SUCCESS,
+    orderInfo,
+  };
+};
+
+const requestMemberOrderInfoFailure = (err: unknown) => {
+  return {
+    type: orderConstants.REQUEST_MEMBER_ORDER_INFO_FAILURE,
+    err,
+  };
+};
+
 export const orderActions = {
   add,
   addSuccess,
@@ -61,4 +85,7 @@ export const orderActions = {
   requestShippingInfo,
   requestShippingInfoSuccess,
   requestShippingInfoFailure,
+  requestMemberOrderInfo,
+  requestMemberOrderInfoSuccess,
+  requestMemberOrderInfoFailure,
 };

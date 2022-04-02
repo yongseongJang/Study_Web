@@ -1,12 +1,51 @@
 import * as React from "react";
-import { OrderTable } from "../components";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { OrderTable, Spinner } from "../components";
+import { RootState } from "../reducers/types";
+import { orderActions } from "../actions";
 
 function OrderInfo() {
+  const dispatch = useDispatch();
+
+  const orderAttributes = [
+    "이미지",
+    "상품정보",
+    "수량",
+    "상품구매금액",
+    "주문처리상태",
+    "취소/교환/반품",
+  ];
+
+  const token = useSelector((state: RootState) => state.loginReducer.token);
+  const isRequesting = useSelector(
+    (state: RootState) => state.orderReducer.isRequesting,
+  );
+  const orderInfo = useSelector(
+    (state: RootState) => state.orderReducer.orderInfo,
+  );
+
+  console.log(orderInfo);
+  useEffect(() => {
+    if (token) {
+      dispatch(orderActions.requestMemberOrderInfo(token));
+    }
+  }, []);
+
   return (
     <div className="OrderInfo">
-      <section>
-        <OrderTable></OrderTable>
-      </section>
+      {isRequesting ? (
+        <div className="OrderInfo__Spinner">
+          <Spinner></Spinner>
+        </div>
+      ) : (
+        <section>
+          <OrderTable
+            attributes={orderAttributes}
+            instances={orderInfo}
+          ></OrderTable>
+        </section>
+      )}
     </div>
   );
 }

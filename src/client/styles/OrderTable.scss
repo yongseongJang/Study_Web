@@ -1,0 +1,42 @@
+.orderTable {
+  table {
+    border: 1px solid #d7d5d5;
+    position: relative;
+    width: 100%;
+
+    th {
+      padding: 11px 0 11px;
+      border-left: 0;
+      border-bottom: 1px solid #dfdfdf;
+      color: #353535;
+      vertical-align: middle;
+      font-weight: normal;
+    }
+
+    tbody {
+      text-align: center;
+
+      td {
+        padding: 11px 0 11px;
+        border-top: 1px solid #dfdfdf;
+        color: #353535;
+        vertical-align: middle;
+
+        img {
+          max-width: 80px;
+          vertical-align: middle;
+        }
+      }
+
+      .product-info {
+        padding-left: 10px;
+
+        li {
+          margin: 9px 0 0;
+          color: #707070;
+          line-height: 16px;
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { MemberOrderDetail } from "../entity";
 import ErrorHandler from "../../utils/error";
 
 @EntityRepository(MemberOrderDetail)
-class MemberOrderRepository extends Repository<MemberOrderDetail> {
+class MemberOrderDetailRepository extends Repository<MemberOrderDetail> {
   public async readOrderDetail(user_id: number): Promise<MemberOrderDetail[]> {
     try {
       return await this.manager.transaction(
@@ -11,14 +11,9 @@ class MemberOrderRepository extends Repository<MemberOrderDetail> {
           return await transactionEntityManager
             .createQueryBuilder(MemberOrderDetail, "memberOrderDetail")
             .leftJoinAndSelect("memberOrderDetail.order", "memberOrder")
-            .select([
-              "memberOrderDetail.quantity",
-              "memberOrderDetail.price",
-              "memberOrderDetail.orderDetailOption",
-              "memberOrderDetail.status",
-              "memberOrderDetail.orderId",
-              "memberOrderDetail.productId",
-            ])
+            .leftJoinAndSelect("memberOrderDetail.product", "product")
+            .leftJoinAndSelect("product.productCategory", "product_category")
+            .leftJoinAndSelect("product_category.category", "category")
             .where("memberOrder.user_id = :user_id", { user_id })
             .getMany();
         },
@@ -29,4 +24,4 @@ class MemberOrderRepository extends Repository<MemberOrderDetail> {
   }
 }
 
-export default MemberOrderRepository;
+export default MemberOrderDetailRepository;

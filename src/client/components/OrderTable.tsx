@@ -1,7 +1,9 @@
 import * as React from "react";
+import { IOrderInfo } from "../interfaces";
 
 interface OrderTableProps {
   attributes: string[];
+  instances: IOrderInfo[];
 }
 
 function OrderTable(props: OrderTableProps) {
@@ -24,12 +26,6 @@ function OrderTable(props: OrderTableProps) {
               <br />
               [주문번호]
             </th>
-            <th scope="col">이미지</th>
-            <th scope="col">상품정보</th>
-            <th scope="col">수량</th>
-            <th scope="col">상품구매금액</th>
-            <th scope="col">주문처리상태</th>
-            <th scope="col">취소/교환/반품</th>
             {props.attributes &&
               props.attributes.map((attr, index) => {
                 return (
@@ -40,7 +36,58 @@ function OrderTable(props: OrderTableProps) {
               })}
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {props.instances &&
+            props.instances.map((instance, index) => {
+              return (
+                <tr key={index}>
+                  <td>
+                    <strong>
+                      <a
+                        href={`/products/${instance.category}/${instance.productId}`}
+                      >{`${instance.orderId}`}</a>
+                    </strong>
+                  </td>
+                  <td>
+                    <a
+                      href={`/products/${instance.category}/${instance.productId}`}
+                    >
+                      <img
+                        src={`${process.env.REACT_APP_CLOUDFRONT_URI}/${instance.image}`}
+                        alt="상품 이미지"
+                      />
+                    </a>
+                  </td>
+                  <td className="product-info">
+                    <strong>
+                      <a
+                        href={`/products/${instance.category}/${instance.productId}`}
+                      >{`${instance.name}`}</a>
+                    </strong>
+                    <ul>
+                      <li>
+                        <strong>{`[옵션: ${instance.orderDetailOption}]`}</strong>
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <strong>{instance.quantity}</strong>
+                  </td>
+                  <td>
+                    <strong>{`KRW ${
+                      instance.price * instance.quantity
+                    }`}</strong>
+                  </td>
+                  <td>
+                    <strong>{instance.status}</strong>
+                  </td>
+                  <td>
+                    <strong></strong>
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
       </table>
     </div>
   );

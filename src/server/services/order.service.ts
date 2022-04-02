@@ -3,6 +3,7 @@ import {
   MemberOrderRepository,
   NonMemberOrderRepository,
   NonMemberOrderDetailRepository,
+  ProductRepository,
 } from "../models/repositories";
 import { getConnection } from "typeorm";
 import createValidator from "../utils/validation/createValidator";
@@ -22,6 +23,7 @@ class OrderService {
   private nonMemberOrderRepository: NonMemberOrderRepository;
   private memberOrderDetailRepository: MemberOrderDetailRepository;
   private nonMemberOrderDetailRepository: NonMemberOrderDetailRepository;
+  private productRepository: ProductRepository;
 
   constructor() {
     const connection = getConnection();
@@ -37,6 +39,7 @@ class OrderService {
     this.nonMemberOrderDetailRepository = connection.getCustomRepository(
       NonMemberOrderDetailRepository,
     );
+    this.productRepository = connection.getCustomRepository(ProductRepository);
   }
 
   public async memberOrder(orderInfo: MemberOrderDto, userId: number) {
@@ -84,6 +87,8 @@ class OrderService {
     try {
       const orderDetail =
         await this.memberOrderDetailRepository.readOrderDetail(userId);
+
+      console.log(orderDetail);
 
       const readOrderDetailDto = this.orderDetailEntitiesToDto(orderDetail);
 

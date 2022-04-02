@@ -1,11 +1,13 @@
-import { IProduct } from ".";
-
 interface IOrderInfo {
+  orderId: number;
   productId: number;
-  option: string;
+  orderDetailOption: string;
+  price: number;
   quantity: number;
+  status: number;
+  name: string;
   category: string;
-  productInfo: Pick<IProduct, "name" | "price" | "salePrice" | "image">;
+  image: string;
 }
 
 export default IOrderInfo;

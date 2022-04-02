@@ -5,6 +5,7 @@ const initialState = {
   isAllProduct: false,
   cartList: [],
   shippingInfo: null,
+  orderInfo: [],
   error: null,
 };
 
@@ -39,6 +40,26 @@ export const orderReducer = (
         ...state,
         isRequesting: false,
         shippingInfo: null,
+        error: action.error,
+      };
+    case orderConstants.REQUEST_MEMBER_ORDER_INFO:
+      return {
+        ...state,
+        isRequesting: true,
+        error: null,
+      };
+    case orderConstants.REQUEST_MEMBER_ORDER_INFO_SUCCESS:
+      return {
+        ...state,
+        isRequesting: false,
+        orderInfo: action.orderInfo,
+        error: null,
+      };
+    case orderConstants.REQUEST_MEMBER_ORDER_INFO_FAILURE:
+      return {
+        ...state,
+        isRequesting: false,
+        orderInfo: [],
         error: action.error,
       };
     default:

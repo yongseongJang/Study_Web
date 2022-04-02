@@ -108,14 +108,26 @@ export class ReadOrderDetailDto {
   status: number;
   orderId: number;
   productId: number;
+  name: string;
+  category: string;
+  image: string;
 
-  constructor(orderDetail: IOrderDetail) {
+  constructor(
+    orderDetail: IOrderDetail & {
+      name: string;
+      category: string;
+      image: string;
+    },
+  ) {
     this.quantity = orderDetail.quantity;
     this.price = orderDetail.price;
     this.orderDetailOption = orderDetail.orderDetailOption;
     this.status = orderDetail.status;
     this.orderId = orderDetail.orderId;
     this.productId = orderDetail.productId;
+    this.name = orderDetail.name;
+    this.category = orderDetail.category;
+    this.image = orderDetail.image;
   }
 
   static from(
@@ -125,6 +137,9 @@ export class ReadOrderDetailDto {
     status: number,
     orderId: number,
     productId: number,
+    name: string,
+    category: string,
+    image: string,
   ) {
     const readOrderDto = new ReadOrderDetailDto({
       quantity,
@@ -133,6 +148,9 @@ export class ReadOrderDetailDto {
       status,
       orderId,
       productId,
+      name,
+      category,
+      image,
     });
 
     return readOrderDto;
