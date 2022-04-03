@@ -88,8 +88,6 @@ class OrderService {
       const orderDetail =
         await this.memberOrderDetailRepository.readOrderDetail(userId);
 
-      console.log(orderDetail);
-
       const readOrderDetailDto = this.orderDetailEntitiesToDto(orderDetail);
 
       return readOrderDetailDto;
@@ -103,8 +101,8 @@ class OrderService {
   ): Promise<ReadOrderDetailDto[]> {
     try {
       const hash: string | null =
-        await this.nonMemberOrderRepository.readPasswordByOrderId(
-          nonMemberInfo.orderId,
+        await this.nonMemberOrderRepository.readPasswordByName(
+          nonMemberInfo.recipient,
         );
 
       if (!hash) {
@@ -115,7 +113,7 @@ class OrderService {
 
       const orderDetail =
         await this.nonMemberOrderDetailRepository.readOrderDetail(
-          nonMemberInfo.orderId,
+          nonMemberInfo.recipient,
         );
 
       const readOrderDetailDto = this.orderDetailEntitiesToDto(orderDetail);

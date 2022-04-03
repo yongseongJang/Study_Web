@@ -62,6 +62,10 @@ export const orderReducer = (
         orderInfo: [],
         error: action.error,
       };
+    case orderConstants.RESET_ERROR:
+      return { ...state, error: null };
+    case orderConstants.RESET:
+      return { ...initialState };
     default:
       return state;
   }

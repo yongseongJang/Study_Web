@@ -158,11 +158,11 @@ export class ReadOrderDetailDto {
 }
 
 export class NonMemberOrderInfo {
-  orderId: number;
+  recipient: string;
   pw: string;
 
-  constructor(orderId: number, pw: string) {
-    this.orderId = orderId;
+  constructor(recipient: string, pw: string) {
+    this.recipient = recipient;
     this.pw = pw;
   }
 }

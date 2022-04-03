@@ -11,6 +11,8 @@ export const orderConstants = {
   REQUEST_MEMBER_ORDER_INFO: "REQUEST_MEMBER_ORDER_INFO",
   REQUEST_MEMBER_ORDER_INFO_SUCCESS: "REQUEST_MEMBER_ORDER_INFO_SUCCESS",
   REQUEST_MEMBER_ORDER_INFO_FAILURE: "REQUEST_MEMBER_ORDER_INFO_FAILURE",
+  RESET_ERROR: "RESET_ERROR",
+  RESET: "RESET",
 };
 
 const add = (isAllProduct: boolean, cartList?: number[]) => {
@@ -78,6 +80,18 @@ const requestMemberOrderInfoFailure = (err: unknown) => {
   };
 };
 
+const resetError = () => {
+  return {
+    type: orderConstants.RESET_ERROR,
+  };
+};
+
+const reset = () => {
+  return {
+    type: orderConstants.RESET,
+  };
+};
+
 export const orderActions = {
   add,
   addSuccess,
@@ -88,4 +102,6 @@ export const orderActions = {
   requestMemberOrderInfo,
   requestMemberOrderInfoSuccess,
   requestMemberOrderInfoFailure,
+  resetError,
+  reset,
 };

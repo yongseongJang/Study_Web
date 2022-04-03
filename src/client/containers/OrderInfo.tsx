@@ -25,7 +25,6 @@ function OrderInfo() {
     (state: RootState) => state.orderReducer.orderInfo,
   );
 
-  console.log(orderInfo);
   useEffect(() => {
     if (token) {
       dispatch(orderActions.requestMemberOrderInfo(token));

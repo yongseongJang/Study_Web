@@ -29,12 +29,12 @@ class NonMemberOrderRepository extends Repository<NonMemberOrder> {
     }
   }
 
-  public async readPasswordByOrderId(order_id: number): Promise<null | string> {
+  public async readPasswordByName(recipient: string): Promise<null | string> {
     try {
       return await this.manager.transaction(
         async (transactionEntityManager) => {
           const order = await transactionEntityManager.findOne(NonMemberOrder, {
-            _id: order_id,
+            recipient,
           });
 
           return order ? order.pw : null;

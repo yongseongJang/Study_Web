@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers/types";
-import { cartActions, loginActions } from "../actions";
+import { cartActions, loginActions, orderActions } from "../actions";
 import mainBanner from "../../public/img/mainbanner.jpg";
 import coat from "../../public/img/coat.jpg";
 import knit from "../../public/img/knit.jpg";
@@ -45,6 +45,8 @@ function Main() {
     dispatch(loginActions.logout());
 
     dispatch(cartActions.removeAll(""));
+
+    dispatch(orderActions.reset());
   };
 
   return (
@@ -87,12 +89,7 @@ function Main() {
                               </React.Fragment>
                             )}
                             <li>
-                              <a
-                                href="javascript:;"
-                                style={{ cursor: "default" }}
-                              >
-                                Order
-                              </a>
+                              <a href="/order/list">Order</a>
                             </li>
                             <li>
                               <a
