@@ -4,7 +4,7 @@ import withForm from "../hocs/withForm";
 import nonMemberLoginField from "../utils/fields/nonMemberLoginField";
 import { orderActions } from "../actions";
 import { IFields } from "../utils/fields/types";
-import { ILoginInfo } from "../interfaces";
+import { ILoginInfo, INonMemberInfo } from "../interfaces";
 import { RootState } from "../reducers/types";
 
 interface OrderHistoryLoginFormProps {
@@ -12,9 +12,9 @@ interface OrderHistoryLoginFormProps {
   isValidForm: boolean;
   onChange: () => void;
   submit: (
-    action: (loginInfo: ILoginInfo) => {
+    action: (nonMemberInfo: INonMemberInfo) => {
       type: string;
-      loginInfo: ILoginInfo;
+      nonMemberInfo: INonMemberInfo;
     },
   ) => () => void;
 }
@@ -32,6 +32,8 @@ function OrderHistoryLoginForm(props: OrderHistoryLoginFormProps) {
 
     if (errorMessage) {
       alert(errorMessage);
+    } else {
+      props.submit(orderActions.requestNonMemberOrderInfo)();
     }
   };
 

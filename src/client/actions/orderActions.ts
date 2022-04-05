@@ -1,4 +1,4 @@
-import { IOrderInfo } from "../interfaces";
+import { INonMemberInfo, IOrderInfo } from "../interfaces";
 import { IShippingInfo } from "../interfaces";
 
 export const orderConstants = {
@@ -11,6 +11,11 @@ export const orderConstants = {
   REQUEST_MEMBER_ORDER_INFO: "REQUEST_MEMBER_ORDER_INFO",
   REQUEST_MEMBER_ORDER_INFO_SUCCESS: "REQUEST_MEMBER_ORDER_INFO_SUCCESS",
   REQUEST_MEMBER_ORDER_INFO_FAILURE: "REQUEST_MEMBER_ORDER_INFO_FAILURE",
+  REQUEST_NON_MEMBER_ORDER_INFO: "REQUEST_NON_MEMBER_ORDER_INFO",
+  REQUEST_NON_MEMBER_ORDER_INFO_SUCCESS:
+    "REQUEST_NON_MEMBER_ORDER_INFO_SUCCESS",
+  REQUEST_NON_MEMBER_ORDER_INFO_FAILURE:
+    "REQUEST_NON_MEMBER_ORDER_INFO_FAILURE",
   RESET_ERROR: "RESET_ERROR",
   RESET: "RESET",
 };
@@ -80,6 +85,27 @@ const requestMemberOrderInfoFailure = (err: unknown) => {
   };
 };
 
+const requestNonMemberOrderInfo = (nonMemberInfo: INonMemberInfo) => {
+  return {
+    type: orderConstants.REQUEST_MEMBER_ORDER_INFO,
+    nonMemberInfo,
+  };
+};
+
+const requestNonMemberOrderInfoSuccess = (orderInfo: IOrderInfo[]) => {
+  return {
+    type: orderConstants.REQUEST_MEMBER_ORDER_INFO_SUCCESS,
+    orderInfo,
+  };
+};
+
+const requestNonMemberOrderInfoFailure = (err: unknown) => {
+  return {
+    type: orderConstants.REQUEST_MEMBER_ORDER_INFO_FAILURE,
+    err,
+  };
+};
+
 const resetError = () => {
   return {
     type: orderConstants.RESET_ERROR,
@@ -102,6 +128,9 @@ export const orderActions = {
   requestMemberOrderInfo,
   requestMemberOrderInfoSuccess,
   requestMemberOrderInfoFailure,
+  requestNonMemberOrderInfo,
+  requestNonMemberOrderInfoSuccess,
+  requestNonMemberOrderInfoFailure,
   resetError,
   reset,
 };

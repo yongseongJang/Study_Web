@@ -49,7 +49,7 @@ class OrderController {
         nonMemberInfo,
       );
 
-      res.status(200).send(result);
+      res.status(200).send({ orderInfo: result });
     },
   );
 }

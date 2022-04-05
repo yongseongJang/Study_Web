@@ -62,6 +62,26 @@ export const orderReducer = (
         orderInfo: [],
         error: action.error,
       };
+    case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO:
+      return {
+        ...state,
+        isRequesting: true,
+        error: null,
+      };
+    case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_SUCCESS:
+      return {
+        ...state,
+        isRequesting: false,
+        orderInfo: action.orderInfo,
+        error: null,
+      };
+    case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_FAILURE:
+      return {
+        ...state,
+        isRequesting: false,
+        orderInfo: [],
+        error: action.error,
+      };
     case orderConstants.RESET_ERROR:
       return { ...state, error: null };
     case orderConstants.RESET:

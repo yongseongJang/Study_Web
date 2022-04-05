@@ -10,3 +10,4 @@ export { default as IOption } from "./option.interface";
 export { default as ICartInfo } from "./cartInfo.interface";
 export { default as IOrderInfo } from "./orderInfo.interface";
 export { default as IShippingInfo } from "./shippingInfo.interface";
+export { default as INonMemberInfo } from "./nonMemberInfo.interface";

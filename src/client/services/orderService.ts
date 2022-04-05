@@ -1,4 +1,5 @@
 import axios from "axios";
+import { INonMemberInfo } from "../interfaces";
 
 const requestShippingInfo = (token: string) => {
   return axios
@@ -30,7 +31,25 @@ const requestMemberOrderInfo = (token: string) => {
     });
 };
 
+const requestNonMemberOrderInfo = (nonMemberInfo: INonMemberInfo) => {
+  return axios
+    .post(`${process.env.REACT_APP_API_URI}/api/orders/details`, {
+      nonMemberInfo,
+    })
+    .then((res) => {
+      const { orderInfo } = res.data;
+
+      console.log(orderInfo);
+
+      return { orderInfo };
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
 export const orderServices = {
   requestShippingInfo,
   requestMemberOrderInfo,
+  requestNonMemberOrderInfo,
 };
