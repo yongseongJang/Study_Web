@@ -28,6 +28,7 @@ function App() {
         <Route path="/order/cart" component={Cart} />
         <Route path="/order/payment" component={Order} />
         <Route path="/order/list" component={OrderList} />
+        <Route path="/order/login" component={Login} />
         <Route path="/blog" component={Blog} />
         <Route component={Error} />
       </Switch>

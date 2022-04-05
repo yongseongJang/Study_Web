@@ -1,8 +1,20 @@
 import * as React from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { TopMenu } from "../components";
 import { OrderInfo } from "../containers";
+import { RootState } from "../reducers/types";
+import { history } from "../utils/history";
 
 function OrderList() {
+  const token = useSelector((state: RootState) => state.loginReducer.token);
+
+  useEffect(() => {
+    if (!token) {
+      history.replace("/order/login/");
+    }
+  }, [token]);
+
   return (
     <div className="orderList">
       <div className="orderList__page-outer">

@@ -1,8 +1,16 @@
 import * as React from "react";
-import { LoginForm } from "../containers";
+import { LoginForm, OrderHistoryLoginForm } from "../containers";
 import { TopMenu } from "../components";
 
-function Login() {
+interface LoginProps {
+  match: {
+    url: string;
+  };
+}
+
+function Login(props: LoginProps) {
+  const isOrderLogin = props.match.url === "/order/login/";
+
   return (
     <div className="login">
       <div className="login__page-outer">
@@ -21,7 +29,9 @@ function Login() {
                 </span>
               </section>
               <section className="section-wrap__main">
-                <div>
+                <div
+                  className={isOrderLogin ? "main__order-login" : "main__login"}
+                >
                   <LoginForm></LoginForm>
                   {/* <ul className="main__snsArea">
                     <p>SNS 로그인</p>
@@ -32,6 +42,9 @@ function Login() {
                       <a href=""></a>
                     </li>
                   </ul> */}
+                  {isOrderLogin && (
+                    <OrderHistoryLoginForm></OrderHistoryLoginForm>
+                  )}
                 </div>
               </section>
               <section>

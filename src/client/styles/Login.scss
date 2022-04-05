@@ -46,8 +46,16 @@
         }
 
         .section-wrap__main {
-          > div {
+          .main__login {
             width: 50%;
+          }
+          .main__order-login {
+            width: 100%;
+            display: flex;
+
+            .login-form {
+              width: 50%;
+            }
           }
 
           .login-form {

@@ -48,7 +48,7 @@ function OrderHistoryLoginForm(props: OrderHistoryLoginFormProps) {
   };
 
   return (
-    <div className="login-from">
+    <div className="login-form">
       {error && handleLoginError()}
       <form>
         {props
