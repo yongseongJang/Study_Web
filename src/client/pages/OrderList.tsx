@@ -8,12 +8,15 @@ import { history } from "../utils/history";
 
 function OrderList() {
   const token = useSelector((state: RootState) => state.loginReducer.token);
+  const nonMemberLogin = useSelector(
+    (state: RootState) => state.orderReducer.nonMemberLogin,
+  );
 
   useEffect(() => {
-    if (!token) {
+    if (!token && !nonMemberLogin) {
       history.replace("/order/login/");
     }
-  }, [token]);
+  }, [token, nonMemberLogin]);
 
   return (
     <div className="orderList">

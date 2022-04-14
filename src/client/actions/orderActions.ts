@@ -87,21 +87,21 @@ const requestMemberOrderInfoFailure = (err: unknown) => {
 
 const requestNonMemberOrderInfo = (nonMemberInfo: INonMemberInfo) => {
   return {
-    type: orderConstants.REQUEST_MEMBER_ORDER_INFO,
+    type: orderConstants.REQUEST_NON_MEMBER_ORDER_INFO,
     nonMemberInfo,
   };
 };
 
 const requestNonMemberOrderInfoSuccess = (orderInfo: IOrderInfo[]) => {
   return {
-    type: orderConstants.REQUEST_MEMBER_ORDER_INFO_SUCCESS,
+    type: orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_SUCCESS,
     orderInfo,
   };
 };
 
 const requestNonMemberOrderInfoFailure = (err: unknown) => {
   return {
-    type: orderConstants.REQUEST_MEMBER_ORDER_INFO_FAILURE,
+    type: orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_FAILURE,
     err,
   };
 };

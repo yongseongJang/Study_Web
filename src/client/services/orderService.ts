@@ -39,8 +39,6 @@ const requestNonMemberOrderInfo = (nonMemberInfo: INonMemberInfo) => {
     .then((res) => {
       const { orderInfo } = res.data;
 
-      console.log(orderInfo);
-
       return { orderInfo };
     })
     .catch((err) => {

@@ -50,5 +50,6 @@ export interface orderReducerState {
   cartList: number[];
   shippingInfo: IShippingInfo;
   orderInfo: IOrderInfo[];
+  nonMemberLogin: boolean;
   error: Error;
 }

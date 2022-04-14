@@ -1,6 +1,8 @@
 import { take, call, put, fork } from "redux-saga/effects";
 import { orderConstants, orderActions } from "../actions";
 import { orderServices } from "../services/orderService";
+import { history } from "../utils/history";
+import { INonMemberInfo } from "../interfaces";
 
 export function* requestAdd(isAllProduct: boolean, cartList: number[]) {
   try {
@@ -36,14 +38,16 @@ export function* requestMemberOrderInfo(token: string) {
   }
 }
 
-export function* requestNonMemberOrderInfo(nonMemberInfo: string) {
+export function* requestNonMemberOrderInfo(nonMemberInfo: INonMemberInfo) {
   try {
     const { orderInfo } = yield call(
-      orderServices.requestMemberOrderInfo,
+      orderServices.requestNonMemberOrderInfo,
       nonMemberInfo,
     );
 
     yield put(orderActions.requestNonMemberOrderInfoSuccess(orderInfo));
+
+    history.replace("/order/list");
   } catch (err) {
     yield put(orderActions.requestNonMemberOrderInfoFailure(err));
   }

@@ -6,6 +6,7 @@ const initialState = {
   cartList: [],
   shippingInfo: null,
   orderInfo: [],
+  nonMemberLogin: false,
   error: null,
 };
 
@@ -66,6 +67,7 @@ export const orderReducer = (
       return {
         ...state,
         isRequesting: true,
+        nonMemberLogin: false,
         error: null,
       };
     case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_SUCCESS:
@@ -73,6 +75,7 @@ export const orderReducer = (
         ...state,
         isRequesting: false,
         orderInfo: action.orderInfo,
+        nonMemberLogin: true,
         error: null,
       };
     case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_FAILURE:
@@ -80,6 +83,7 @@ export const orderReducer = (
         ...state,
         isRequesting: false,
         orderInfo: [],
+        nonMemberLogin: false,
         error: action.error,
       };
     case orderConstants.RESET_ERROR:
