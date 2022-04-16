@@ -2,7 +2,7 @@ import { take, call, put, fork } from "redux-saga/effects";
 import { orderConstants, orderActions } from "../actions";
 import { orderServices } from "../services/orderService";
 import { history } from "../utils/history";
-import { INonMemberInfo } from "../interfaces";
+import { INonMemberInfo, IPaymentInfo } from "../interfaces";
 
 export function* requestAdd(isAllProduct: boolean, cartList: number[]) {
   try {
@@ -53,6 +53,21 @@ export function* requestNonMemberOrderInfo(nonMemberInfo: INonMemberInfo) {
   }
 }
 
+export function* requestMemberPayment(
+  paymentInfo: IPaymentInfo,
+  token: string,
+) {
+  try {
+    yield call(orderServices.requestMemberPayment, paymentInfo, token);
+
+    yield put(orderActions.requestMemberPaymentSuccess());
+
+    history.replace("/");
+  } catch (err) {
+    yield put(orderActions.requestMemberPaymentFailure(err));
+  }
+}
+
 export function* watchRequestAdd() {
   while (true) {
     const { isAllProduct, cartList } = yield take(
@@ -89,9 +104,20 @@ export function* watchRequestNonMemberOrderInfo() {
   }
 }
 
+export function* watchRequestMemberPayment() {
+  while (true) {
+    const { paymentInfo, token } = yield take(
+      orderConstants.REQUEST_MEMBER_PAYMENT,
+    );
+
+    yield call(requestMemberPayment, paymentInfo, token);
+  }
+}
+
 export const orderSaga = [
   fork(watchRequestAdd),
   fork(watchRequestShippingInfo),
   fork(watchRequestMemberOrderInfo),
   fork(watchRequestNonMemberOrderInfo),
+  fork(watchRequestMemberPayment),
 ];

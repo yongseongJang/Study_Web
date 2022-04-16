@@ -86,6 +86,22 @@ export const orderReducer = (
         nonMemberLogin: false,
         error: action.error,
       };
+    case orderConstants.REQUEST_MEMBER_PAYMENT:
+      return {
+        ...state,
+        isRequesting: true,
+      };
+    case orderConstants.REQUEST_MEMBER_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        isRequesting: false,
+      };
+    case orderConstants.REQUEST_MEMBER_PAYMENT_FAILURE:
+      return {
+        ...state,
+        isRequesting: false,
+        error: action.error,
+      };
     case orderConstants.RESET_ERROR:
       return { ...state, error: null };
     case orderConstants.RESET:

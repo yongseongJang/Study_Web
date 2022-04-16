@@ -110,6 +110,7 @@ const withForm =
           isValidForm={formValidation}
           onChange={handleChange}
           submit={submit}
+          getFormValues={getFormValues}
         />
       );
     };

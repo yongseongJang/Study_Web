@@ -62,7 +62,7 @@ function Payment(props: PaymentProps) {
                 id="payment"
                 data-chk-index={index}
                 ref={inputRefs[index]}
-                value={method.method}
+                value={index}
                 onClick={handleClick}
                 checked={checkedState[index]}
               />

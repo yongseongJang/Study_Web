@@ -1,5 +1,5 @@
 import axios from "axios";
-import { INonMemberInfo } from "../interfaces";
+import { INonMemberInfo, IPaymentInfo } from "../interfaces";
 
 const requestShippingInfo = (token: string) => {
   return axios
@@ -46,8 +46,28 @@ const requestNonMemberOrderInfo = (nonMemberInfo: INonMemberInfo) => {
     });
 };
 
+const requestMemberPayment = (paymentInfo: IPaymentInfo, token: string) => {
+  return axios
+    .post(
+      `${process.env.REACT_APP_API_URI}/api/orders/member`,
+      {
+        orderInfo: paymentInfo,
+      },
+      {
+        headers: { authorization: "Bearer " + token },
+      },
+    )
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
 export const orderServices = {
   requestShippingInfo,
   requestMemberOrderInfo,
   requestNonMemberOrderInfo,
+  requestMemberPayment,
 };

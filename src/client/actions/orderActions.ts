@@ -1,5 +1,5 @@
 import { INonMemberInfo, IOrderInfo } from "../interfaces";
-import { IShippingInfo } from "../interfaces";
+import { IShippingInfo, IPaymentInfo } from "../interfaces";
 
 export const orderConstants = {
   REQUEST_ORDER_ADD: "REQUEST_ORDER_ADD",
@@ -16,6 +16,9 @@ export const orderConstants = {
     "REQUEST_NON_MEMBER_ORDER_INFO_SUCCESS",
   REQUEST_NON_MEMBER_ORDER_INFO_FAILURE:
     "REQUEST_NON_MEMBER_ORDER_INFO_FAILURE",
+  REQUEST_MEMBER_PAYMENT: "REQUEST_MEMBER_PAYMENT",
+  REQUEST_MEMBER_PAYMENT_SUCCESS: "REQUEST_MEMBER_PAYMENT_SUCCESS",
+  REQUEST_MEMBER_PAYMENT_FAILURE: "REQUEST_MEMBER_PAYMENT_FAILURE",
   RESET_ERROR: "RESET_ERROR",
   RESET: "RESET",
 };
@@ -106,6 +109,27 @@ const requestNonMemberOrderInfoFailure = (err: unknown) => {
   };
 };
 
+const requestMemberPayment = (paymentInfo: IPaymentInfo, token: string) => {
+  return {
+    type: orderConstants.REQUEST_MEMBER_PAYMENT,
+    paymentInfo,
+    token,
+  };
+};
+
+const requestMemberPaymentSuccess = () => {
+  return {
+    type: orderConstants.REQUEST_MEMBER_PAYMENT_SUCCESS,
+  };
+};
+
+const requestMemberPaymentFailure = (err: unknown) => {
+  return {
+    type: orderConstants.REQUEST_MEMBER_PAYMENT_FAILURE,
+    err,
+  };
+};
+
 const resetError = () => {
   return {
     type: orderConstants.RESET_ERROR,
@@ -131,6 +155,9 @@ export const orderActions = {
   requestNonMemberOrderInfo,
   requestNonMemberOrderInfoSuccess,
   requestNonMemberOrderInfoFailure,
+  requestMemberPayment,
+  requestMemberPaymentSuccess,
+  requestMemberPaymentFailure,
   resetError,
   reset,
 };

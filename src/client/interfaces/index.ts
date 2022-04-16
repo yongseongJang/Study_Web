@@ -11,3 +11,5 @@ export { default as ICartInfo } from "./cartInfo.interface";
 export { default as IOrderInfo } from "./orderInfo.interface";
 export { default as IShippingInfo } from "./shippingInfo.interface";
 export { default as INonMemberInfo } from "./nonMemberInfo.interface";
+export { default as IPaymentInfo } from "./paymentInfo.interface";
+export { default as IOrderDetail } from "./orderDetail.interface";

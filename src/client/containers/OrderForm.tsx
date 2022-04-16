@@ -9,12 +9,29 @@ import { IFields } from "../utils/fields/types";
 import { RootState } from "../reducers/types";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
 import orderTermsField from "../utils/fields/orderTermsField";
+import { orderActions } from "../actions";
+import { IOrderDetail, IPaymentInfo } from "../interfaces";
 
 interface OrderProps {
   renderElements: () => [];
   isValidForm: boolean;
   onChange: () => void;
-  submit: (action: () => {}) => () => void;
+  submit: (
+    action: (paymentInfo: IPaymentInfo) => {
+      type: string;
+      paymentInfo: IPaymentInfo;
+    },
+  ) => () => void;
+  getFormValues: () => {
+    recipient: string;
+    address: string;
+    cellularPhone: string;
+    email: string;
+    message?: string;
+    payment: number;
+    pw?: string;
+    pw_check?: string;
+  };
 }
 
 function OrderForm(props: OrderProps) {
@@ -80,6 +97,49 @@ function OrderForm(props: OrderProps) {
         alert(orderTermsField[i].errorMessage);
         return;
       }
+    }
+
+    const orderDetail = isAllProduct
+      ? cartInfo.map((info) => {
+          return {
+            quantity: info.quantity,
+            price: info.productInfo.price,
+            orderDetailOption: info.option,
+            status: 0,
+            productId: info.productId,
+          };
+        })
+      : cartInfo
+          .filter((info, index) => {
+            return cartList.indexOf(index) !== -1;
+          })
+          .map((info) => {
+            return {
+              quantity: info.quantity,
+              price: info.productInfo.price,
+              orderDetailOption: info.option,
+              status: 0,
+              productId: info.productId,
+            };
+          });
+
+    const formValues = props.getFormValues();
+    formValues.payment = Number(formValues.payment);
+
+    if (token) {
+      delete formValues.pw;
+      delete formValues.pw_check;
+
+      dispatch(
+        orderActions.requestMemberPayment(
+          {
+            ...formValues,
+            price: totalPrice - totalSalePrice,
+            orderDetail,
+          },
+          token,
+        ),
+      );
     }
   };
 
