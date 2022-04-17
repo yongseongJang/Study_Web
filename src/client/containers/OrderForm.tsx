@@ -140,6 +140,14 @@ function OrderForm(props: OrderProps) {
           token,
         ),
       );
+    } else {
+      dispatch(
+        orderActions.requestNonMemberPayment({
+          ...formValues,
+          price: totalPrice - totalSalePrice,
+          orderDetail,
+        }),
+      );
     }
   };
 

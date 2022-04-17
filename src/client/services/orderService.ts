@@ -65,9 +65,23 @@ const requestMemberPayment = (paymentInfo: IPaymentInfo, token: string) => {
     });
 };
 
+const requestNonMemberPayment = (paymentInfo: IPaymentInfo) => {
+  return axios
+    .post(`${process.env.REACT_APP_API_URI}/api/orders`, {
+      orderInfo: paymentInfo,
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
 export const orderServices = {
   requestShippingInfo,
   requestMemberOrderInfo,
   requestNonMemberOrderInfo,
   requestMemberPayment,
+  requestNonMemberPayment,
 };

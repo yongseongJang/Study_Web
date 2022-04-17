@@ -10,6 +10,7 @@ export const nonMemberOrderSchema = Joi.object().keys({
   price: Joi.number().required(),
   payment: Joi.number().required(),
   pw: Joi.string().required(),
+  pw_check: Joi.string().required(),
   orderDetail: Joi.array().items(
     Joi.object().keys({
       quantity: Joi.number().required(),

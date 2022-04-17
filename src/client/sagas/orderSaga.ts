@@ -68,6 +68,18 @@ export function* requestMemberPayment(
   }
 }
 
+export function* requestNonMemberPayment(paymentInfo: IPaymentInfo) {
+  try {
+    yield call(orderServices.requestNonMemberPayment, paymentInfo);
+
+    yield put(orderActions.requestNonMemberPaymentSuccess());
+
+    history.replace("/");
+  } catch (err) {
+    yield put(orderActions.requestNonMemberPaymentFailure(err));
+  }
+}
+
 export function* watchRequestAdd() {
   while (true) {
     const { isAllProduct, cartList } = yield take(
@@ -114,10 +126,21 @@ export function* watchRequestMemberPayment() {
   }
 }
 
+export function* watchRequestNonMemberPayment() {
+  while (true) {
+    const { paymentInfo } = yield take(
+      orderConstants.REQUEST_NON_MEMBER_PAYMENT,
+    );
+
+    yield call(requestNonMemberPayment, paymentInfo);
+  }
+}
+
 export const orderSaga = [
   fork(watchRequestAdd),
   fork(watchRequestShippingInfo),
   fork(watchRequestMemberOrderInfo),
   fork(watchRequestNonMemberOrderInfo),
   fork(watchRequestMemberPayment),
+  fork(watchRequestNonMemberPayment),
 ];

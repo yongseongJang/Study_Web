@@ -19,6 +19,9 @@ export const orderConstants = {
   REQUEST_MEMBER_PAYMENT: "REQUEST_MEMBER_PAYMENT",
   REQUEST_MEMBER_PAYMENT_SUCCESS: "REQUEST_MEMBER_PAYMENT_SUCCESS",
   REQUEST_MEMBER_PAYMENT_FAILURE: "REQUEST_MEMBER_PAYMENT_FAILURE",
+  REQUEST_NON_MEMBER_PAYMENT: "REQUEST_NON_MEMBER_PAYMENT",
+  REQUEST_NON_MEMBER_PAYMENT_SUCCESS: "REQUEST_NON_MEMBER_PAYMENT_SUCCESS",
+  REQUEST_NON_MEMBER_PAYMENT_FAILURE: "REQUEST_NON_MEMBER_PAYMENT_FAILURE",
   RESET_ERROR: "RESET_ERROR",
   RESET: "RESET",
 };
@@ -130,6 +133,26 @@ const requestMemberPaymentFailure = (err: unknown) => {
   };
 };
 
+const requestNonMemberPayment = (paymentInfo: IPaymentInfo) => {
+  return {
+    type: orderConstants.REQUEST_NON_MEMBER_PAYMENT,
+    paymentInfo,
+  };
+};
+
+const requestNonMemberPaymentSuccess = () => {
+  return {
+    type: orderConstants.REQUEST_NON_MEMBER_PAYMENT_SUCCESS,
+  };
+};
+
+const requestNonMemberPaymentFailure = (err: unknown) => {
+  return {
+    type: orderConstants.REQUEST_NON_MEMBER_PAYMENT_FAILURE,
+    err,
+  };
+};
+
 const resetError = () => {
   return {
     type: orderConstants.RESET_ERROR,
@@ -158,6 +181,9 @@ export const orderActions = {
   requestMemberPayment,
   requestMemberPaymentSuccess,
   requestMemberPaymentFailure,
+  requestNonMemberPayment,
+  requestNonMemberPaymentSuccess,
+  requestNonMemberPaymentFailure,
   resetError,
   reset,
 };

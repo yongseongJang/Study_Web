@@ -44,14 +44,12 @@ class OrderService {
 
   public async memberOrder(orderInfo: MemberOrderDto, userId: number) {
     try {
-      console.log(orderInfo);
       const validatedOrderInfo = await validatedMemberOrderDto(orderInfo);
 
       const { memberOrder, memberOrderDetail } = new MemberOrderDto(
         validatedOrderInfo,
       ).toEntity();
 
-      console.log(memberOrder, memberOrderDetail);
       memberOrder.setUserId(userId);
 
       await this.memberOrderRepository.order(memberOrder, memberOrderDetail);
@@ -62,8 +60,10 @@ class OrderService {
 
   public async nonMemberOrder(orderInfo: NonMemberOrderDto) {
     try {
+      console.log(orderInfo);
       const validatedOrderInfo = await validatedNonMemberOrderDto(orderInfo);
 
+      console.log(validatedOrderInfo);
       const hash = await this.stringPasswordToHash(validatedOrderInfo.pw);
 
       const convertedOrderInfo = Object.assign({}, validatedOrderInfo, {
