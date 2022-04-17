@@ -5,8 +5,9 @@ import {
   IShippingInfo,
   IOrderInfo,
 } from "../interfaces";
+import { LoginState } from "./loginReducer";
 export interface RootState {
-  loginReducer: loginReducerState;
+  loginReducer: LoginState;
   signupReducer: signupReducerState;
   productReducer: productReducerState;
   cartReducer: cartReducerState;
@@ -20,7 +21,6 @@ export interface signupReducerState {
 
 export interface loginReducerState {
   isRequesting: boolean;
-  loginStatus: boolean;
   error: null | Error;
   token: string;
   email: string;

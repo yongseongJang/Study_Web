@@ -1,13 +1,28 @@
+import { Record } from "immutable";
+import type { RecordOf } from "immutable";
 import { loginConstants } from "../actions";
 
-const initialState = {
+interface State {
+  isRequesting: boolean;
+  token: string;
+  email: string;
+  userName: string;
+  error: string;
+}
+
+const defaultValues: State = {
   isRequesting: false,
-  loginStatus: false,
-  error: null,
   token: "",
   email: "",
   userName: "",
+  error: "",
 };
+
+const makeLoginState: Record.Factory<State> = Record(defaultValues);
+
+export type LoginState = RecordOf<State>;
+
+const initialState: LoginState = makeLoginState();
 
 export const loginReducer = (
   state = initialState,
@@ -15,36 +30,25 @@ export const loginReducer = (
 ) => {
   switch (action.type) {
     case loginConstants.LOGIN_REQUEST:
-      return { ...state, isRequesting: true, error: null };
+      return state.update("isRequesting", () => true);
     case loginConstants.LOGIN_SUCCESS:
-      return {
-        ...state,
-        isRequesting: false,
-        loginStatus: true,
-        error: null,
-        token: action.token,
-        id: action.id,
-        userName: action.userName,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("token", () => action.token)
+        .update("userName", () => action.userName);
     case loginConstants.LOGIN_FAILURE:
-      return { ...state, isRequesting: false, error: action.err };
+      return state
+        .update("isRequesting", () => false)
+        .update("error", () => action.err);
     case loginConstants.LOGOUT_REQUEST:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case loginConstants.LOGOUT_SUCCESS:
-      return {
-        ...state,
-        isRequesting: false,
-        loginStatus: false,
-        error: null,
-        token: "",
-        id: "",
-        userName: "",
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("token", () => "")
+        .update("userName", () => "");
     case loginConstants.RESET_ERROR:
-      return {
-        ...state,
-        error: null,
-      };
+      return state.update("error", () => "");
     default:
       return state;
   }
