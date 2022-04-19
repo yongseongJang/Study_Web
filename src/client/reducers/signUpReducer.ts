@@ -1,9 +1,22 @@
+import { Record } from "immutable";
+import type { RecordOf } from "immutable";
 import { signUpConstants } from "../actions";
 
-const initialState = {
+interface State {
+  isRequesting: boolean;
+  error: string;
+}
+
+const defaultValues: State = {
   isRequesting: false,
-  error: null,
+  error: "",
 };
+
+const makeSignUpState: Record.Factory<State> = Record(defaultValues);
+
+export type SignUpState = RecordOf<State>;
+
+const initialState: SignUpState = makeSignUpState();
 
 export const signUpReducer = (
   state = initialState,
@@ -11,11 +24,13 @@ export const signUpReducer = (
 ) => {
   switch (action.type) {
     case signUpConstants.SIGNUP_REQUEST:
-      return { ...state, isRequesting: true, error: null };
+      return state.update("isRequesting", () => true);
     case signUpConstants.SIGNUP_SUCCESS:
-      return { ...state, isRequesting: false, error: null };
+      return state.update("isRequesting", () => false);
     case signUpConstants.SIGNUP_FAILURE:
-      return { ...state, isRequesting: false, error: action.err };
+      return state
+        .update("isRequesting", () => false)
+        .update("error", () => action.err);
     default:
       return state;
   }

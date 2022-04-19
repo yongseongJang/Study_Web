@@ -3,7 +3,7 @@ import { Task } from "redux-saga";
 import { loginServices } from "../services";
 import { loginConstants, loginActions } from "../actions";
 import { history } from "../utils/history";
-import { ILoginInfo } from "../interfaces";
+import { ILoginDto } from "../interfaces";
 
 let forkCheckAuthTimeout: Task;
 
@@ -12,14 +12,15 @@ export function* checkAuthTimeout(expirationTime: number) {
   yield put(loginActions.logout());
 }
 
-export function* login(loginInfo: ILoginInfo) {
+export function* login(payload: { loginDto: ILoginDto }) {
   try {
+    const { loginDto } = payload;
     const { token, expirationTime, userName } = yield call(
       loginServices.login,
-      loginInfo,
+      loginDto,
     );
 
-    yield put(loginActions.loginSuccess(token, loginInfo.id, userName));
+    yield put(loginActions.loginSuccess(token, loginDto.id, userName));
 
     history.replace("/");
 
@@ -37,8 +38,8 @@ export function* logout() {
 
 export function* watchLoginRequest() {
   while (true) {
-    const { loginInfo } = yield take(loginConstants.LOGIN_REQUEST);
-    yield call(login, loginInfo);
+    const { payload } = yield take(loginConstants.LOGIN_REQUEST);
+    yield call(login, payload);
   }
 }
 

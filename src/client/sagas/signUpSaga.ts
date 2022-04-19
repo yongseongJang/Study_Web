@@ -2,11 +2,11 @@ import { take, call, put, fork } from "redux-saga/effects";
 import { signUpServices } from "../services";
 import { signUpConstants, signUpActions } from "../actions";
 import { history } from "../utils/history";
-import { IUserInfo } from "../interfaces";
+import { IUserDto } from "../interfaces";
 
-function* signUp(userInfo: IUserInfo) {
+function* signUp(payload: { userDto: IUserDto }) {
   try {
-    yield call(signUpServices.signUp, userInfo);
+    yield call(signUpServices.signUp, payload.userDto);
 
     yield put(signUpActions.signUpSuccess());
     history.replace("/");
@@ -17,9 +17,9 @@ function* signUp(userInfo: IUserInfo) {
 
 function* watchSignUpRequest() {
   while (true) {
-    const { userInfo } = yield take(signUpConstants.SIGNUP_REQUEST);
+    const { payload } = yield take(signUpConstants.SIGNUP_REQUEST);
 
-    yield call(signUp, userInfo);
+    yield call(signUp, payload);
   }
 }
 

@@ -6,9 +6,10 @@ import {
   IOrderInfo,
 } from "../interfaces";
 import { LoginState } from "./loginReducer";
+import { SignUpState } from "./signUpReducer";
 export interface RootState {
   loginReducer: LoginState;
-  signupReducer: signupReducerState;
+  signupReducer: SignUpState;
   productReducer: productReducerState;
   cartReducer: cartReducerState;
   orderReducer: orderReducerState;
