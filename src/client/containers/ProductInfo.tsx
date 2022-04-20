@@ -27,7 +27,7 @@ function ProductInfo(props: ProductInfoProps) {
 
   const dispatch = useDispatch();
   const product = useSelector(
-    (state: RootState) => state.productReducer.product,
+    (state: RootState) => state.productReducer.productDetail,
   );
   const token = useSelector((state: RootState) => state.loginReducer.token);
 

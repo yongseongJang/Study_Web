@@ -20,7 +20,7 @@ const initialState: SignUpState = makeSignUpState();
 
 export const signUpReducer = (
   state = initialState,
-  action: { type: string; [key: string]: any },
+  action: { type: string; payload: { [key: string]: any } },
 ) => {
   switch (action.type) {
     case signUpConstants.SIGNUP_REQUEST:
@@ -28,9 +28,11 @@ export const signUpReducer = (
     case signUpConstants.SIGNUP_SUCCESS:
       return state.update("isRequesting", () => false);
     case signUpConstants.SIGNUP_FAILURE:
+      const { err } = action.payload;
+
       return state
         .update("isRequesting", () => false)
-        .update("error", () => action.err);
+        .update("error", () => err);
     default:
       return state;
   }

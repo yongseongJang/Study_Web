@@ -12,8 +12,10 @@ export const productConstants = {
 const requestProducts = (category: string, page = 1) => {
   return {
     type: productConstants.REQUEST_PRODUCTS,
-    category,
-    page,
+    payload: {
+      category,
+      page,
+    },
   };
 };
 
@@ -28,37 +30,47 @@ const requestProductsSuccess = (
 ) => {
   return {
     type: productConstants.REQUEST_PRODUCTS_SUCCESS,
-    pagination,
-    productList,
+    payload: {
+      pagination,
+      productList,
+    },
   };
 };
 
 const requestProductsFailure = (err: unknown) => {
   return {
     type: productConstants.REQUEST_PRODUCTS_FAILURE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
 const requestProductDetail = (category: string, productId: number) => {
   return {
     type: productConstants.REQUEST_PRODUCT_DETAIL,
-    category,
-    productId,
+    payload: {
+      category,
+      productId,
+    },
   };
 };
 
 const requestProductDetailSuccess = (product: IProduct) => {
   return {
     type: productConstants.REQUEST_PRODUCT_DETAIL_SUCCESS,
-    product,
+    payload: {
+      product,
+    },
   };
 };
 
 const requestProductDetailFailure = (err: unknown) => {
   return {
     type: productConstants.REQUEST_PRODUCT_DETAIL_FAILURE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 

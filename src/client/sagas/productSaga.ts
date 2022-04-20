@@ -2,8 +2,10 @@ import { take, call, put, fork } from "redux-saga/effects";
 import { productServices } from "../services";
 import { productConstants, productActions } from "../actions";
 
-export function* requestProduct(category: string, page: number) {
+export function* requestProduct(payload: { category: string; page: number }) {
   try {
+    const { category, page } = payload;
+
     let _pagination, _productList;
 
     if (category === "all_product") {
@@ -31,8 +33,13 @@ export function* requestProduct(category: string, page: number) {
   }
 }
 
-export function* requestProductDetail(category: string, productId: number) {
+export function* requestProductDetail(payload: {
+  category: string;
+  productId: number;
+}) {
   try {
+    const { category, productId } = payload;
+
     const { product } = yield call(
       productServices.getProductDetail,
       category,
@@ -47,17 +54,15 @@ export function* requestProductDetail(category: string, productId: number) {
 
 export function* watchRequestProduct() {
   while (true) {
-    const { category, page } = yield take(productConstants.REQUEST_PRODUCTS);
-    yield call(requestProduct, category, page);
+    const { payload } = yield take(productConstants.REQUEST_PRODUCTS);
+    yield call(requestProduct, payload);
   }
 }
 
 export function* watchRequestProductDetail() {
   while (true) {
-    const { category, productId } = yield take(
-      productConstants.REQUEST_PRODUCT_DETAIL,
-    );
-    yield call(requestProductDetail, category, productId);
+    const { payload } = yield take(productConstants.REQUEST_PRODUCT_DETAIL);
+    yield call(requestProductDetail, payload);
   }
 }
 

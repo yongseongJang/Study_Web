@@ -16,10 +16,10 @@ const login = (loginDto: ILoginDto) => {
   };
 };
 
-const loginSuccess = (token: string, id: string, userName: string) => {
+const loginSuccess = (token: string, userName: string) => {
   return {
     type: loginConstants.LOGIN_SUCCESS,
-    payload: { token, id, userName },
+    payload: { token, userName },
   };
 };
 

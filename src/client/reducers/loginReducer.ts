@@ -26,20 +26,24 @@ const initialState: LoginState = makeLoginState();
 
 export const loginReducer = (
   state = initialState,
-  action: { type: string; [key: string]: any },
+  action: { type: string; payload: { [key: string]: any } },
 ) => {
   switch (action.type) {
     case loginConstants.LOGIN_REQUEST:
       return state.update("isRequesting", () => true);
     case loginConstants.LOGIN_SUCCESS:
+      const { token, userName } = action.payload;
+
       return state
         .update("isRequesting", () => false)
-        .update("token", () => action.token)
-        .update("userName", () => action.userName);
+        .update("token", () => token)
+        .update("userName", () => userName);
     case loginConstants.LOGIN_FAILURE:
+      const { err } = action.payload;
+
       return state
         .update("isRequesting", () => false)
-        .update("error", () => action.err);
+        .update("error", () => err);
     case loginConstants.LOGOUT_REQUEST:
       return state.update("isRequesting", () => true);
     case loginConstants.LOGOUT_SUCCESS:
