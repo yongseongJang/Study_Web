@@ -5,7 +5,7 @@ import loginField from "../utils/fields/loginField";
 import { loginActions } from "../actions";
 import { IFields } from "../utils/fields/types";
 import { ILoginInfo } from "../interfaces";
-import { RootState } from "../reducers/types";
+import { loginSelectors } from "../selectors";
 import "../styles/Login.scss";
 
 interface LoginProps {
@@ -24,7 +24,7 @@ function LoginForm(props: LoginProps) {
   const dispatch = useDispatch();
   let errorMessage = "";
 
-  const error = useSelector((state: RootState) => state.loginReducer.error);
+  const error = useSelector(loginSelectors.selectError);
 
   const handleSubmitClick = (
     e: React.MouseEvent<HTMLElement> | React.KeyboardEvent,

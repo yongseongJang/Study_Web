@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../reducers/types";
+import { loginSelectors } from "../selectors";
 import { OrderForm } from "../containers";
 
 function Order() {
-  const token = useSelector((state: RootState) => state.loginReducer.token);
+  const token = useSelector(loginSelectors.selectToken);
 
   return (
     <div className="order">

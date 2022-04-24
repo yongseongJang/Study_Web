@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItem, CartPagination, Spinner } from "../components";
 import { RootState } from "../reducers/types";
+import { loginSelectors } from "../selectors";
 import { paginate } from "../utils/pagination";
 import { IPagination } from "../interfaces";
 import { cartActions, orderActions } from "../actions";
@@ -20,7 +21,7 @@ function CartModal(props: CartModalProps) {
   const cartInfo = useSelector(
     (state: RootState) => state.cartReducer.cartInfo,
   );
-  const token = useSelector((state: RootState) => state.loginReducer.token);
+  const token = useSelector(loginSelectors.selectToken);
 
   const [pagination, setPagination] = useState<IPagination>(
     paginate(cartInfo.size),

@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers/types";
+import { loginSelectors } from "../selectors";
 import { productActions, cartActions, orderActions } from "../actions";
 import {
   ProductDetail,
@@ -29,7 +30,7 @@ function ProductInfo(props: ProductInfoProps) {
   const product = useSelector(
     (state: RootState) => state.productReducer.productDetail,
   );
-  const token = useSelector((state: RootState) => state.loginReducer.token);
+  const token = useSelector(loginSelectors.selectToken);
 
   const cartInfo = useSelector(
     (state: RootState) => state.cartReducer.cartInfo,

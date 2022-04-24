@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { OrderTable, Spinner } from "../components";
 import { RootState } from "../reducers/types";
+import { loginSelectors } from "../selectors";
 import { orderActions } from "../actions";
 
 function OrderInfo() {
@@ -17,7 +18,7 @@ function OrderInfo() {
     "취소/교환/반품",
   ];
 
-  const token = useSelector((state: RootState) => state.loginReducer.token);
+  const token = useSelector(loginSelectors.selectToken);
   const isRequesting = useSelector(
     (state: RootState) => state.orderReducer.isRequesting,
   );

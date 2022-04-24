@@ -4,10 +4,11 @@ import { useSelector } from "react-redux";
 import { TopMenu } from "../components";
 import { OrderInfo } from "../containers";
 import { RootState } from "../reducers/types";
+import { loginSelectors } from "../selectors";
 import { history } from "../utils/history";
 
 function OrderList() {
-  const token = useSelector((state: RootState) => state.loginReducer.token);
+  const token = useSelector(loginSelectors.selectToken);
   const nonMemberLogin = useSelector(
     (state: RootState) => state.orderReducer.nonMemberLogin,
   );

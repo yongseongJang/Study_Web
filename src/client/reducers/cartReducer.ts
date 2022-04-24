@@ -30,7 +30,7 @@ export const cartReducer = (
     case cartConstants.REQUEST_ADD:
       return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_ADD:
-      tmp = [...state.cartInfo];
+      tmp = state.cartInfo.toArray();
 
       tmp.forEach((info, index) => {
         for (let i = 0; i < payload.cartInfo.length; i++) {
@@ -58,7 +58,7 @@ export const cartReducer = (
     case cartConstants.REQUEST_REMOVE:
       return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_REMOVE:
-      tmp = [...state.cartInfo];
+      tmp = state.cartInfo.toArray();
 
       let removeIndex = -1;
       state.cartInfo.some((info, index) => {
@@ -86,7 +86,7 @@ export const cartReducer = (
     case cartConstants.REQUEST_SELECT_REMOVE:
       return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_SELECT_REMOVE:
-      tmp = [...state.cartInfo];
+      tmp = state.cartInfo.toArray();
 
       payload.cartInfo.forEach(
         (selectProduct: { productId: number; option: string }) => {
@@ -127,7 +127,7 @@ export const cartReducer = (
     case cartConstants.REQUEST_INCREASE_QUANTITY:
       return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_INCREASE_QUANTITY:
-      tmp = [...state.cartInfo];
+      tmp = state.cartInfo.toArray();
 
       let increaseIndex = -1;
       state.cartInfo.some((info, index) => {
@@ -155,7 +155,7 @@ export const cartReducer = (
     case cartConstants.REQUEST_DECREASE_QUANTITY:
       return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_DECREASE_QUANTITY:
-      tmp = [...state.cartInfo];
+      tmp = state.cartInfo.toArray();
 
       let decreaseIndex = -1;
       state.cartInfo.some((info, index) => {
@@ -183,7 +183,7 @@ export const cartReducer = (
     case cartConstants.REQUEST_CHANGE_QUANTITY:
       return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_CHANGE_QUANTITY:
-      tmp = [...state.cartInfo];
+      tmp = state.cartInfo.toArray();
 
       let changeIndex = -1;
       state.cartInfo.some((info, index) => {

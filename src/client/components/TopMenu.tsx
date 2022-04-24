@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loginActions, cartActions, orderActions } from "../actions";
-import { RootState } from "../reducers/types";
+import { loginSelectors } from "../selectors";
 
 function TopMenu() {
   const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.loginReducer.token);
+  const token = useSelector(loginSelectors.selectToken);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();

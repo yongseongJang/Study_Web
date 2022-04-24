@@ -7,6 +7,7 @@ import { Terms2 } from "../components";
 import OrderTermsField from "../utils/fields/orderTermsField";
 import { IFields } from "../utils/fields/types";
 import { RootState } from "../reducers/types";
+import { loginSelectors } from "../selectors";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
 import orderTermsField from "../utils/fields/orderTermsField";
 import { orderActions } from "../actions";
@@ -46,7 +47,7 @@ function OrderForm(props: OrderProps) {
 
   const dispatch = useDispatch();
 
-  const token = useSelector((state: RootState) => state.loginReducer.token);
+  const token = useSelector(loginSelectors.selectToken);
 
   const cartInfo = useSelector((state: RootState) =>
     state.cartReducer.cartInfo.toArray(),
