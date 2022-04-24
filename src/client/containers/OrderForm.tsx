@@ -48,8 +48,8 @@ function OrderForm(props: OrderProps) {
 
   const token = useSelector((state: RootState) => state.loginReducer.token);
 
-  const cartInfo = useSelector(
-    (state: RootState) => state.cartReducer.cartInfo,
+  const cartInfo = useSelector((state: RootState) =>
+    state.cartReducer.cartInfo.toArray(),
   );
   const isAllProduct = useSelector(
     (state: RootState) => state.orderReducer.isAllProduct,

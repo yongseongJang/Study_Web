@@ -4,7 +4,7 @@ import withForm from "../hocs/withForm";
 import loginField from "../utils/fields/loginField";
 import { loginActions } from "../actions";
 import { IFields } from "../utils/fields/types";
-import { ILoginDto } from "../interfaces";
+import { ILoginInfo } from "../interfaces";
 import { RootState } from "../reducers/types";
 import "../styles/Login.scss";
 
@@ -13,9 +13,9 @@ interface LoginProps {
   isValidForm: boolean;
   onChange: () => void;
   submit: (
-    action: (loginDto: ILoginDto) => {
+    action: (loginInfo: ILoginInfo) => {
       type: string;
-      loginDto: ILoginDto;
+      loginInfo: ILoginInfo;
     },
   ) => () => void;
 }

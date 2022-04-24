@@ -1,9 +1,9 @@
 import axios from "axios";
-import { IUserDto } from "../interfaces";
+import { IUserInfo } from "../interfaces";
 
-const signUp = (userDto: IUserDto) => {
+const signUp = (userInfo: IUserInfo) => {
   return axios
-    .post(`${process.env.REACT_APP_API_URI}/api/users`, { userInfo: userDto })
+    .post(`${process.env.REACT_APP_API_URI}/api/users`, { userInfo: userInfo })
     .catch((err) => {
       throw err;
     });

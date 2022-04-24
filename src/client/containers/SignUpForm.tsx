@@ -6,7 +6,7 @@ import { Terms } from "../components";
 import { signUpActions } from "../actions";
 
 import { IFields } from "../utils/fields/types";
-import { IUserDto } from "../interfaces";
+import { IUserInfo } from "../interfaces";
 import signUpTermsField from "../utils/fields/signUpTermsField";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
 
@@ -15,7 +15,7 @@ interface SignUpProps {
   isValidForm: boolean;
   onChange: () => void;
   submit: (
-    action: (userDto: IUserDto) => { type: string; userDto: IUserDto },
+    action: (userInfo: IUserInfo) => { type: string; userInfo: IUserInfo },
   ) => () => void;
 }
 

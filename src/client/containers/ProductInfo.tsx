@@ -69,7 +69,7 @@ function ProductInfo(props: ProductInfoProps) {
     if (sizes.length > 0) {
       addToCart(sizes, token);
 
-      dispatch(orderActions.add(false, [cartInfo.length]));
+      dispatch(orderActions.add(false, [cartInfo.size]));
 
       history.replace("/order/payment");
     }

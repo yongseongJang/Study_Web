@@ -3,8 +3,12 @@ import { cartConstants, cartActions } from "../actions";
 import { ICartInfo } from "../interfaces";
 import { cartServices } from "../services";
 
-export function* requestAdd(cartInfo: ICartInfo[], token?: string) {
+export function* requestAdd(payload: {
+  cartInfo: ICartInfo[];
+  token?: string;
+}) {
   try {
+    const { cartInfo, token } = payload;
     if (token) {
       yield call(cartServices.add, cartInfo, token);
     }
@@ -15,12 +19,13 @@ export function* requestAdd(cartInfo: ICartInfo[], token?: string) {
   }
 }
 
-export function* requestRemove(
-  productId: number,
-  option: string,
-  token?: string,
-) {
+export function* requestRemove(payload: {
+  productId: number;
+  option: string;
+  token?: string;
+}) {
   try {
+    const { productId, option, token } = payload;
     if (token) {
       yield call(cartServices.remove, productId, option, token);
     }
@@ -31,11 +36,12 @@ export function* requestRemove(
   }
 }
 
-export function* requestSelectRemove(
-  cartInfo: Pick<ICartInfo, "productId" | "option">[],
-  token?: string,
-) {
+export function* requestSelectRemove(payload: {
+  cartInfo: Pick<ICartInfo, "productId" | "option">[];
+  token?: string;
+}) {
   try {
+    const { cartInfo, token } = payload;
     if (token) {
       yield call(cartServices.selectRemove, cartInfo, token);
     }
@@ -45,8 +51,9 @@ export function* requestSelectRemove(
   }
 }
 
-export function* requestRemoveAll(token?: string) {
+export function* requestRemoveAll(payload: { token?: string }) {
   try {
+    const { token } = payload;
     if (token) {
       yield call(cartServices.removeAll, token);
     }
@@ -57,36 +64,47 @@ export function* requestRemoveAll(token?: string) {
   }
 }
 
-export function* requestIncreaseQuantity(productId: number, option: string) {
+export function* requestIncreaseQuantity(payload: {
+  productId: number;
+  option: string;
+}) {
   try {
+    const { productId, option } = payload;
     yield put(cartActions.increaseQuantitySuccess(productId, option));
   } catch (err) {
     yield put(cartActions.increaseQuantityFailure(err));
   }
 }
 
-export function* requestDecreaseQuantity(productId: number, option: string) {
+export function* requestDecreaseQuantity(payload: {
+  productId: number;
+  option: string;
+}) {
   try {
+    const { productId, option } = payload;
     yield put(cartActions.decreaseQuantitySuccess(productId, option));
   } catch (err) {
     yield put(cartActions.decreaseQuantityFailure(err));
   }
 }
 
-export function* requestChangeQuantity(
-  productId: number,
-  option: string,
-  quantity: number,
-) {
+export function* requestChangeQuantity(payload: {
+  productId: number;
+  option: string;
+  quantity: number;
+}) {
   try {
+    const { productId, option, quantity } = payload;
     yield put(cartActions.changeQuantitySuccess(productId, option, quantity));
   } catch (err) {
     yield put(cartActions.changeQuantityFailure(err));
   }
 }
 
-export function* requestCartProduct(token: string) {
+export function* requestCartProduct(payload: { token: string }) {
   try {
+    const { token } = payload;
+
     const { cartInfo } = yield call(cartServices.requestCartProduct, token);
 
     yield put(cartActions.requestCartProductSuccess(cartInfo));
@@ -97,65 +115,57 @@ export function* requestCartProduct(token: string) {
 
 export function* watchRequestAdd() {
   while (true) {
-    const { cartInfo, token } = yield take(cartConstants.REQUEST_ADD);
-    yield call(requestAdd, cartInfo, token);
+    const { payload } = yield take(cartConstants.REQUEST_ADD);
+    yield call(requestAdd, payload);
   }
 }
 
 export function* watchRequestRemove() {
   while (true) {
-    const { productId, option, token } = yield take(
-      cartConstants.REQUEST_REMOVE,
-    );
-    yield call(requestRemove, productId, option, token);
+    const { payload } = yield take(cartConstants.REQUEST_REMOVE);
+    yield call(requestRemove, payload);
   }
 }
 
 export function* watchRequestSelectRemove() {
   while (true) {
-    const { cartInfo, token } = yield take(cartConstants.REQUEST_SELECT_REMOVE);
-    yield call(requestSelectRemove, cartInfo, token);
+    const { payload } = yield take(cartConstants.REQUEST_SELECT_REMOVE);
+    yield call(requestSelectRemove, payload);
   }
 }
 
 export function* watchRequestRemoveAll() {
   while (true) {
-    const { token } = yield take(cartConstants.REQUEST_REMOVE_ALL);
-    yield call(requestRemoveAll, token);
+    const { payload } = yield take(cartConstants.REQUEST_REMOVE_ALL);
+    yield call(requestRemoveAll, payload);
   }
 }
 
 export function* watchRequestIncreaseQuantity() {
   while (true) {
-    const { productId, option } = yield take(
-      cartConstants.REQUEST_INCREASE_QUANTITY,
-    );
-    yield call(requestIncreaseQuantity, productId, option);
+    const { payload } = yield take(cartConstants.REQUEST_INCREASE_QUANTITY);
+    yield call(requestIncreaseQuantity, payload);
   }
 }
 
 export function* watchRequestDecreaseQuantity() {
   while (true) {
-    const { productId, option } = yield take(
-      cartConstants.REQUEST_DECREASE_QUANTITY,
-    );
-    yield call(requestDecreaseQuantity, productId, option);
+    const { payload } = yield take(cartConstants.REQUEST_DECREASE_QUANTITY);
+    yield call(requestDecreaseQuantity, payload);
   }
 }
 
 export function* watchRequestChangeQuantity() {
   while (true) {
-    const { productId, option, quantity } = yield take(
-      cartConstants.REQUEST_CHANGE_QUANTITY,
-    );
-    yield call(requestChangeQuantity, productId, option, quantity);
+    const { payload } = yield take(cartConstants.REQUEST_CHANGE_QUANTITY);
+    yield call(requestChangeQuantity, payload);
   }
 }
 
 export function* watchRequestCartProduct() {
   while (true) {
-    const { token } = yield take(cartConstants.REQUEST_CART_PRODUCT);
-    yield call(requestCartProduct, token);
+    const { payload } = yield take(cartConstants.REQUEST_CART_PRODUCT);
+    yield call(requestCartProduct, payload);
   }
 }
 

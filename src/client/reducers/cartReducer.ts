@@ -1,57 +1,70 @@
+import { List, Record } from "immutable";
+import type { RecordOf } from "immutable";
 import { cartConstants } from "../actions";
 import { ICartInfo } from "../interfaces";
 
-const initialState: { isRequesting: boolean; cartInfo: ICartInfo[] } = {
+interface State {
+  isRequesting: boolean;
+  cartInfo: List<ICartInfo>;
+}
+
+const defaultValues: State = {
   isRequesting: false,
-  cartInfo: [],
+  cartInfo: List(),
 };
+
+const makeCartState: Record.Factory<State> = Record(defaultValues);
+
+export type CartState = RecordOf<State>;
+
+const initialState: CartState = makeCartState();
 
 export const cartReducer = (
   state = initialState,
-  action: { type: string; [key: string]: any },
+  action: { type: string; payload: { [key: string]: any } },
 ) => {
   let tmp: ICartInfo[] = [];
+  const payload = action.payload;
 
   switch (action.type) {
     case cartConstants.REQUEST_ADD:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_ADD:
       tmp = [...state.cartInfo];
 
       tmp.forEach((info, index) => {
-        for (let i = 0; i < action.cartInfo.length; i++) {
+        for (let i = 0; i < payload.cartInfo.length; i++) {
           if (
-            info.productId === action.cartInfo[i].productId &&
-            info.option === action.cartInfo[i].option
+            info.productId === payload.cartInfo[i].productId &&
+            info.option === payload.cartInfo[i].option
           ) {
-            tmp[index].quantity += action.cartInfo[i].quantity;
+            tmp[index].quantity += payload.cartInfo[i].quantity;
 
-            action.cartInfo.splice(i, 1);
+            payload.cartInfo.splice(i, 1);
             break;
           }
         }
       });
 
-      return {
-        ...state,
-        isRequesting: false,
-        cartInfo:
-          Array.isArray(action.cartInfo) && action.cartInfo.length > 0
-            ? tmp.concat(action.cartInfo)
-            : tmp,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("cartInfo", () =>
+          Array.isArray(payload.cartInfo) && payload.cartInfo.length > 0
+            ? List(tmp.concat(payload.cartInfo))
+            : List(tmp),
+        );
     case cartConstants.FAILURE_ADD:
-      return { ...state, isRequesting: false };
+      return state.update("isRequesting", () => false);
     case cartConstants.REQUEST_REMOVE:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_REMOVE:
       tmp = [...state.cartInfo];
 
       let removeIndex = -1;
       state.cartInfo.some((info, index) => {
         if (
-          info.productId === action.productId &&
-          info.option === action.option
+          info.productId === payload.productId &&
+          info.option === payload.option
         ) {
           removeIndex = index;
 
@@ -64,15 +77,18 @@ export const cartReducer = (
       if (removeIndex !== -1) {
         tmp.splice(removeIndex, 1);
       }
-      return { ...state, isRequesting: false, cartInfo: tmp };
+
+      return state
+        .update("isRequesting", () => false)
+        .update("cartInfo", () => List(tmp));
     case cartConstants.FAILURE_REMOVE:
-      return { ...state, isRequesting: false };
+      return state.update("isRequesting", () => false);
     case cartConstants.REQUEST_SELECT_REMOVE:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_SELECT_REMOVE:
       tmp = [...state.cartInfo];
 
-      action.cartInfo.forEach(
+      payload.cartInfo.forEach(
         (selectProduct: { productId: number; option: string }) => {
           let removeIndex = -1;
 
@@ -95,25 +111,29 @@ export const cartReducer = (
         },
       );
 
-      return { ...state, isRequesting: false, cartInfo: tmp };
+      return state
+        .update("isRequesting", () => false)
+        .update("cartInfo", () => List(tmp));
     case cartConstants.FAILURE_SELECT_REMOVE:
-      return { ...state, isRequesting: false };
+      return state.update("isRequesting", () => false);
     case cartConstants.REQUEST_REMOVE_ALL:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_REMOVE_ALL:
-      return { ...state, isRequesting: false, cartInfo: [] };
+      return state
+        .update("isRequesting", () => false)
+        .update("cartInfo", () => List());
     case cartConstants.FAILURE_REMOVE_ALL:
-      return { ...state, isRequesting: false };
+      return state.update("isRequesting", () => false);
     case cartConstants.REQUEST_INCREASE_QUANTITY:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_INCREASE_QUANTITY:
       tmp = [...state.cartInfo];
 
       let increaseIndex = -1;
       state.cartInfo.some((info, index) => {
         if (
-          info.productId === action.productId &&
-          info.option == action.option
+          info.productId === payload.productId &&
+          info.option == payload.option
         ) {
           increaseIndex = index;
 
@@ -126,19 +146,22 @@ export const cartReducer = (
       if (increaseIndex !== -1) {
         tmp[increaseIndex].quantity++;
       }
-      return { ...state, isRequesting: false, cartInfo: tmp };
+
+      return state
+        .update("isRequesting", () => false)
+        .update("cartInfo", () => List(tmp));
     case cartConstants.FAILURE_INCREASE_QUANTITY:
-      return { ...state, isRequesting: false };
+      return state.update("isRequesting", () => false);
     case cartConstants.REQUEST_DECREASE_QUANTITY:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_DECREASE_QUANTITY:
       tmp = [...state.cartInfo];
 
       let decreaseIndex = -1;
       state.cartInfo.some((info, index) => {
         if (
-          info.productId === action.productId &&
-          info.option == action.option
+          info.productId === payload.productId &&
+          info.option == payload.option
         ) {
           decreaseIndex = index;
 
@@ -151,19 +174,22 @@ export const cartReducer = (
       if (decreaseIndex !== -1) {
         tmp[decreaseIndex].quantity--;
       }
-      return { ...state, isRequesting: false, cartInfo: tmp };
+
+      return state
+        .update("isRequesting", () => false)
+        .update("cartInfo", () => List(tmp));
     case cartConstants.FAILURE_DECREASE_QUANTITY:
-      return { ...state, isRequesting: false };
+      return state.update("isRequesting", () => false);
     case cartConstants.REQUEST_CHANGE_QUANTITY:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case cartConstants.SUCCESS_CHANGE_QUANTITY:
       tmp = [...state.cartInfo];
 
       let changeIndex = -1;
       state.cartInfo.some((info, index) => {
         if (
-          info.productId === action.productId &&
-          info.option == action.option
+          info.productId === payload.productId &&
+          info.option == payload.option
         ) {
           changeIndex = index;
 
@@ -174,17 +200,22 @@ export const cartReducer = (
       });
 
       if (changeIndex !== -1) {
-        tmp[changeIndex].quantity = action.quantity;
+        tmp[changeIndex].quantity = payload.quantity;
       }
-      return { ...state, isRequesting: false, cartInfo: tmp };
+
+      return state
+        .update("isRequesting", () => false)
+        .update("cartInfo", () => List(tmp));
     case cartConstants.FAILURE_CHANGE_QUANTITY:
-      return { ...state, isRequesting: false };
+      return state.update("isRequesting", () => false);
     case cartConstants.REQUEST_CART_PRODUCT:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case cartConstants.REQUEST_CART_PRODUCT_SUCCESS:
-      return { ...state, isRequesting: false, cartInfo: action.cartInfo };
+      return state
+        .update("isRequesting", () => false)
+        .update("cartInfo", () => List(payload.cartInfo));
     case cartConstants.REQUEST_CART_PRODUCT_FAILURE:
-      return { ...state, isRequesting: false };
+      return state.update("isRequesting", () => false);
     default:
       return state;
   }

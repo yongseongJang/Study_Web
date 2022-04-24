@@ -7,6 +7,7 @@ import { paginate } from "../utils/pagination";
 import { IPagination } from "../interfaces";
 import { cartActions, orderActions } from "../actions";
 import { history } from "../utils/history";
+import { List } from "immutable";
 interface CartModalProps {
   isVisible: boolean;
   onClick: (e: React.MouseEvent) => void;
@@ -22,7 +23,7 @@ function CartModal(props: CartModalProps) {
   const token = useSelector((state: RootState) => state.loginReducer.token);
 
   const [pagination, setPagination] = useState<IPagination>(
-    paginate(cartInfo.length),
+    paginate(cartInfo.size),
   );
 
   const dispatch = useDispatch();
@@ -34,8 +35,8 @@ function CartModal(props: CartModalProps) {
   }, []);
 
   useEffect(() => {
-    if (cartInfo.length > 0) {
-      setPagination(paginate(cartInfo.length));
+    if (cartInfo.size > 0) {
+      setPagination(paginate(cartInfo.size));
     }
   }, [cartInfo]);
 
@@ -51,7 +52,7 @@ function CartModal(props: CartModalProps) {
     const page = e.currentTarget.getAttribute("data-page");
 
     if (page) {
-      setPagination(paginate(cartInfo.length, Number(page)));
+      setPagination(paginate(cartInfo.size, Number(page)));
     }
   };
 
@@ -84,13 +85,14 @@ function CartModal(props: CartModalProps) {
           <>
             <div className="content__count">
               {`총 `}
-              <strong>{cartInfo.length}</strong>
+              <strong>{cartInfo.size}</strong>
               {` 개`}
             </div>
             <ul className="content__item-list">
               {cartInfo &&
-                Array.isArray(cartInfo) &&
+                List.isList(cartInfo) &&
                 cartInfo
+                  .toArray()
                   .slice(pagination.startIndex, pagination.endIndex + 1)
                   .map((info, index) => {
                     return <CartItem key={index} info={info}></CartItem>;

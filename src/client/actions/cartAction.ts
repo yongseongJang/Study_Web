@@ -30,46 +30,58 @@ export const cartConstants = {
 const add = (cartInfo: ICartInfo[], token?: string) => {
   return {
     type: cartConstants.REQUEST_ADD,
-    cartInfo,
-    token,
+    payload: {
+      cartInfo,
+      token,
+    },
   };
 };
 
 const addSuccess = (cartInfo: ICartInfo[]) => {
   return {
     type: cartConstants.SUCCESS_ADD,
-    cartInfo,
+    payload: {
+      cartInfo,
+    },
   };
 };
 
 const addFailure = (err: unknown) => {
   return {
     type: cartConstants.FAILURE_ADD,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
 const remove = (productId: number, option: string, token: string) => {
   return {
     type: cartConstants.REQUEST_REMOVE,
-    productId,
-    option,
-    token,
+    payload: {
+      productId,
+      option,
+      token,
+    },
   };
 };
 
 const removeSuccess = (productId: number, option: string) => {
   return {
     type: cartConstants.SUCCESS_REMOVE,
-    productId,
-    option,
+    payload: {
+      productId,
+      option,
+    },
   };
 };
 
 const removeFailure = (err: unknown) => {
   return {
     type: cartConstants.FAILURE_REMOVE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
@@ -79,8 +91,10 @@ const selectRemove = (
 ) => {
   return {
     type: cartConstants.REQUEST_SELECT_REMOVE,
-    cartInfo,
-    token,
+    payload: {
+      cartInfo,
+      token,
+    },
   };
 };
 
@@ -89,19 +103,23 @@ const selectRemoveSuccess = (
 ) => {
   return {
     type: cartConstants.SUCCESS_SELECT_REMOVE,
-    cartInfo,
+    payload: {
+      cartInfo,
+    },
   };
 };
 
 const selectRemoveFailure = (err: unknown) => {
   return {
     type: cartConstants.FAILURE_SELECT_REMOVE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
 const removeAll = (token: string) => {
-  return { type: cartConstants.REQUEST_REMOVE_ALL, token };
+  return { type: cartConstants.REQUEST_REMOVE_ALL, payload: { token } };
 };
 
 const removeAllSuccess = () => {
@@ -111,40 +129,52 @@ const removeAllSuccess = () => {
 const removeAllFailure = (err: unknown) => {
   return {
     type: cartConstants.FAILURE_REMOVE_ALL,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
 const increaseQuantity = (productId: number, option: string) => {
   return {
     type: cartConstants.REQUEST_INCREASE_QUANTITY,
-    productId,
-    option,
+    payload: {
+      productId,
+      option,
+    },
   };
 };
 
 const increaseQuantitySuccess = (productId: number, option: string) => {
-  return { type: cartConstants.SUCCESS_INCREASE_QUANTITY, productId, option };
+  return {
+    type: cartConstants.SUCCESS_INCREASE_QUANTITY,
+    payload: { productId, option },
+  };
 };
 
 const increaseQuantityFailure = (err: unknown) => {
-  return { type: cartConstants.FAILURE_INCREASE_QUANTITY, err };
+  return { type: cartConstants.FAILURE_INCREASE_QUANTITY, payload: { err } };
 };
 
 const decreaseQuantity = (productId: number, option: string) => {
   return {
     type: cartConstants.REQUEST_DECREASE_QUANTITY,
-    productId,
-    option,
+    payload: {
+      productId,
+      option,
+    },
   };
 };
 
 const decreaseQuantitySuccess = (productId: number, option: string) => {
-  return { type: cartConstants.SUCCESS_DECREASE_QUANTITY, productId, option };
+  return {
+    type: cartConstants.SUCCESS_DECREASE_QUANTITY,
+    payload: { productId, option },
+  };
 };
 
 const decreaseQuantityFailure = (err: unknown) => {
-  return { type: cartConstants.FAILURE_DECREASE_QUANTITY, err };
+  return { type: cartConstants.FAILURE_DECREASE_QUANTITY, payload: { err } };
 };
 
 const changeQuantity = (
@@ -154,9 +184,11 @@ const changeQuantity = (
 ) => {
   return {
     type: cartConstants.REQUEST_CHANGE_QUANTITY,
-    productId,
-    option,
-    quantity,
+    payload: {
+      productId,
+      option,
+      quantity,
+    },
   };
 };
 
@@ -167,34 +199,42 @@ const changeQuantitySuccess = (
 ) => {
   return {
     type: cartConstants.SUCCESS_CHANGE_QUANTITY,
-    productId,
-    option,
-    quantity,
+    payload: {
+      productId,
+      option,
+      quantity,
+    },
   };
 };
 
 const changeQuantityFailure = (err: unknown) => {
-  return { type: cartConstants.FAILURE_CHANGE_QUANTITY, err };
+  return { type: cartConstants.FAILURE_CHANGE_QUANTITY, payload: { err } };
 };
 
 const requestCartProduct = (token: string) => {
   return {
     type: cartConstants.REQUEST_CART_PRODUCT,
-    token,
+    payload: {
+      token,
+    },
   };
 };
 
 const requestCartProductSuccess = (cartInfo: ICartInfo[]) => {
   return {
     type: cartConstants.REQUEST_CART_PRODUCT_SUCCESS,
-    cartInfo,
+    payload: {
+      cartInfo,
+    },
   };
 };
 
 const requestCartProductFailure = (err: unknown) => {
   return {
     type: cartConstants.REQUEST_CART_PRODUCT_FAILURE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 

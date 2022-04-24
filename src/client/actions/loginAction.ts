@@ -1,4 +1,4 @@
-import { ILoginDto } from "../interfaces";
+import { ILoginInfo } from "../interfaces";
 
 export const loginConstants = {
   LOGIN_REQUEST: "LOGIN_REQUEST",
@@ -9,10 +9,10 @@ export const loginConstants = {
   RESET_ERROR: "RESET_ERROR",
 };
 
-const login = (loginDto: ILoginDto) => {
+const login = (loginInfo: ILoginInfo) => {
   return {
     type: loginConstants.LOGIN_REQUEST,
-    payload: { loginDto },
+    payload: { loginInfo },
   };
 };
 

@@ -1,4 +1,4 @@
-import { IUserDto } from "../interfaces";
+import { IUserInfo } from "../interfaces";
 
 export const signUpConstants = {
   SIGNUP_REQUEST: "SIGNUP_REQUEST",
@@ -6,8 +6,8 @@ export const signUpConstants = {
   SIGNUP_FAILURE: "SIGNUP_FAILURE",
 };
 
-const signUp = (userDto: IUserDto) => {
-  return { type: signUpConstants.SIGNUP_REQUEST, payload: { userDto } };
+const signUp = (userInfo: IUserInfo) => {
+  return { type: signUpConstants.SIGNUP_REQUEST, payload: { userInfo } };
 };
 
 const signUpSuccess = () => {

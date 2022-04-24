@@ -38,7 +38,7 @@ function CartInfo() {
 
   const [selectAllState, setSelectAllState] = useState<boolean>(false);
   const [checkBoxState, setCheckBoxState] = useState<boolean[]>(
-    Array(cartInfo.length).fill(false),
+    Array(cartInfo.size).fill(false),
   );
 
   const totalPrice = cartInfo.reduce((acc, info) => {
@@ -76,7 +76,7 @@ function CartInfo() {
 
     dispatch(cartActions.selectRemove(selectInfo, token));
 
-    setCheckBoxState(Array(cartInfo.length - selectInfo.length).fill(false));
+    setCheckBoxState(Array(cartInfo.size - selectInfo.length).fill(false));
     setSelectAllState(false);
   };
 
@@ -135,7 +135,7 @@ function CartInfo() {
   };
 
   const handleSelectAllStateChange = () => {
-    setCheckBoxState(Array(cartInfo.length).fill(!selectAllState));
+    setCheckBoxState(Array(cartInfo.size).fill(!selectAllState));
     setSelectAllState(!selectAllState);
   };
 
@@ -159,7 +159,7 @@ function CartInfo() {
 
   const handleOrderAllBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (cartInfo.length > 0) {
+    if (cartInfo.size > 0) {
       dispatch(orderActions.add(true));
 
       history.replace("/order/payment");
@@ -197,12 +197,12 @@ function CartInfo() {
         </div>
       ) : (
         <>
-          {cartInfo.length > 0 ? (
+          {cartInfo.size > 0 ? (
             <React.Fragment>
               <section>
                 <CartTable
                   attributes={cartAttributes}
-                  instances={cartInfo}
+                  instances={cartInfo.toArray()}
                   onRemoveClick={handleRemoveClick}
                   onIncreaseClick={handleIncreaseQuantityClick}
                   onDecreaseClick={handleDecreaseQuantityClick}

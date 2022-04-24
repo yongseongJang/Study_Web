@@ -1,4 +1,5 @@
-import { List, Record, RecordOf } from "immutable";
+import { List, Record } from "immutable";
+import type { RecordOf } from "immutable";
 import { productConstants } from "../actions";
 import {
   IPagination,
