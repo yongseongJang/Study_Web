@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../reducers/types";
 import { loginSelectors } from "../selectors";
 import { productActions, cartActions, orderActions } from "../actions";
 import {
@@ -14,6 +13,7 @@ import {
 import { CartModal } from "../containers";
 import { IOption, ICartInfo } from "../interfaces";
 import { history } from "../utils/history";
+import { productSelectors, cartSelectors } from "../selectors";
 interface ProductInfoProps {
   category: string;
   productId: number;
@@ -27,14 +27,14 @@ function ProductInfo(props: ProductInfoProps) {
   const [option, setOption] = useState<IOption>({});
 
   const dispatch = useDispatch();
-  const product = useSelector(
-    (state: RootState) => state.productReducer.productDetail,
-  );
-  const token = useSelector(loginSelectors.selectToken);
 
-  const cartInfo = useSelector(
-    (state: RootState) => state.cartReducer.cartInfo,
-  );
+  const token = useSelector(loginSelectors.selectToken);
+  const product = useSelector(productSelectors.selectProductDetail);
+  const productDetail = useSelector(productSelectors.selectProductDetails);
+  const productImage = useSelector(productSelectors.selectProductImage);
+  const productCaution = useSelector(productSelectors.selectProductCaution);
+  const productSize = useSelector(productSelectors.selectProductSize);
+  const cartInfo = useSelector(cartSelectors.selectCartInfo);
 
   let resizeTimer = setTimeout(() => {
     return 0;
@@ -70,7 +70,7 @@ function ProductInfo(props: ProductInfoProps) {
     if (sizes.length > 0) {
       addToCart(sizes, token);
 
-      dispatch(orderActions.add(false, [cartInfo.size]));
+      dispatch(orderActions.add(false, [cartInfo.length]));
 
       history.replace("/order/payment");
     }
@@ -122,11 +122,11 @@ function ProductInfo(props: ProductInfoProps) {
             <ProductDetail
               brandName={props.category}
               productName={product.name}
-              productDetail={product.productDetail}
+              productDetail={productDetail}
             ></ProductDetail>
           </section>
           <section className="productInfo__center">
-            <ProductImage productImage={product.productImage}></ProductImage>
+            <ProductImage productImage={productImage}></ProductImage>
           </section>
           <section
             className="productInfo__right"
@@ -139,7 +139,7 @@ function ProductInfo(props: ProductInfoProps) {
                     productName={product.name}
                     price={product.price}
                     salePrice={product.salePrice}
-                    productSize={product.productSize}
+                    productSize={productSize}
                     option={option}
                     setOption={setOption}
                   ></ProductOption>
@@ -160,7 +160,7 @@ function ProductInfo(props: ProductInfoProps) {
                     </a>
                   </div>
                   <ProductGuide
-                    productCaution={product.productCaution}
+                    productCaution={productCaution}
                     name={product.name}
                     size={product.size}
                   ></ProductGuide>

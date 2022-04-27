@@ -11,7 +11,8 @@ import { loginSelectors } from "../selectors";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
 import orderTermsField from "../utils/fields/orderTermsField";
 import { orderActions } from "../actions";
-import { IOrderDetail, IPaymentInfo } from "../interfaces";
+import { IPaymentInfo } from "../interfaces";
+import { cartSelectors } from "../selectors";
 
 interface OrderProps {
   renderElements: () => [];
@@ -48,10 +49,8 @@ function OrderForm(props: OrderProps) {
   const dispatch = useDispatch();
 
   const token = useSelector(loginSelectors.selectToken);
+  const cartInfo = useSelector(cartSelectors.selectCartInfo);
 
-  const cartInfo = useSelector((state: RootState) =>
-    state.cartReducer.cartInfo.toArray(),
-  );
   const isAllProduct = useSelector(
     (state: RootState) => state.orderReducer.isAllProduct,
   );

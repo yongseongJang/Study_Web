@@ -2,29 +2,25 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItem, CartPagination, Spinner } from "../components";
-import { RootState } from "../reducers/types";
 import { loginSelectors } from "../selectors";
 import { paginate } from "../utils/pagination";
 import { IPagination } from "../interfaces";
 import { cartActions, orderActions } from "../actions";
 import { history } from "../utils/history";
 import { List } from "immutable";
+import { cartSelectors } from "../selectors";
 interface CartModalProps {
   isVisible: boolean;
   onClick: (e: React.MouseEvent) => void;
 }
 
 function CartModal(props: CartModalProps) {
-  const isRequesting = useSelector(
-    (state: RootState) => state.cartReducer.isRequesting,
-  );
-  const cartInfo = useSelector(
-    (state: RootState) => state.cartReducer.cartInfo,
-  );
   const token = useSelector(loginSelectors.selectToken);
+  const isRequesting = useSelector(cartSelectors.selectIsRequesting);
+  const cartInfo = useSelector(cartSelectors.selectCartInfo);
 
   const [pagination, setPagination] = useState<IPagination>(
-    paginate(cartInfo.size),
+    paginate(cartInfo.length),
   );
 
   const dispatch = useDispatch();
@@ -36,8 +32,8 @@ function CartModal(props: CartModalProps) {
   }, []);
 
   useEffect(() => {
-    if (cartInfo.size > 0) {
-      setPagination(paginate(cartInfo.size));
+    if (cartInfo.length > 0) {
+      setPagination(paginate(cartInfo.length));
     }
   }, [cartInfo]);
 
@@ -53,7 +49,7 @@ function CartModal(props: CartModalProps) {
     const page = e.currentTarget.getAttribute("data-page");
 
     if (page) {
-      setPagination(paginate(cartInfo.size, Number(page)));
+      setPagination(paginate(cartInfo.length, Number(page)));
     }
   };
 
@@ -86,14 +82,13 @@ function CartModal(props: CartModalProps) {
           <>
             <div className="content__count">
               {`총 `}
-              <strong>{cartInfo.size}</strong>
+              <strong>{cartInfo.length}</strong>
               {` 개`}
             </div>
             <ul className="content__item-list">
               {cartInfo &&
                 List.isList(cartInfo) &&
                 cartInfo
-                  .toArray()
                   .slice(pagination.startIndex, pagination.endIndex + 1)
                   .map((info, index) => {
                     return <CartItem key={index} info={info}></CartItem>;

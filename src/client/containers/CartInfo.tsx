@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartActions, orderActions } from "../actions";
 import { CartTable, Spinner } from "../components";
 import { ICartInfo } from "../interfaces";
-import { RootState } from "../reducers/types";
 import { loginSelectors } from "../selectors";
 import { history } from "../utils/history";
+import { cartSelectors } from "../selectors";
 
 function CartInfo() {
   const dispatch = useDispatch();
@@ -23,13 +23,9 @@ function CartInfo() {
     "선택",
   ];
 
-  const isRequesting = useSelector(
-    (state: RootState) => state.cartReducer.isRequesting,
-  );
-  const cartInfo = useSelector(
-    (state: RootState) => state.cartReducer.cartInfo,
-  );
   const token = useSelector(loginSelectors.selectToken);
+  const isRequesting = useSelector(cartSelectors.selectIsRequesting);
+  const cartInfo = useSelector(cartSelectors.selectCartInfo);
 
   useEffect(() => {
     if (token) {
@@ -39,7 +35,7 @@ function CartInfo() {
 
   const [selectAllState, setSelectAllState] = useState<boolean>(false);
   const [checkBoxState, setCheckBoxState] = useState<boolean[]>(
-    Array(cartInfo.size).fill(false),
+    Array(cartInfo.length).fill(false),
   );
 
   const totalPrice = cartInfo.reduce((acc, info) => {
@@ -77,7 +73,7 @@ function CartInfo() {
 
     dispatch(cartActions.selectRemove(selectInfo, token));
 
-    setCheckBoxState(Array(cartInfo.size - selectInfo.length).fill(false));
+    setCheckBoxState(Array(cartInfo.length - selectInfo.length).fill(false));
     setSelectAllState(false);
   };
 
@@ -136,7 +132,7 @@ function CartInfo() {
   };
 
   const handleSelectAllStateChange = () => {
-    setCheckBoxState(Array(cartInfo.size).fill(!selectAllState));
+    setCheckBoxState(Array(cartInfo.length).fill(!selectAllState));
     setSelectAllState(!selectAllState);
   };
 
@@ -160,7 +156,7 @@ function CartInfo() {
 
   const handleOrderAllBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (cartInfo.size > 0) {
+    if (cartInfo.length > 0) {
       dispatch(orderActions.add(true));
 
       history.replace("/order/payment");
@@ -198,12 +194,12 @@ function CartInfo() {
         </div>
       ) : (
         <>
-          {cartInfo.size > 0 ? (
+          {cartInfo.length > 0 ? (
             <React.Fragment>
               <section>
                 <CartTable
                   attributes={cartAttributes}
-                  instances={cartInfo.toArray()}
+                  instances={cartInfo}
                   onRemoveClick={handleRemoveClick}
                   onIncreaseClick={handleIncreaseQuantityClick}
                   onDecreaseClick={handleDecreaseQuantityClick}

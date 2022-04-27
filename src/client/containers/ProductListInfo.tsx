@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers/types";
 import { Item, Pagination, Spinner } from "../components";
 import { productActions } from "../actions";
+import { productSelectors } from "../selectors";
 
 interface ProductListInfoProps {
   category: string;
@@ -13,15 +14,9 @@ interface ProductListInfoProps {
 function ProductListInfo(props: ProductListInfoProps) {
   const dispatch = useDispatch();
 
-  const isRequesting = useSelector(
-    (state: RootState) => state.productReducer.isRequesting,
-  );
-  const pagination = useSelector(
-    (state: RootState) => state.productReducer.pagination,
-  );
-  const productList = useSelector(
-    (state: RootState) => state.productReducer.productList,
-  );
+  const isRequesting = useSelector(productSelectors.selectIsRequesting);
+  const pagination = useSelector(productSelectors.selectPagination);
+  const productList = useSelector(productSelectors.selectProductList);
 
   React.useEffect(() => {
     if (props.page) {

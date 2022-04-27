@@ -104,7 +104,15 @@ export const productReducer = (
 
       return state
         .update("isRequesting", () => false)
-        .update("productDetail", () => makeProductDetailState(product));
+        .update("productDetail", () =>
+          makeProductDetailState({
+            ...product,
+            productImage: List(product.productImage),
+            productDetail: List(product.productDetail),
+            productCaution: List(product.productCaution),
+            productSize: List(product.productSize),
+          }),
+        );
     case productConstants.REQUEST_PRODUCT_DETAIL_FAILURE:
       return state.update("isRequesting", () => false);
     default:
