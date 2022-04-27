@@ -87,7 +87,7 @@ function CartModal(props: CartModalProps) {
             </div>
             <ul className="content__item-list">
               {cartInfo &&
-                List.isList(cartInfo) &&
+                Array.isArray(cartInfo) &&
                 cartInfo
                   .slice(pagination.startIndex, pagination.endIndex + 1)
                   .map((info, index) => {

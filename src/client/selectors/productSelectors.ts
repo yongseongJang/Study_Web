@@ -17,7 +17,6 @@ const selectProductDetail = (state: RootState) => {
 };
 
 const selectProductDetails = (state: RootState) => {
-  console.log(state.productReducer.productDetail.productDetail);
   return state.productReducer.productDetail.productDetail.toArray();
 };
 
