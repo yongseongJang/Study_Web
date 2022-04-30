@@ -20,7 +20,7 @@ export function* login(payload: { loginInfo: ILoginInfo }) {
       loginInfo,
     );
 
-    yield put(loginActions.loginSuccess(token, userName));
+    yield put(loginActions.loginSuccess(token, expirationTime, userName));
 
     history.replace("/");
 

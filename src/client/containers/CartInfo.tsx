@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions, orderActions } from "../actions";
 import { CartTable, Spinner } from "../components";
@@ -23,7 +24,9 @@ function CartInfo() {
     "선택",
   ];
 
-  const token = useSelector(loginSelectors.selectToken);
+  const [cookies] = useCookies();
+  const token = cookies.uniformbridge_token;
+
   const isRequesting = useSelector(cartSelectors.selectIsRequesting);
   const cartInfo = useSelector(cartSelectors.selectCartInfo);
 

@@ -1,10 +1,11 @@
 import * as React from "react";
+import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
 import { loginSelectors } from "../selectors";
 import { OrderForm } from "../containers";
 
 function Order() {
-  const token = useSelector(loginSelectors.selectToken);
+  const [cookies] = useCookies();
 
   return (
     <div className="order">
@@ -23,7 +24,11 @@ function Order() {
               </a>
             </div>
             <div className="material-icons">
-              <a href={token ? "javascript:;" : "/member/login"}>
+              <a
+                href={
+                  cookies.uniformbridge_token ? "javascript:;" : "/member/login"
+                }
+              >
                 <span className="material-icons-outlined">person</span>
               </a>
             </div>

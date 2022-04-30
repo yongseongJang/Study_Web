@@ -1,14 +1,18 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
 import { loginActions, cartActions, orderActions } from "../actions";
 import { loginSelectors } from "../selectors";
 
 function TopMenu() {
   const dispatch = useDispatch();
-  const token = useSelector(loginSelectors.selectToken);
+
+  const [cookies, setCookies, removeCookies] = useCookies();
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+
+    removeCookies("uniformbridge_token");
 
     dispatch(loginActions.logout());
 
@@ -19,7 +23,7 @@ function TopMenu() {
   return (
     <section className="top-menu">
       <ul>
-        {token ? (
+        {cookies.uniformbridge_token ? (
           <li>
             <a href="/" onClick={handleClick}>
               Logout

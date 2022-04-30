@@ -1,6 +1,8 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../reducers/types";
+import { useCookies } from "react-cookie";
+import { loginSelectors } from "../selectors";
 import { cartActions, loginActions, orderActions } from "../actions";
 import mainBanner from "../../public/img/mainbanner.jpg";
 import coat from "../../public/img/coat.jpg";
@@ -18,10 +20,21 @@ import womensLine from "../../public/img/womens_line.jpg";
 
 function Main() {
   const secondSectionImage = [coat, knit, still_by_hand, arcteryx];
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "uniformbridge_token",
+  ]);
 
   const dispatch = useDispatch();
 
-  const token = useSelector((state: RootState) => state.loginReducer.token);
+  const token = useSelector(loginSelectors.selectToken);
+  const expirationTime = useSelector(loginSelectors.selectExpirationTime);
+
+  useEffect(() => {
+    if (token) {
+      const expires = new Date(Date.now() + expirationTime);
+      setCookie("uniformbridge_token", token, { path: "/", expires });
+    }
+  }, [token]);
 
   const thirdSectionTitle = [
     "UNIFORM BRIDGE 21-22 WINTER",
@@ -41,6 +54,8 @@ function Main() {
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+
+    removeCookie("uniformbridge_token");
 
     dispatch(loginActions.logout());
 
@@ -72,7 +87,7 @@ function Main() {
                       <div className="wrap__menu">
                         <div className="menu__container">
                           <ul>
-                            {token ? (
+                            {cookies.uniformbridge_token ? (
                               <li>
                                 <a href="/" onClick={handleClick}>
                                   Logout

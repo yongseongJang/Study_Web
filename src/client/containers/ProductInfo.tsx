@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSelectors } from "../selectors";
 import { productActions, cartActions, orderActions } from "../actions";
@@ -28,7 +29,8 @@ function ProductInfo(props: ProductInfoProps) {
 
   const dispatch = useDispatch();
 
-  const token = useSelector(loginSelectors.selectToken);
+  const [cookies] = useCookies();
+  const token = cookies.uniformbridge_token;
   const product = useSelector(productSelectors.selectProductDetail);
   const productDetail = useSelector(productSelectors.selectProductDetails);
   const productImage = useSelector(productSelectors.selectProductImage);

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 import { useSelector, useDispatch } from "react-redux";
 import withForm from "../hocs/withForm";
 import orderField from "../utils/fields/orderField";
@@ -48,7 +49,8 @@ function OrderForm(props: OrderProps) {
 
   const dispatch = useDispatch();
 
-  const token = useSelector(loginSelectors.selectToken);
+  const [cookies] = useCookies();
+  const token = cookies.uniformbridge_token;
   const cartInfo = useSelector(cartSelectors.selectCartInfo);
 
   const isAllProduct = useSelector(

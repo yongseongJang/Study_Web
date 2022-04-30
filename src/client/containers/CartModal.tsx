@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItem, CartPagination, Spinner } from "../components";
 import { loginSelectors } from "../selectors";
@@ -7,7 +8,6 @@ import { paginate } from "../utils/pagination";
 import { IPagination } from "../interfaces";
 import { cartActions, orderActions } from "../actions";
 import { history } from "../utils/history";
-import { List } from "immutable";
 import { cartSelectors } from "../selectors";
 interface CartModalProps {
   isVisible: boolean;
@@ -15,7 +15,8 @@ interface CartModalProps {
 }
 
 function CartModal(props: CartModalProps) {
-  const token = useSelector(loginSelectors.selectToken);
+  const [cookies] = useCookies();
+  const token = cookies.uniformbridge_token;
   const isRequesting = useSelector(cartSelectors.selectIsRequesting);
   const cartInfo = useSelector(cartSelectors.selectCartInfo);
 

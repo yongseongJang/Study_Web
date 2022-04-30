@@ -16,10 +16,14 @@ const login = (loginInfo: ILoginInfo) => {
   };
 };
 
-const loginSuccess = (token: string, userName: string) => {
+const loginSuccess = (
+  token: string,
+  expirationTime: number,
+  userName: string,
+) => {
   return {
     type: loginConstants.LOGIN_SUCCESS,
-    payload: { token, userName },
+    payload: { token, expirationTime, userName },
   };
 };
 

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { OrderTable, Spinner } from "../components";
 import { RootState } from "../reducers/types";
@@ -18,7 +19,8 @@ function OrderInfo() {
     "취소/교환/반품",
   ];
 
-  const token = useSelector(loginSelectors.selectToken);
+  const [cookies] = useCookies();
+  const token = cookies.uniformbridge_token;
   const isRequesting = useSelector(
     (state: RootState) => state.orderReducer.isRequesting,
   );

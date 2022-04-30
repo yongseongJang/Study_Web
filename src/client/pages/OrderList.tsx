@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
 import { TopMenu } from "../components";
 import { OrderInfo } from "../containers";
@@ -8,7 +9,8 @@ import { loginSelectors } from "../selectors";
 import { history } from "../utils/history";
 
 function OrderList() {
-  const token = useSelector(loginSelectors.selectToken);
+  const [cookies] = useCookies();
+  const token = cookies.uniformbridge_token;
   const nonMemberLogin = useSelector(
     (state: RootState) => state.orderReducer.nonMemberLogin,
   );
