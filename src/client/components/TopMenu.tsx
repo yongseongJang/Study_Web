@@ -1,13 +1,14 @@
 import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
 import { loginActions, cartActions, orderActions } from "../actions";
-import { loginSelectors } from "../selectors";
 
 function TopMenu() {
   const dispatch = useDispatch();
 
-  const [cookies, setCookies, removeCookies] = useCookies();
+  const [cookies, setCookies, removeCookies] = useCookies([
+    "uniformbridge_token",
+  ]);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();

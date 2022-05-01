@@ -1,11 +1,9 @@
 import * as React from "react";
 import { useCookies } from "react-cookie";
-import { useSelector } from "react-redux";
-import { loginSelectors } from "../selectors";
 import { OrderForm } from "../containers";
 
 function Order() {
-  const [cookies] = useCookies();
+  const [cookies] = useCookies(["uniformbridge_token"]);
 
   return (
     <div className="order">

@@ -6,7 +6,7 @@ import logo from "../../public/img/UniformBridge_logo.png";
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const [cookies] = useCookies();
+  const [cookies] = useCookies(["uniformbridge_token"]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();

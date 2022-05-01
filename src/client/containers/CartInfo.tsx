@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartActions, orderActions } from "../actions";
 import { CartTable, Spinner } from "../components";
 import { ICartInfo } from "../interfaces";
-import { loginSelectors } from "../selectors";
 import { history } from "../utils/history";
 import { cartSelectors } from "../selectors";
 
@@ -24,17 +23,29 @@ function CartInfo() {
     "선택",
   ];
 
-  const [cookies] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "uniformbridge_token",
+    "cartInfo",
+  ]);
   const token = cookies.uniformbridge_token;
 
   const isRequesting = useSelector(cartSelectors.selectIsRequesting);
   const cartInfo = useSelector(cartSelectors.selectCartInfo);
 
+  console.log(cartInfo);
   useEffect(() => {
     if (token) {
       dispatch(cartActions.requestCartProduct(token));
+    } else {
+      dispatch(cartActions.setCartProduct(cookies.cartInfo));
     }
   }, []);
+
+  useEffect(() => {
+    if (!token) {
+      setCookie("cartInfo", JSON.stringify(cartInfo), { path: "/" });
+    }
+  }, [cartInfo]);
 
   const [selectAllState, setSelectAllState] = useState<boolean>(false);
   const [checkBoxState, setCheckBoxState] = useState<boolean[]>(

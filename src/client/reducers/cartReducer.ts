@@ -216,6 +216,8 @@ export const cartReducer = (
         .update("cartInfo", () => List(payload.cartInfo));
     case cartConstants.REQUEST_CART_PRODUCT_FAILURE:
       return state.update("isRequesting", () => false);
+    case cartConstants.SET_CART_PRODUCT:
+      return state.update("cartInfo", () => List(payload.cartInfo));
     default:
       return state;
   }

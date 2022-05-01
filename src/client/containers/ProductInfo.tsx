@@ -2,7 +2,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSelectors } from "../selectors";
 import { productActions, cartActions, orderActions } from "../actions";
 import {
   ProductDetail,
@@ -29,7 +28,10 @@ function ProductInfo(props: ProductInfoProps) {
 
   const dispatch = useDispatch();
 
-  const [cookies] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "uniformbridge_token",
+    "cartInfo",
+  ]);
   const token = cookies.uniformbridge_token;
   const product = useSelector(productSelectors.selectProductDetail);
   const productDetail = useSelector(productSelectors.selectProductDetails);
@@ -60,10 +62,20 @@ function ProductInfo(props: ProductInfoProps) {
       productActions.requestProductDetail(props.category, props.productId),
     );
 
+    if (!token) {
+      dispatch(cartActions.setCartProduct(cookies.cartInfo));
+    }
+
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (!token) {
+      setCookie("cartInfo", JSON.stringify(cartInfo), { path: "/" });
+    }
+  }, [cartInfo]);
 
   const handleLeftBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();

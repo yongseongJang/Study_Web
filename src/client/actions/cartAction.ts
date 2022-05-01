@@ -25,6 +25,7 @@ export const cartConstants = {
   REQUEST_CART_PRODUCT: "REQUEST_CART_PRODUCT",
   REQUEST_CART_PRODUCT_SUCCESS: "REQUEST_CART_PRODUCT_SUCCESS",
   REQUEST_CART_PRODUCT_FAILURE: "REQUEST_CART_PRODUCT_FAILURE",
+  SET_CART_PRODUCT: "SET_CART_PRODUCT",
 };
 
 const add = (cartInfo: ICartInfo[], token?: string) => {
@@ -238,6 +239,15 @@ const requestCartProductFailure = (err: unknown) => {
   };
 };
 
+const setCartProduct = (cartInfo: ICartInfo[]) => {
+  return {
+    type: cartConstants.SET_CART_PRODUCT,
+    payload: {
+      cartInfo,
+    },
+  };
+};
+
 export const cartActions = {
   add,
   addSuccess,
@@ -263,4 +273,5 @@ export const cartActions = {
   requestCartProduct,
   requestCartProductSuccess,
   requestCartProductFailure,
+  setCartProduct,
 };

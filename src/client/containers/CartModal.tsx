@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItem, CartPagination, Spinner } from "../components";
-import { loginSelectors } from "../selectors";
 import { paginate } from "../utils/pagination";
 import { IPagination } from "../interfaces";
 import { cartActions, orderActions } from "../actions";
@@ -15,7 +14,10 @@ interface CartModalProps {
 }
 
 function CartModal(props: CartModalProps) {
-  const [cookies] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "uniformbridge_token",
+    "cartInfo",
+  ]);
   const token = cookies.uniformbridge_token;
   const isRequesting = useSelector(cartSelectors.selectIsRequesting);
   const cartInfo = useSelector(cartSelectors.selectCartInfo);
@@ -34,6 +36,10 @@ function CartModal(props: CartModalProps) {
 
   useEffect(() => {
     if (cartInfo.length > 0) {
+      if (token) {
+        setCookie("cartInfo", JSON.stringify(cartInfo), { path: "/" });
+      }
+
       setPagination(paginate(cartInfo.length));
     }
   }, [cartInfo]);

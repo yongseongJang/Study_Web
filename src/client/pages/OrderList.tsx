@@ -5,11 +5,10 @@ import { useSelector } from "react-redux";
 import { TopMenu } from "../components";
 import { OrderInfo } from "../containers";
 import { RootState } from "../reducers/types";
-import { loginSelectors } from "../selectors";
 import { history } from "../utils/history";
 
 function OrderList() {
-  const [cookies] = useCookies();
+  const [cookies] = useCookies(["uniformbridge_token"]);
   const token = cookies.uniformbridge_token;
   const nonMemberLogin = useSelector(
     (state: RootState) => state.orderReducer.nonMemberLogin,
