@@ -29,94 +29,120 @@ export const orderConstants = {
 const add = (isAllProduct: boolean, cartList?: number[]) => {
   return {
     type: orderConstants.REQUEST_ORDER_ADD,
-    isAllProduct,
-    cartList,
+    payload: {
+      isAllProduct,
+      cartList,
+    },
   };
 };
 
 const addSuccess = (isAllProduct: boolean, cartList?: number[]) => {
   return {
     type: orderConstants.SUCCESS_ORDER_ADD,
-    isAllProduct,
-    cartList,
+    payload: {
+      isAllProduct,
+      cartList,
+    },
   };
 };
 
 const addFailure = (err: unknown) => {
   return {
     type: orderConstants.FAILURE_ORDER_ADD,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
 const requestShippingInfo = (token: string) => {
   return {
     type: orderConstants.REQUEST_SHIPPING_INFO,
-    token,
+    payload: {
+      token,
+    },
   };
 };
 
 const requestShippingInfoSuccess = (shippingInfo: IShippingInfo) => {
   return {
     type: orderConstants.REQUEST_SHIPPING_INFO_SUCCESS,
-    shippingInfo,
+    payload: {
+      shippingInfo,
+    },
   };
 };
 
 const requestShippingInfoFailure = (err: unknown) => {
   return {
     type: orderConstants.REQUEST_SHIPPING_INFO_FAILURE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
 const requestMemberOrderInfo = (token: string) => {
   return {
     type: orderConstants.REQUEST_MEMBER_ORDER_INFO,
-    token,
+    payload: {
+      token,
+    },
   };
 };
 
 const requestMemberOrderInfoSuccess = (orderInfo: IOrderInfo[]) => {
   return {
     type: orderConstants.REQUEST_MEMBER_ORDER_INFO_SUCCESS,
-    orderInfo,
+    payload: {
+      orderInfo,
+    },
   };
 };
 
 const requestMemberOrderInfoFailure = (err: unknown) => {
   return {
     type: orderConstants.REQUEST_MEMBER_ORDER_INFO_FAILURE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
 const requestNonMemberOrderInfo = (nonMemberInfo: INonMemberInfo) => {
   return {
     type: orderConstants.REQUEST_NON_MEMBER_ORDER_INFO,
-    nonMemberInfo,
+    payload: {
+      nonMemberInfo,
+    },
   };
 };
 
 const requestNonMemberOrderInfoSuccess = (orderInfo: IOrderInfo[]) => {
   return {
     type: orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_SUCCESS,
-    orderInfo,
+    payload: {
+      orderInfo,
+    },
   };
 };
 
 const requestNonMemberOrderInfoFailure = (err: unknown) => {
   return {
     type: orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_FAILURE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
 const requestMemberPayment = (paymentInfo: IPaymentInfo, token: string) => {
   return {
     type: orderConstants.REQUEST_MEMBER_PAYMENT,
-    paymentInfo,
-    token,
+    payload: {
+      paymentInfo,
+      token,
+    },
   };
 };
 
@@ -129,14 +155,18 @@ const requestMemberPaymentSuccess = () => {
 const requestMemberPaymentFailure = (err: unknown) => {
   return {
     type: orderConstants.REQUEST_MEMBER_PAYMENT_FAILURE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 
 const requestNonMemberPayment = (paymentInfo: IPaymentInfo) => {
   return {
     type: orderConstants.REQUEST_NON_MEMBER_PAYMENT,
-    paymentInfo,
+    payload: {
+      paymentInfo,
+    },
   };
 };
 
@@ -149,7 +179,9 @@ const requestNonMemberPaymentSuccess = () => {
 const requestNonMemberPaymentFailure = (err: unknown) => {
   return {
     type: orderConstants.REQUEST_NON_MEMBER_PAYMENT_FAILURE,
-    err,
+    payload: {
+      err,
+    },
   };
 };
 

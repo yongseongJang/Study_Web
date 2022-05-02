@@ -1,127 +1,111 @@
+import { List, Record } from "immutable";
+import type { RecordOf } from "immutable";
 import { orderConstants } from "../actions";
+import { IOrderInfo, IShippingInfo } from "../interfaces";
 
-const initialState = {
+interface State {
+  isRequesting: boolean;
+  isAllProduct: boolean;
+  cartList: List<number>;
+  shippingInfo: IShippingInfo | null;
+  orderInfo: List<IOrderInfo>;
+  nonMemberLogin: boolean;
+  error: string;
+}
+
+const defaultValues: State = {
   isRequesting: false,
   isAllProduct: false,
-  cartList: [],
+  cartList: List(),
   shippingInfo: null,
-  orderInfo: [],
+  orderInfo: List(),
   nonMemberLogin: false,
-  error: null,
+  error: "",
 };
+
+const makeOrderState: Record.Factory<State> = Record(defaultValues);
+
+export type OrderState = RecordOf<State>;
+
+const initialState: OrderState = makeOrderState();
 
 export const orderReducer = (
   state = initialState,
-  action: { type: string; [key: string]: any },
+  action: { type: string; payload: { [key: string]: any } },
 ) => {
+  const payload = action.payload;
+
   switch (action.type) {
     case orderConstants.REQUEST_ORDER_ADD:
-      return { ...state, isRequesting: true };
+      return state.update("isRequesting", () => true);
     case orderConstants.SUCCESS_ORDER_ADD:
-      return {
-        ...state,
-        isRequesting: false,
-        isAllProduct: action.isAllProduct,
-        cartList: action.cartList ? action.cartList : [],
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("isAllProduct", () => payload.isAllProduct)
+        .update("cartList", () => (payload.cartList ? payload.cartList : []));
     case orderConstants.FAILURE_ORDER_ADD:
-      return { ...state, isRequesting: false };
+      return state.update("isRequesting", () => false);
     case orderConstants.REQUEST_SHIPPING_INFO:
-      return { ...state, isRequesting: true, error: null };
-
+      return state.update("isRequesting", () => true).update("error", () => "");
     case orderConstants.REQUEST_SHIPPING_INFO_SUCCESS:
-      return {
-        ...state,
-        isRequesting: false,
-        shippingInfo: action.shippingInfo,
-        error: null,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("shippingInfo", () => payload.shippingInfo)
+        .update("error", () => "");
     case orderConstants.REQUEST_SHIPPING_INFO_FAILURE:
-      return {
-        ...state,
-        isRequesting: false,
-        shippingInfo: null,
-        error: action.error,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("shippingInfo", () => null)
+        .update("error", () => "");
     case orderConstants.REQUEST_MEMBER_ORDER_INFO:
-      return {
-        ...state,
-        isRequesting: true,
-        error: null,
-      };
+      return state.update("isRequesting", () => true).update("error", () => "");
     case orderConstants.REQUEST_MEMBER_ORDER_INFO_SUCCESS:
-      return {
-        ...state,
-        isRequesting: false,
-        orderInfo: action.orderInfo,
-        error: null,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("orderInfo", () => List(payload.orderInfo))
+        .update("error", () => "");
     case orderConstants.REQUEST_MEMBER_ORDER_INFO_FAILURE:
-      return {
-        ...state,
-        isRequesting: false,
-        orderInfo: [],
-        error: action.error,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("orderInfo", () => List())
+        .update("error", () => payload.error);
     case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO:
-      return {
-        ...state,
-        isRequesting: true,
-        nonMemberLogin: false,
-        error: null,
-      };
+      return state
+        .update("isRequesting", () => true)
+        .update("nonMemberLogin", () => false)
+        .update("error", () => "");
     case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_SUCCESS:
-      return {
-        ...state,
-        isRequesting: false,
-        orderInfo: action.orderInfo,
-        nonMemberLogin: true,
-        error: null,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("orderInfo", () => List(payload.orderInfo))
+        .update("nonMemberLogin", () => true)
+        .update("error", () => "");
     case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_FAILURE:
-      return {
-        ...state,
-        isRequesting: false,
-        orderInfo: [],
-        nonMemberLogin: false,
-        error: action.error,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("orderInfo", () => List())
+        .update("nonMemberLogin", () => false)
+        .update("error", () => payload.error);
     case orderConstants.REQUEST_MEMBER_PAYMENT:
-      return {
-        ...state,
-        isRequesting: true,
-      };
+      return state.update("isRequesting", () => true);
     case orderConstants.REQUEST_MEMBER_PAYMENT_SUCCESS:
-      return {
-        ...state,
-        isRequesting: false,
-      };
+      return state.update("isRequesting", () => true);
     case orderConstants.REQUEST_MEMBER_PAYMENT_FAILURE:
-      return {
-        ...state,
-        isRequesting: false,
-        error: action.error,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("error", () => payload.error);
     case orderConstants.REQUEST_NON_MEMBER_PAYMENT:
-      return {
-        ...state,
-        isRequesting: true,
-      };
+      return state.update("isRequesting", () => true);
     case orderConstants.REQUEST_NON_MEMBER_PAYMENT_SUCCESS:
-      return {
-        ...state,
-        isRequesting: false,
-      };
+      return state.update("isRequesting", () => true);
     case orderConstants.REQUEST_NON_MEMBER_PAYMENT_FAILURE:
-      return {
-        ...state,
-        isRequesting: false,
-        error: action.error,
-      };
+      return state
+        .update("isRequesting", () => false)
+        .update("error", () => payload.error);
     case orderConstants.RESET_ERROR:
-      return { ...state, error: null };
+      return state.update("error", () => "");
     case orderConstants.RESET:
-      return { ...initialState };
+      return initialState;
     default:
       return state;
   }

@@ -32,7 +32,6 @@ function CartInfo() {
   const isRequesting = useSelector(cartSelectors.selectIsRequesting);
   const cartInfo = useSelector(cartSelectors.selectCartInfo);
 
-  console.log(cartInfo);
   useEffect(() => {
     if (token) {
       dispatch(cartActions.requestCartProduct(token));

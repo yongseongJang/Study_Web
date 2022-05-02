@@ -4,19 +4,23 @@ import { orderServices } from "../services/orderService";
 import { history } from "../utils/history";
 import { INonMemberInfo, IPaymentInfo } from "../interfaces";
 
-export function* requestAdd(isAllProduct: boolean, cartList: number[]) {
+export function* requestAdd(payload: {
+  isAllProduct: boolean;
+  cartList: number[];
+}) {
   try {
+    const { isAllProduct, cartList } = payload;
     yield put(orderActions.addSuccess(isAllProduct, cartList));
   } catch (err) {
     yield put(orderActions.addFailure(err));
   }
 }
 
-export function* requestShippingInfo(token: string) {
+export function* requestShippingInfo(payload: { token: string }) {
   try {
     const { shippingInfo } = yield call(
       orderServices.requestShippingInfo,
-      token,
+      payload.token,
     );
 
     yield put(orderActions.requestShippingInfoSuccess(shippingInfo));
@@ -25,11 +29,11 @@ export function* requestShippingInfo(token: string) {
   }
 }
 
-export function* requestMemberOrderInfo(token: string) {
+export function* requestMemberOrderInfo(payload: { token: string }) {
   try {
     const { orderInfo } = yield call(
       orderServices.requestMemberOrderInfo,
-      token,
+      payload.token,
     );
 
     yield put(orderActions.requestMemberOrderInfoSuccess(orderInfo));
@@ -38,11 +42,13 @@ export function* requestMemberOrderInfo(token: string) {
   }
 }
 
-export function* requestNonMemberOrderInfo(nonMemberInfo: INonMemberInfo) {
+export function* requestNonMemberOrderInfo(payload: {
+  nonMemberInfo: INonMemberInfo;
+}) {
   try {
     const { orderInfo } = yield call(
       orderServices.requestNonMemberOrderInfo,
-      nonMemberInfo,
+      payload.nonMemberInfo,
     );
 
     yield put(orderActions.requestNonMemberOrderInfoSuccess(orderInfo));
@@ -53,11 +59,12 @@ export function* requestNonMemberOrderInfo(nonMemberInfo: INonMemberInfo) {
   }
 }
 
-export function* requestMemberPayment(
-  paymentInfo: IPaymentInfo,
-  token: string,
-) {
+export function* requestMemberPayment(payload: {
+  paymentInfo: IPaymentInfo;
+  token: string;
+}) {
   try {
+    const { paymentInfo, token } = payload;
     yield call(orderServices.requestMemberPayment, paymentInfo, token);
 
     yield put(orderActions.requestMemberPaymentSuccess());
@@ -68,9 +75,11 @@ export function* requestMemberPayment(
   }
 }
 
-export function* requestNonMemberPayment(paymentInfo: IPaymentInfo) {
+export function* requestNonMemberPayment(payload: {
+  paymentInfo: IPaymentInfo;
+}) {
   try {
-    yield call(orderServices.requestNonMemberPayment, paymentInfo);
+    yield call(orderServices.requestNonMemberPayment, payload.paymentInfo);
 
     yield put(orderActions.requestNonMemberPaymentSuccess());
 
@@ -82,57 +91,51 @@ export function* requestNonMemberPayment(paymentInfo: IPaymentInfo) {
 
 export function* watchRequestAdd() {
   while (true) {
-    const { isAllProduct, cartList } = yield take(
-      orderConstants.REQUEST_ORDER_ADD,
-    );
+    const { payload } = yield take(orderConstants.REQUEST_ORDER_ADD);
 
-    yield call(requestAdd, isAllProduct, cartList);
+    yield call(requestAdd, payload);
   }
 }
 
 export function* watchRequestShippingInfo() {
   while (true) {
-    const { token } = yield take(orderConstants.REQUEST_SHIPPING_INFO);
+    const { payload } = yield take(orderConstants.REQUEST_SHIPPING_INFO);
 
-    yield call(requestShippingInfo, token);
+    yield call(requestShippingInfo, payload);
   }
 }
 
 export function* watchRequestMemberOrderInfo() {
   while (true) {
-    const { token } = yield take(orderConstants.REQUEST_MEMBER_ORDER_INFO);
+    const { payload } = yield take(orderConstants.REQUEST_MEMBER_ORDER_INFO);
 
-    yield call(requestMemberOrderInfo, token);
+    yield call(requestMemberOrderInfo, payload);
   }
 }
 
 export function* watchRequestNonMemberOrderInfo() {
   while (true) {
-    const { nonMemberInfo } = yield take(
+    const { payload } = yield take(
       orderConstants.REQUEST_NON_MEMBER_ORDER_INFO,
     );
 
-    yield call(requestNonMemberOrderInfo, nonMemberInfo);
+    yield call(requestNonMemberOrderInfo, payload);
   }
 }
 
 export function* watchRequestMemberPayment() {
   while (true) {
-    const { paymentInfo, token } = yield take(
-      orderConstants.REQUEST_MEMBER_PAYMENT,
-    );
+    const { payload } = yield take(orderConstants.REQUEST_MEMBER_PAYMENT);
 
-    yield call(requestMemberPayment, paymentInfo, token);
+    yield call(requestMemberPayment, payload);
   }
 }
 
 export function* watchRequestNonMemberPayment() {
   while (true) {
-    const { paymentInfo } = yield take(
-      orderConstants.REQUEST_NON_MEMBER_PAYMENT,
-    );
+    const { payload } = yield take(orderConstants.REQUEST_NON_MEMBER_PAYMENT);
 
-    yield call(requestNonMemberPayment, paymentInfo);
+    yield call(requestNonMemberPayment, payload);
   }
 }
 
