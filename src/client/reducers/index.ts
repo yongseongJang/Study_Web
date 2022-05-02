@@ -4,14 +4,6 @@ import { loginReducer } from "./loginReducer";
 import { productReducer } from "./productReducer";
 import { cartReducer } from "./cartReducer";
 import { orderReducer } from "./orderReducer";
-import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage/session";
-
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["orderReducer"],
-};
 
 const rootReducer = combineReducers({
   loginReducer,
@@ -21,4 +13,4 @@ const rootReducer = combineReducers({
   orderReducer,
 });
 
-export default persistReducer(persistConfig, rootReducer);
+export default rootReducer;
