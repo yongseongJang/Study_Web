@@ -4,8 +4,8 @@ import withForm from "../hocs/withForm";
 import nonMemberLoginField from "../utils/fields/nonMemberLoginField";
 import { orderActions } from "../actions";
 import { IFields } from "../utils/fields/types";
-import { ILoginInfo, INonMemberInfo } from "../interfaces";
-import { RootState } from "../reducers/types";
+import { INonMemberInfo } from "../interfaces";
+import { orderSelectors } from "../selectors";
 
 interface OrderHistoryLoginFormProps {
   renderElements: () => [];
@@ -23,7 +23,7 @@ function OrderHistoryLoginForm(props: OrderHistoryLoginFormProps) {
   const dispatch = useDispatch();
   let errorMessage = "";
 
-  const error = useSelector((state: RootState) => state.orderReducer.error);
+  const error = useSelector(orderSelectors.selectError);
 
   const handleSubmitClick = (
     e: React.MouseEvent<HTMLElement> | React.KeyboardEvent,

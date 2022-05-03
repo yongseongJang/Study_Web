@@ -7,12 +7,11 @@ import orderField from "../utils/fields/orderField";
 import { Terms2 } from "../components";
 import OrderTermsField from "../utils/fields/orderTermsField";
 import { IFields } from "../utils/fields/types";
-import { RootState } from "../reducers/types";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
 import orderTermsField from "../utils/fields/orderTermsField";
 import { orderActions } from "../actions";
 import { IPaymentInfo } from "../interfaces";
-import { cartSelectors } from "../selectors";
+import { cartSelectors, orderSelectors } from "../selectors";
 
 interface OrderProps {
   renderElements: () => [];
@@ -52,12 +51,8 @@ function OrderForm(props: OrderProps) {
   const token = cookies.uniformbridge_token;
   const cartInfo = useSelector(cartSelectors.selectCartInfo);
 
-  const isAllProduct = useSelector(
-    (state: RootState) => state.orderReducer.isAllProduct,
-  );
-  const cartList = useSelector(
-    (state: RootState) => state.orderReducer.cartList,
-  );
+  const isAllProduct = useSelector(orderSelectors.selectIsAllProduct);
+  const cartList = useSelector(orderSelectors.selectCartList);
 
   const totalPrice = cartInfo.reduce((acc, info, index) => {
     return isAllProduct || cartList.indexOf(index) !== -1

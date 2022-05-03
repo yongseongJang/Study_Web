@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { OrderTable, Spinner } from "../components";
-import { RootState } from "../reducers/types";
 import { orderActions } from "../actions";
+import { orderSelectors } from "../selectors";
 
 function OrderInfo() {
   const dispatch = useDispatch();
@@ -20,12 +20,8 @@ function OrderInfo() {
 
   const [cookies] = useCookies(["uniformbridge_token"]);
   const token = cookies.uniformbridge_token;
-  const isRequesting = useSelector(
-    (state: RootState) => state.orderReducer.isRequesting,
-  );
-  const orderInfo = useSelector(
-    (state: RootState) => state.orderReducer.orderInfo,
-  );
+  const isRequesting = useSelector(orderSelectors.selectIsRequesting);
+  const orderInfo = useSelector(orderSelectors.selectOrderInfo);
 
   useEffect(() => {
     if (token) {

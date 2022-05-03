@@ -4,15 +4,13 @@ import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
 import { TopMenu } from "../components";
 import { OrderInfo } from "../containers";
-import { RootState } from "../reducers/types";
 import { history } from "../utils/history";
+import { orderSelectors } from "../selectors";
 
 function OrderList() {
   const [cookies] = useCookies(["uniformbridge_token"]);
   const token = cookies.uniformbridge_token;
-  const nonMemberLogin = useSelector(
-    (state: RootState) => state.orderReducer.nonMemberLogin,
-  );
+  const nonMemberLogin = useSelector(orderSelectors.selectNonMemberLogin);
 
   useEffect(() => {
     if (!token && !nonMemberLogin) {
