@@ -17,6 +17,7 @@ function CartModal(props: CartModalProps) {
   const [cookies, setCookie, removeCookie] = useCookies([
     "uniformbridge_token",
     "cartInfo",
+    "isAllProduct",
   ]);
   const token = cookies.uniformbridge_token;
   const isRequesting = useSelector(cartSelectors.selectIsRequesting);
@@ -63,7 +64,7 @@ function CartModal(props: CartModalProps) {
   const handleOrderBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    dispatch(orderActions.add(true));
+    setCookie("isAllProduct", true, { path: "/" });
 
     history.replace("/order/payment");
   };

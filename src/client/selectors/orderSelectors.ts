@@ -16,10 +16,6 @@ const selectNonMemberLogin = (state: RootState) => {
   return state.orderReducer.nonMemberLogin;
 };
 
-const selectIsAllProduct = (state: RootState) => {
-  return state.orderReducer.isAllProduct;
-};
-
 const selectCartList = (state: RootState) => {
   return state.orderReducer.cartList.toArray();
 };
@@ -29,6 +25,5 @@ export default {
   selectError,
   selectOrderInfo,
   selectNonMemberLogin,
-  selectIsAllProduct,
   selectCartList,
 };

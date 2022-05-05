@@ -31,6 +31,8 @@ function ProductInfo(props: ProductInfoProps) {
   const [cookies, setCookie, removeCookie] = useCookies([
     "uniformbridge_token",
     "cartInfo",
+    "cartList",
+    "isAllProduct",
   ]);
   const token = cookies.uniformbridge_token;
   const product = useSelector(productSelectors.selectProductDetail);
@@ -72,7 +74,7 @@ function ProductInfo(props: ProductInfoProps) {
   }, []);
 
   useEffect(() => {
-    if (!token) {
+    if (!token && cartInfo.length) {
       setCookie("cartInfo", JSON.stringify(cartInfo), { path: "/" });
     }
   }, [cartInfo]);
@@ -84,7 +86,8 @@ function ProductInfo(props: ProductInfoProps) {
     if (sizes.length > 0) {
       addToCart(sizes, token);
 
-      dispatch(orderActions.add(false, [cartInfo.length]));
+      removeCookie("isAllProduct", { path: "/" });
+      setCookie("cartList", JSON.stringify([cartInfo.length]), { path: "/" });
 
       history.replace("/order/payment");
     }
@@ -102,10 +105,10 @@ function ProductInfo(props: ProductInfoProps) {
   };
 
   const addToCart = (sizes: string[], token: string) => {
-    const cartInfo: ICartInfo[] = [];
+    const tmp: ICartInfo[] = [];
 
     sizes.forEach((size) => {
-      cartInfo.push({
+      tmp.push({
         productId: product._id,
         option: size,
         quantity: option[size],
@@ -119,7 +122,8 @@ function ProductInfo(props: ProductInfoProps) {
       });
     });
 
-    dispatch(cartActions.add(cartInfo, token));
+    setCookie("cartInfo", JSON.stringify([...cartInfo, ...tmp]), { path: "/" });
+    dispatch(cartActions.add(tmp, token));
   };
   return (
     <div className="productInfo">

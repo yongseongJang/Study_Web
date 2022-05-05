@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions, orderActions } from "../actions";
+import { cartActions } from "../actions";
 import { CartTable, Spinner } from "../components";
 import { ICartInfo } from "../interfaces";
 import { history } from "../utils/history";
@@ -26,6 +26,8 @@ function CartInfo() {
   const [cookies, setCookie, removeCookie] = useCookies([
     "uniformbridge_token",
     "cartInfo",
+    "cartList",
+    "isAllProduct",
   ]);
   const token = cookies.uniformbridge_token;
 
@@ -170,7 +172,7 @@ function CartInfo() {
   const handleOrderAllBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (cartInfo.length > 0) {
-      dispatch(orderActions.add(true));
+      setCookie("isAllProduct", true, { path: "/" });
 
       history.replace("/order/payment");
     }
@@ -181,7 +183,7 @@ function CartInfo() {
 
     const cartList: number[] = [];
     if (selectAllState) {
-      dispatch(orderActions.add(true));
+      setCookie("isAllProduct", true, { path: "/" });
     } else if (checkBoxState.length > 0) {
       checkBoxState.forEach((state, index) => {
         if (state) {
@@ -190,7 +192,8 @@ function CartInfo() {
       });
 
       if (cartList.length > 0) {
-        dispatch(orderActions.add(false, cartList));
+        removeCookie("isAllProduct", { path: "/" });
+        setCookie("cartList", JSON.stringify(cartList), { path: "/" });
       }
     }
 
