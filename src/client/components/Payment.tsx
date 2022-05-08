@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 interface PaymentProps {
   id: string;
   info: string | undefined;
-  onChange: () => void;
+  onChange: (e: React.MouseEvent) => void;
 }
 
 const paymentMethods = [
@@ -45,10 +45,9 @@ function Payment(props: PaymentProps) {
   const handleLabelClick = (e: React.MouseEvent) => {
     const index = Number(e.currentTarget.getAttribute("data-chk-index"));
 
-    if (inputRefs[index].current) {
-      inputRefs[index].current.dispatchEvent(
-        new Event("click", { bubbles: true }),
-      );
+    const currentRef = inputRefs[index].current;
+    if (currentRef) {
+      currentRef.dispatchEvent(new Event("click", { bubbles: true }));
     }
   };
   return (

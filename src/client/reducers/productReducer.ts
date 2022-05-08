@@ -59,12 +59,12 @@ const initialProductDetailState: ProductDetailState = makeProductDetailState();
 interface State {
   isRequesting: boolean;
   pagination: PaginationState;
-  productList: List<
-    Omit<
+  productList: List<{
+    product: Omit<
       IProduct,
       "productDetail" | "productImage" | "productCaution" | "productSize"
-    >
-  >;
+    >;
+  }>;
   productDetail: ProductDetailState;
 }
 

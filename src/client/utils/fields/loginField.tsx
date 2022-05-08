@@ -2,7 +2,7 @@ import * as React from "react";
 import { IFields } from "../../utils/fields/types";
 import { Input } from "../../components";
 
-const loginField: { [key: string]: Omit<IFields, "elementLabel" | "info"> } = {
+const loginField: { [key: string]: IFields } = {
   id: {
     inputElement: [
       {

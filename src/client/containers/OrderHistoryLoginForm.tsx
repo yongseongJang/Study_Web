@@ -14,7 +14,9 @@ interface OrderHistoryLoginFormProps {
   submit: (
     action: (nonMemberInfo: INonMemberInfo) => {
       type: string;
-      nonMemberInfo: INonMemberInfo;
+      payload: {
+        nonMemberInfo: INonMemberInfo;
+      };
     },
   ) => () => void;
 }

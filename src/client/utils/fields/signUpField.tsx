@@ -3,7 +3,7 @@ import { IFields } from "../../utils/fields/types";
 import { Input, PhoneNumber } from "../../components";
 import { AddressForm } from "../../components";
 
-const signUpField: { [key: string]: Omit<IFields, "placeholder"> } = {
+const signUpField: { [key: string]: IFields } = {
   id: {
     elementLabel: "아이디",
     inputElement: [

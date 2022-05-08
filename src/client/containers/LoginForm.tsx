@@ -15,7 +15,9 @@ interface LoginProps {
   submit: (
     action: (loginInfo: ILoginInfo) => {
       type: string;
-      loginInfo: ILoginInfo;
+      payload: {
+        loginInfo: ILoginInfo;
+      };
     },
   ) => () => void;
 }

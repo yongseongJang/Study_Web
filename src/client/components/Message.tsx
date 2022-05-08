@@ -5,13 +5,13 @@ interface messageProps {
   messages: string[];
   id?: string;
   info?: string | undefined;
-  onChange?: () => void;
+  onChange?: (e: React.ChangeEvent) => void;
 }
 
 function message(props: messageProps) {
   const [selectedValue, setSelectedValue] = useState<number>(0);
 
-  const handleChange = (e: React.ChangeEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const messageIndex = props.messages.indexOf(e.target.value);
     const option = [0, props.messages.length - 1];
 

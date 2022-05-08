@@ -3,7 +3,7 @@ import { IFields } from "../../utils/fields/types";
 import { Input } from "../../components";
 
 const nonMemberLoginField: {
-  [key: string]: Omit<IFields, "elementLabel" | "info">;
+  [key: string]: IFields;
 } = {
   recipient: {
     inputElement: [

@@ -4,7 +4,7 @@ import { Input, PhoneNumber, Message } from "../../components";
 import { AddressForm, Payment } from "../../components";
 import { message } from "../message/deliveryMessage";
 
-const orderField: { [key: string]: Omit<IFields, "placeholder"> } = {
+const orderField: { [key: string]: IFields } = {
   recipient: {
     elementLabel: "받는 사람",
     inputElement: [
@@ -170,7 +170,7 @@ const orderField: { [key: string]: Omit<IFields, "placeholder"> } = {
 
 function getPaymentComponent(
   formElement: { id: string; config: IFields },
-  onChange: () => void,
+  onChange: (e: React.MouseEvent) => void,
 ) {
   return (
     <Payment
@@ -183,7 +183,7 @@ function getPaymentComponent(
 
 function getMessageComponent(
   formElement: { id: string; config: IFields },
-  onChange: () => void,
+  onChange: (e: React.ChangeEvent) => void,
 ) {
   return (
     <Message

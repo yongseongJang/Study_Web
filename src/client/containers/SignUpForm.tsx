@@ -15,7 +15,10 @@ interface SignUpProps {
   isValidForm: boolean;
   onChange: () => void;
   submit: (
-    action: (userInfo: IUserInfo) => { type: string; userInfo: IUserInfo },
+    action: (userInfo: IUserInfo) => {
+      type: string;
+      payload: { userInfo: IUserInfo };
+    },
   ) => () => void;
 }
 

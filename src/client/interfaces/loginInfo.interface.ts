@@ -1,6 +1,6 @@
-interface ILoginDto {
+interface ILoginInfo {
   id: string;
   password: string;
 }
 
-export default ILoginDto;
+export default ILoginInfo;

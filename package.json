@@ -16,7 +16,19 @@
     "deploy": "aws s3 sync ./build/client s3://onlineshop.com --profile=yongseong",
     "invalidate": "aws cloudfront create-invalidation --profile=yongseong --distribution-id EAMPBCES4Y7T1 --paths \"/*\"",
     "lint:client": "eslint \"./src/client/**/*.{ts,tsx}\"",
-    "lint:server": "eslint ./src/server/**/*.ts"
+    "lint:server": "eslint ./src/server/**/*.ts",
+    "test:client": "jest ./src/test/client",
+    "test:server": "jest ./src/test/server"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(ts|tsx)?$": "ts-jest"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "jest-transform-stub",
+      "\\.(css|scss)$": "jest-transform-stub"
+    },
+    "testEnvironment": "jest-environment-jsdom"
   },
   "repository": {
     "type": "git",
@@ -33,13 +45,17 @@
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.14.5",
-    "@babel/preset-typescript": "^7.15.0",
+    "@babel/preset-typescript": "^7.16.7",
+    "@reduxjs/toolkit": "^1.8.1",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.2",
     "@types/bcrypt": "^5.0.0",
     "@types/body-parser": "^1.19.1",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/hapi__joi": "^17.1.7",
     "@types/history": "^4.7.6",
+    "@types/jest": "^27.5.0",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/morgan": "^1.9.3",
     "@types/mysql": "^2.15.19",
@@ -54,6 +70,7 @@
     "babel-loader": "^8.2.2",
     "core-js": "^3.17.3",
     "css-loader": "^6.2.0",
+    "enzyme": "^3.11.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -62,6 +79,9 @@
     "html-webpack-plugin": "^5.3.2",
     "http-proxy-middleware": "^2.0.3",
     "image-webpack-loader": "^8.0.1",
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "jest-transform-stub": "^2.0.0",
     "mini-css-extract-plugin": "^2.4.1",
     "prettier": "^2.4.0",
     "reflect-metadata": "^0.1.13",
@@ -69,6 +89,7 @@
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.2.1",
+    "ts-jest": "^28.0.1",
     "ts-loader": "^9.2.5",
     "typeorm": "^0.2.41",
     "typescript": "^4.4.3",

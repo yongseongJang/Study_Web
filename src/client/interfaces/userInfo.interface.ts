@@ -1,4 +1,4 @@
-interface IUserDto {
+interface IUserInfo {
   id: string;
   pw: string;
   name: string;
@@ -6,4 +6,4 @@ interface IUserDto {
   phoneNumber: string;
 }
 
-export default IUserDto;
+export default IUserInfo;

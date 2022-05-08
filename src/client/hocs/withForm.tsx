@@ -7,9 +7,11 @@ import { IFields } from "../utils/fields/types";
 const withForm =
   (formInitialData: { [key: string]: IFields }) =>
   (WrappedComponent: (props: any) => JSX.Element) => {
-    return (props: any) => {
+    return function FormComponent(props: any) {
       const dispatch = useDispatch();
-      const [formState, setFormState] = useState<{ [key: string]: IFields }>({
+      const [formState, setFormState] = useState<{
+        [key: string]: IFields;
+      }>({
         ...formInitialData,
       });
       const [formValidation, setFormValidation] = useState<boolean>(false);
@@ -45,31 +47,35 @@ const withForm =
           ? Number(e.currentTarget.getAttribute("data-index"))
           : 0;
 
-        const validation = validate(
-          elementLabel,
-          inputValue,
-          formState[key].inputElement[index].validation,
-        );
+        const inputElement = formState[key].inputElement;
 
-        const formData = {
-          ...formState,
-          [key]: {
-            ...formState[key],
-            inputElement: [
-              ...formState[key].inputElement.slice(0, index),
-              {
-                ...formState[key].inputElement[index],
-                value: inputValue,
-              },
-              ...formState[key].inputElement.slice(index + 1),
-            ],
-            valid: validation.isValid,
-            errorMessage: validation.error,
-          },
-        };
+        if (elementLabel && inputElement) {
+          const validation = validate(
+            elementLabel,
+            inputValue,
+            inputElement[index].validation,
+          );
 
-        setFormState(formData);
-        setFormValidation(isFormValid(formData));
+          const formData = {
+            ...formState,
+            [key]: {
+              ...formState[key],
+              inputElement: [
+                ...inputElement.slice(0, index),
+                {
+                  ...inputElement[index],
+                  value: inputValue,
+                },
+                ...inputElement.slice(index + 1),
+              ],
+              valid: validation.isValid,
+              errorMessage: validation.error,
+            },
+          };
+
+          setFormState(formData);
+          setFormValidation(isFormValid(formData));
+        }
       };
 
       const getFormValues = (): object => {
@@ -86,13 +92,17 @@ const withForm =
               break;
           }
 
-          const value = formState[key].inputElement
-            .map((element) => {
-              return element.value;
-            })
-            .join(delemeter);
+          const inputElement = formState[key].inputElement;
 
-          formValues = { ...formValues, [key]: value };
+          if (inputElement) {
+            const value = inputElement
+              .map((element) => {
+                return element.value;
+              })
+              .join(delemeter);
+
+            formValues = { ...formValues, [key]: value };
+          }
         }
         return formValues;
       };

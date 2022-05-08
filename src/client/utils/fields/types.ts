@@ -1,12 +1,12 @@
 import * as React from "react";
 
 export interface IFields {
-  elementLabel: string;
+  elementLabel?: string;
   inputElement: { inputType: string; value: string; validation: IValidation }[];
   valid: boolean;
   errorMessage: string | null;
   info?: string;
-  placeholder: string;
+  placeholder?: string;
   required: boolean;
   getComponent: Function;
 }
