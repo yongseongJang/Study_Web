@@ -1,5 +1,5 @@
 import * as React from "react";
-import { render } from "./test-utils";
+import { render, fireEvent } from "./test-utils";
 import { Login } from "../../client/pages";
 
 describe("<Login />", () => {
