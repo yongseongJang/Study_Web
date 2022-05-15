@@ -41,7 +41,11 @@ const withForm =
       const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
         const key = e.target.id;
-        const elementLabel = formState[key].elementLabel;
+        let elementLabel = formState[key].elementLabel;
+
+        if (!elementLabel) {
+          elementLabel = "";
+        }
 
         const index = e.currentTarget.getAttribute("data-index")
           ? Number(e.currentTarget.getAttribute("data-index"))
@@ -49,7 +53,7 @@ const withForm =
 
         const inputElement = formState[key].inputElement;
 
-        if (elementLabel && inputElement) {
+        if (inputElement) {
           const validation = validate(
             elementLabel,
             inputValue,

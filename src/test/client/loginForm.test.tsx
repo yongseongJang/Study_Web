@@ -1,5 +1,5 @@
 import * as React from "react";
-import { render, fireEvent } from "./test-utils";
+import { render, fireEvent, waitFor } from "./test-utils";
 import { LoginForm } from "../../client/containers";
 
 function renderLoginForm() {
@@ -18,9 +18,26 @@ function renderLoginForm() {
 
   const loginBtn = () => result.getByText("LOGIN");
   const registerBtn = () => result.getByText("REGISTER");
+  const idInput = () => result.getByPlaceholderText("아이디");
+  const pwInput = () => result.getByPlaceholderText("비밀번호");
 
   const clickLoginBtn = () => {
     fireEvent.click(loginBtn());
+  };
+
+  const enterId = () => {
+    const inputElement = idInput();
+    fireEvent.change(inputElement, { target: { value: "testing" } });
+  };
+
+  const enterIncorrectPW = () => {
+    const inputElement = pwInput();
+    fireEvent.change(inputElement, { target: { value: "reacttest" } });
+  };
+
+  const enterCorrectPW = () => {
+    const inputElement = pwInput();
+    fireEvent.change(inputElement, { target: { value: "!@reacttesting" } });
   };
 
   return {
@@ -29,10 +46,18 @@ function renderLoginForm() {
     loginBtn,
     registerBtn,
     clickLoginBtn,
+    enterId,
+    enterIncorrectPW,
+    enterCorrectPW,
   };
 }
 
 describe("<LoginForm />", () => {
+  beforeEach(() => {
+    jest.resetModules();
+    process.env = { REACT_APP_API_URI: "https://yongseongjang.com" };
+  });
+
   it("renders component correctly", () => {
     const { loginBtn, registerBtn } = renderLoginForm();
 
@@ -46,5 +71,27 @@ describe("<LoginForm />", () => {
     clickLoginBtn();
 
     expect(window.alert).toHaveBeenCalled();
+  });
+
+  it("when the login button is clicked with incorrect PW, window alert should appear", async () => {
+    const { enterId, enterIncorrectPW, clickLoginBtn } = renderLoginForm();
+
+    enterId();
+    enterIncorrectPW();
+
+    clickLoginBtn();
+
+    await waitFor(() => expect(window.alert).toHaveBeenCalled());
+  });
+
+  it("when the login button is clicked with correct ID and PW, window alert should not appear", async () => {
+    const { enterId, enterCorrectPW, clickLoginBtn } = renderLoginForm();
+
+    enterId();
+    enterCorrectPW();
+
+    clickLoginBtn();
+
+    await waitFor(() => expect(window.alert).not.toHaveBeenCalled());
   });
 });
