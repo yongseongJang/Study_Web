@@ -1,11 +1,9 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import withForm from "../hocs/withForm";
 import loginField from "../utils/fields/loginField";
-import { loginActions } from "../actions";
 import { IFields } from "../utils/fields/types";
 import { ILoginInfo } from "../interfaces";
-import { loginSelectors } from "../selectors";
+import { useLogin } from "../hooks";
 import "../styles/Login.scss";
 
 interface LoginProps {
@@ -23,34 +21,8 @@ interface LoginProps {
 }
 
 function LoginForm(props: LoginProps) {
-  const dispatch = useDispatch();
-  let errorMessage = "";
-
-  const error = useSelector(loginSelectors.selectError);
-
-  const handleSubmitClick = (
-    e: React.MouseEvent<HTMLElement> | React.KeyboardEvent,
-  ) => {
-    e.preventDefault();
-
-    if (errorMessage) {
-      alert(errorMessage);
-    } else {
-      props.submit(loginActions.login)();
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleSubmitClick(e);
-    }
-  };
-
-  const handleLoginError = () => {
-    alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
-
-    dispatch(loginActions.resetError());
-  };
+  const { error, handleSubmitClick, handleKeyPress, handleLoginError } =
+    useLogin(props.submit, props.renderElements);
 
   return (
     <div className="login-form">
@@ -59,9 +31,6 @@ function LoginForm(props: LoginProps) {
         {props
           .renderElements()
           .map((formElement: { id: string; config: IFields }) => {
-            if (formElement.config.errorMessage) {
-              errorMessage = formElement.config.errorMessage;
-            }
             return (
               <div key={formElement.id} className="login-form__input-wrapper">
                 {formElement.config.getComponent(

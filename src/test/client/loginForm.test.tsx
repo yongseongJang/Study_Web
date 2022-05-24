@@ -25,6 +25,10 @@ function renderLoginForm() {
     fireEvent.click(loginBtn());
   };
 
+  const clickRegisterBtn = () => {
+    fireEvent.click(registerBtn());
+  };
+
   const enterId = () => {
     const inputElement = idInput();
     fireEvent.change(inputElement, { target: { value: "testing" } });
@@ -46,9 +50,11 @@ function renderLoginForm() {
     loginBtn,
     registerBtn,
     clickLoginBtn,
+    clickRegisterBtn,
     enterId,
     enterIncorrectPW,
     enterCorrectPW,
+    result,
   };
 }
 

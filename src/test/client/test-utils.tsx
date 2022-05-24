@@ -5,14 +5,23 @@ import createSagaMiddleware from "redux-saga";
 import { Provider } from "react-redux";
 import rootReducer from "../../client/reducers";
 import rootSaga from "../../client/sagas";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
 import "@testing-library/jest-dom";
+
+export const history = createMemoryHistory();
 
 function render(ui: React.ReactElement) {
   const sagaMiddleware = createSagaMiddleware();
   const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
   sagaMiddleware.run(rootSaga);
+
   function Wrapper({ children }: { children?: React.ReactNode }) {
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <Provider store={store}>
+        <Router history={history}>{children}</Router>
+      </Provider>
+    );
   }
   return rtlRender(ui, { wrapper: Wrapper });
 }
