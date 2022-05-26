@@ -1,8 +1,7 @@
 import * as React from "react";
-import { useState } from "react";
-import * as queryString from "query-string";
 import { ColumnFilter } from "../components";
 import { ProductListInfo } from "../containers";
+import { useProductList } from "../hooks";
 
 interface ProductListProps {
   match: {
@@ -21,20 +20,8 @@ interface ProductListProps {
 }
 
 function ProductList(props: ProductListProps) {
-  const category = props.match.params.category;
-  const { page } = queryString.parse(props.location.search);
-
-  const [itemColumnLength, setItemColumnLength] = useState<number>(4);
-
-  const itemWidth = 80 / itemColumnLength;
-
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-
-    const column = Number(e.currentTarget.dataset.column);
-
-    setItemColumnLength(column);
-  };
+  const { category, page, itemColumnLength, itemWidth, handleClick } =
+    useProductList(props.match.params.category, props.location.search);
 
   return (
     <div className="product-list">

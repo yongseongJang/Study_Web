@@ -4,7 +4,7 @@ import { loginSelectors } from "../selectors";
 import { ILoginInfo } from "../interfaces";
 import { IFields } from "../utils/fields/types";
 
-const useLogin = (
+const useLoginForm = (
   submit: (
     action: (loginInfo: ILoginInfo) => {
       type: string;
@@ -57,4 +57,4 @@ const useLogin = (
   };
 };
 
-export default useLogin;
+export default useLoginForm;

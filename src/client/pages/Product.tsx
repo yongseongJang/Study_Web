@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ProductInfo } from "../containers";
+import { useProductInfo } from "../hooks";
 
 interface ProductDetailProps {
   match: {
@@ -14,8 +15,7 @@ interface ProductDetailProps {
 }
 
 function Product(props: ProductDetailProps) {
-  const category = props.match.params.category.replace(/_/g, " ");
-  const productId = Number(props.match.params.productId);
+  const { category, productId } = useProductInfo(props.match.params);
 
   return (
     <div className="product">

@@ -1,9 +1,6 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../reducers/types";
 import { Item, Pagination, Spinner } from "../components";
-import { productActions } from "../actions";
-import { productSelectors } from "../selectors";
+import { useProductListInfo } from "../hooks";
 
 interface ProductListInfoProps {
   category: string;
@@ -12,19 +9,10 @@ interface ProductListInfoProps {
 }
 
 function ProductListInfo(props: ProductListInfoProps) {
-  const dispatch = useDispatch();
-
-  const isRequesting = useSelector(productSelectors.selectIsRequesting);
-  const pagination = useSelector(productSelectors.selectPagination);
-  const productList = useSelector(productSelectors.selectProductList);
-
-  React.useEffect(() => {
-    if (props.page) {
-      dispatch(productActions.requestProducts(props.category, props.page));
-    } else {
-      dispatch(productActions.requestProducts(props.category));
-    }
-  }, []);
+  const { isRequesting, pagination, productList } = useProductListInfo(
+    props.page,
+    props.category,
+  );
 
   return (
     <div className="productListInfo">

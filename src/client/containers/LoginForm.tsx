@@ -3,7 +3,7 @@ import withForm from "../hocs/withForm";
 import loginField from "../utils/fields/loginField";
 import { IFields } from "../utils/fields/types";
 import { ILoginInfo } from "../interfaces";
-import { useLogin } from "../hooks";
+import { useLoginForm } from "../hooks";
 import "../styles/Login.scss";
 
 interface LoginProps {
@@ -22,7 +22,7 @@ interface LoginProps {
 
 function LoginForm(props: LoginProps) {
   const { error, handleSubmitClick, handleKeyPress, handleLoginError } =
-    useLogin(props.submit, props.renderElements);
+    useLoginForm(props.submit, props.renderElements);
 
   return (
     <div className="login-form">
