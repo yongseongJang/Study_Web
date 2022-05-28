@@ -1,16 +1,12 @@
 import * as React from "react";
-import { useState } from "react";
-import { useCookies } from "react-cookie";
-import { useSelector, useDispatch } from "react-redux";
 import withForm from "../hocs/withForm";
 import orderField from "../utils/fields/orderField";
 import { Terms2 } from "../components";
 import OrderTermsField from "../utils/fields/orderTermsField";
 import { IFields } from "../utils/fields/types";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
-import orderTermsField from "../utils/fields/orderTermsField";
-import { orderActions } from "../actions";
-import { ICartInfo, IPaymentInfo } from "../interfaces";
+import { IPaymentInfo } from "../interfaces";
+import { useOrderForm } from "../hooks";
 
 interface OrderProps {
   renderElements: () => [];
@@ -35,120 +31,20 @@ interface OrderProps {
 }
 
 function OrderForm(props: OrderProps) {
-  const [checkBoxState, setCheckBoxState] = useState<boolean[]>(
-    Array(OrderTermsField.length).fill(false),
-  );
-  const [agreeAllState, setAgreeAllState] = useState<boolean>(false);
-
-  let errorMessage = "";
-  let password = "";
-  let passwordCheck = "";
-
-  const dispatch = useDispatch();
-
-  const [cookies] = useCookies([
-    "uniformbridge_token",
-    "cartInfo",
-    "cartList",
-    "isAllProduct",
-  ]);
-  const token = cookies.uniformbridge_token;
-  const cartInfo: ICartInfo[] = cookies.cartInfo;
-  const isAllProduct = cookies.isAllProduct;
-  const cartList = cookies.cartList;
-
-  const totalPrice = cartInfo.reduce((acc, info, index) => {
-    return isAllProduct || cartList.indexOf(index) !== -1
-      ? acc + info.productInfo.price * info.quantity
-      : acc;
-  }, 0);
-
-  const totalSalePrice = cartInfo.reduce((acc, info, index) => {
-    return isAllProduct || cartList.indexOf(index) !== -1
-      ? acc +
-          (info.productInfo.price - info.productInfo.salePrice) * info.quantity
-      : acc;
-  }, 0);
-
-  const handleChange = (e: React.ChangeEvent) => {
-    setCheckBoxState(Array(OrderTermsField.length).fill(!agreeAllState));
-
-    setAgreeAllState(!agreeAllState);
-  };
-
-  const handleSubmitClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-
-    if (errorMessage) {
-      alert(errorMessage);
-      return;
-    }
-
-    if (password !== passwordCheck) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
-    for (let i = 0; i < orderTermsField.length; i++) {
-      if (!orderTermsField[i].required) continue;
-
-      if (!checkBoxState[i]) {
-        alert(orderTermsField[i].errorMessage);
-        return;
-      }
-    }
-
-    const orderDetail = isAllProduct
-      ? cartInfo.map((info) => {
-          return {
-            quantity: info.quantity,
-            price: info.productInfo.price,
-            orderDetailOption: info.option,
-            status: 0,
-            productId: info.productId,
-          };
-        })
-      : cartInfo
-          .filter((info, index) => {
-            return cartList.indexOf(index) !== -1;
-          })
-          .map((info) => {
-            return {
-              quantity: info.quantity,
-              price: info.productInfo.price,
-              orderDetailOption: info.option,
-              status: 0,
-              productId: info.productId,
-            };
-          });
-
-    const formValues = props.getFormValues();
-    formValues.payment = Number(formValues.payment);
-
-    if (token) {
-      delete formValues.pw;
-      delete formValues.pw_check;
-
-      dispatch(
-        orderActions.requestMemberPayment(
-          {
-            ...formValues,
-            price: totalPrice - totalSalePrice,
-            orderDetail,
-          },
-          token,
-        ),
-      );
-    } else {
-      dispatch(
-        orderActions.requestNonMemberPayment({
-          ...formValues,
-          price: totalPrice - totalSalePrice,
-          orderDetail,
-        }),
-      );
-    }
-  };
+  const {
+    token,
+    isAllProduct,
+    cartInfo,
+    cartList,
+    totalPrice,
+    totalSalePrice,
+    agreeAllState,
+    handleChange,
+    checkBoxState,
+    setCheckBoxState,
+    setAgreeAllState,
+    handleSubmitClick,
+  } = useOrderForm(props.getFormValues, props.renderElements);
 
   return (
     <div className="orderForm">
@@ -163,10 +59,6 @@ function OrderForm(props: OrderProps) {
                 .renderElements()
                 .slice(0, -3)
                 .map((formElement: { id: string; config: IFields }) => {
-                  if (formElement.config.errorMessage) {
-                    errorMessage = formElement.config.errorMessage;
-                  }
-
                   return (
                     <tr key={formElement.id}>
                       <th>
@@ -200,16 +92,6 @@ function OrderForm(props: OrderProps) {
                   .renderElements()
                   .slice(-3, -1)
                   .map((formElement: { id: string; config: IFields }) => {
-                    if (formElement.config.errorMessage) {
-                      errorMessage = formElement.config.errorMessage;
-                    }
-
-                    if (formElement.id === "pw") {
-                      password = formElement.config.inputElement[0].value;
-                    } else if (formElement.id === "pw_check") {
-                      passwordCheck = formElement.config.inputElement[0].value;
-                    }
-
                     return (
                       <tr key={formElement.id}>
                         <th>{`${formElement.config.elementLabel} `}</th>
@@ -363,10 +245,6 @@ function OrderForm(props: OrderProps) {
             .renderElements()
             .slice(-1)
             .map((formElement: { id: string; config: IFields }) => {
-              if (formElement.config.errorMessage) {
-                errorMessage = formElement.config.errorMessage;
-              }
-
               return (
                 <>
                   {formElement.config.getComponent(formElement, props.onChange)}

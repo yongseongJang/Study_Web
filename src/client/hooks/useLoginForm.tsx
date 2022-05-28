@@ -30,7 +30,7 @@ const useLoginForm = (
           formElement.config.errorMessage,
       )
       .filter((errorMessage: string | null) => !!errorMessage);
-    if (errorMessages.length > 0) {
+    if (errorMessages.length) {
       alert(errorMessages[0]);
     } else {
       submit(loginActions.login)();

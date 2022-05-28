@@ -1,22 +1,10 @@
 import * as React from "react";
-import { useEffect } from "react";
-import { useCookies } from "react-cookie";
-import { useSelector } from "react-redux";
 import { TopMenu } from "../components";
 import { OrderInfo } from "../containers";
-import { history } from "../utils/history";
-import { orderSelectors } from "../selectors";
+import { useOrderList } from "../hooks";
 
 function OrderList() {
-  const [cookies] = useCookies(["uniformbridge_token"]);
-  const token = cookies.uniformbridge_token;
-  const nonMemberLogin = useSelector(orderSelectors.selectNonMemberLogin);
-
-  useEffect(() => {
-    if (!token && !nonMemberLogin) {
-      history.replace("/order/login/");
-    }
-  }, [token, nonMemberLogin]);
+  useOrderList();
 
   return (
     <div className="orderList">

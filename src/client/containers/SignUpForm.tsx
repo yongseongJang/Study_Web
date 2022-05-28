@@ -1,14 +1,12 @@
 import * as React from "react";
-import { useState } from "react";
 import withForm from "../hocs/withForm";
 import signUpField from "../utils/fields/signUpField";
 import { Terms } from "../components";
-import { signUpActions } from "../actions";
-
 import { IFields } from "../utils/fields/types";
 import { IUserInfo } from "../interfaces";
 import signUpTermsField from "../utils/fields/signUpTermsField";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
+import { useSignUpForm } from "../hooks";
 
 interface SignUpProps {
   renderElements: () => [];
@@ -23,52 +21,14 @@ interface SignUpProps {
 }
 
 function SignUpForm(props: SignUpProps) {
-  const termsLen = signUpTermsField.length;
-  const [agreeAllState, setAgreeAllState] = useState<boolean>(false);
-  const [checkBoxState, setCheckBoxState] = useState<boolean[][]>(
-    Array(termsLen)
-      .fill(null)
-      .map((v, i) => Array(signUpTermsField[i].tail.length).fill(false)),
-  );
-  let errorMessage = "";
-  let password = "";
-  let passwordCheck = "";
-
-  const handleSubmitClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-
-    if (errorMessage) {
-      alert(errorMessage);
-      return;
-    }
-
-    if (password !== passwordCheck) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
-    for (let i = 0; i < termsLen; i++) {
-      if (!signUpTermsField[i].required) continue;
-
-      if (checkBoxState[i].indexOf(false) != -1) {
-        alert(signUpTermsField[i].errorMessage);
-        return;
-      }
-    }
-
-    props.submit(signUpActions.signUp)();
-  };
-
-  const handleAgreeAll = () => {
-    setAgreeAllState(!agreeAllState);
-    setCheckBoxState(
-      Array(termsLen)
-        .fill(null)
-        .map((v, i) =>
-          Array(signUpTermsField[i].tail.length).fill(!agreeAllState),
-        ),
-    );
-  };
+  const {
+    agreeAllState,
+    handleAgreeAll,
+    checkBoxState,
+    setCheckBoxState,
+    setAgreeAllState,
+    handleSubmitClick,
+  } = useSignUpForm(props.submit, props.renderElements);
 
   return (
     <div className="signup-form">
@@ -107,16 +67,6 @@ function SignUpForm(props: SignUpProps) {
               {props
                 .renderElements()
                 .map((formElement: { id: string; config: IFields }) => {
-                  if (formElement.config.errorMessage) {
-                    errorMessage = formElement.config.errorMessage;
-                  }
-
-                  if (formElement.id === "pw") {
-                    password = formElement.config.inputElement[0].value;
-                  } else if (formElement.id === "pw_check") {
-                    passwordCheck = formElement.config.inputElement[0].value;
-                  }
-
                   return (
                     <tr key={formElement.id}>
                       <th>
