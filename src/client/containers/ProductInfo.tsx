@@ -7,7 +7,7 @@ import {
   TopMenu,
 } from "../components";
 import { CartModal } from "../containers";
-import { useProduct } from "../hooks";
+import { useProductInfo } from "../hooks";
 interface ProductInfoProps {
   category: string;
   productId: number;
@@ -26,7 +26,7 @@ function ProductInfo(props: ProductInfoProps) {
     setOption,
     handleLeftBtnClick,
     handleRightBtnClick,
-  } = useProduct(props.category, props.productId);
+  } = useProductInfo(props.category, props.productId);
 
   return (
     <div className="productInfo">
