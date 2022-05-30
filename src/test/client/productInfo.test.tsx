@@ -48,20 +48,28 @@ function renderProductInfo() {
 }
 
 describe("<ProductInfo />", () => {
-  it("", async () => {
+  it("render component correctly", async () => {
     const { result } = renderProductInfo();
 
-    const sizeBtn = await waitFor(() =>
-      result.container.querySelector("[data-size='S']"),
-    );
+    const sizeBtn = result.container.querySelector("[data-size='S']");
+
+    if (sizeBtn) {
+      expect(sizeBtn.textContent).toBe("S");
+    }
+  });
+
+  it("if size button click, selected option be created", async () => {
+    const { result } = renderProductInfo();
+
+    const sizeBtn = result.container.querySelector("[data-size='S']");
 
     if (sizeBtn) {
       fireEvent.click(sizeBtn);
 
       await waitFor(() =>
         expect(
-          result.container.getElementsByClassName("quantity__increase").length,
-        ).toBe(1),
+          result.container.getElementsByClassName("quantity__increase"),
+        ).toHaveLength(1),
       );
     }
   });
