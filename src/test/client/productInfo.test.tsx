@@ -1,9 +1,13 @@
 import * as React from "react";
+import { useState } from "react";
 import { render, fireEvent, waitFor } from "./test-utils";
 import { ProductInfo } from "../../client/containers";
+import { IOption } from "../../client/interfaces";
 
 jest.mock("../../client/hooks", () => ({
   useProductInfo: () => {
+    const [option, setOption] = useState<IOption>({});
+
     return {
       product: {
         _id: 43,
@@ -28,9 +32,9 @@ jest.mock("../../client/hooks", () => ({
         },
       ],
       browserWidth: 1076,
-      option: {},
+      option,
       isVisibleCart: false,
-      setOption: () => {},
+      setOption,
       handleLeftBtnClick: () => {},
       handleRightBtnClick: () => {},
     };
@@ -42,35 +46,106 @@ function renderProductInfo() {
     <ProductInfo category={"all_product"} productId={43} />,
   );
 
+  const sizeBtn = () => result.container.querySelector("[data-size='S']");
+
+  const quantityIncreaseBtn = () =>
+    result.container.getElementsByClassName("quantity__increase");
+
+  const quantityDecreaseBtn = () =>
+    result.container.getElementsByClassName("quantity__decrease");
+
+  const deleteOptionBtn = () =>
+    result.container.getElementsByClassName("wrap__delete-img");
+
+  const sizeGuideMenu = () => result.getByText("SIZE GUIDE");
+
+  const sizePopup = () =>
+    result.container.getElementsByClassName("productGuide__size-popup");
+
+  const clickSizeBtn = () => {
+    const sizeBtnElement = sizeBtn();
+
+    if (sizeBtnElement) {
+      fireEvent.click(sizeBtnElement);
+    }
+  };
+
+  const clickDeleteOptionBtn = () => {
+    const deleteOptionBtnElement = deleteOptionBtn();
+
+    if (deleteOptionBtnElement.length) {
+      fireEvent.click(deleteOptionBtnElement[0]);
+    }
+  };
+
+  const clickSizeGuide = () => {
+    const sizeGuideMenuElement = sizeGuideMenu();
+
+    fireEvent.click(sizeGuideMenuElement);
+  };
+
   return {
     result,
+    sizeBtn,
+    quantityIncreaseBtn,
+    quantityDecreaseBtn,
+    deleteOptionBtn,
+    sizePopup,
+    clickSizeBtn,
+    clickDeleteOptionBtn,
+    clickSizeGuide,
   };
 }
 
 describe("<ProductInfo />", () => {
-  it("render component correctly", async () => {
-    const { result } = renderProductInfo();
+  it("render component correctly", () => {
+    const { sizeBtn } = renderProductInfo();
 
-    const sizeBtn = result.container.querySelector("[data-size='S']");
+    const btn = sizeBtn();
 
-    if (sizeBtn) {
-      expect(sizeBtn.textContent).toBe("S");
+    if (btn) {
+      expect(btn.textContent).toBe("S");
     }
   });
 
-  it("if size button click, selected option be created", async () => {
-    const { result } = renderProductInfo();
+  it("if size button click, selected option be created", () => {
+    const {
+      clickSizeBtn,
+      quantityIncreaseBtn,
+      quantityDecreaseBtn,
+      deleteOptionBtn,
+    } = renderProductInfo();
 
-    const sizeBtn = result.container.querySelector("[data-size='S']");
+    clickSizeBtn();
 
-    if (sizeBtn) {
-      fireEvent.click(sizeBtn);
+    expect(quantityIncreaseBtn()).toHaveLength(1);
+    expect(quantityDecreaseBtn()).toHaveLength(1);
+    expect(deleteOptionBtn()).toHaveLength(1);
+  });
 
-      await waitFor(() =>
-        expect(
-          result.container.getElementsByClassName("quantity__increase"),
-        ).toHaveLength(1),
-      );
-    }
+  it("if delete option btn click, selected option be removed", () => {
+    const {
+      clickSizeBtn,
+      clickDeleteOptionBtn,
+      quantityIncreaseBtn,
+      quantityDecreaseBtn,
+      deleteOptionBtn,
+    } = renderProductInfo();
+
+    clickSizeBtn();
+
+    clickDeleteOptionBtn();
+
+    expect(quantityIncreaseBtn()).toHaveLength(0);
+    expect(quantityDecreaseBtn()).toHaveLength(0);
+    expect(deleteOptionBtn()).toHaveLength(0);
+  });
+
+  it("if size guide menu click, size guide modal is displayed", () => {
+    const { sizePopup, clickSizeGuide } = renderProductInfo();
+
+    clickSizeGuide();
+
+    expect(sizePopup()).toHaveLength(1);
   });
 });
