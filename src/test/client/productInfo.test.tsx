@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { render, fireEvent, waitFor } from "./test-utils";
+import { render, fireEvent } from "./test-utils";
 import { ProductInfo } from "../../client/containers";
 import { IOption } from "../../client/interfaces";
 

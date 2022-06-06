@@ -49,18 +49,23 @@ const useCartInfo = () => {
 
   const [selectAllState, setSelectAllState] = useState<boolean>(false);
   const [checkBoxState, setCheckBoxState] = useState<boolean[]>(
-    Array(cartInfo.length).fill(false),
+    Array(cartInfo ? cartInfo.length : 0).fill(false),
   );
 
-  const totalPrice = cartInfo.reduce((acc, info) => {
-    return acc + info.productInfo.price * info.quantity;
-  }, 0);
-  const totalSalePrice = cartInfo.reduce((acc, info) => {
-    return info.productInfo.salePrice
-      ? acc +
-          (info.productInfo.price - info.productInfo.salePrice) * info.quantity
-      : acc;
-  }, 0);
+  const totalPrice =
+    cartInfo &&
+    cartInfo.reduce((acc, info) => {
+      return acc + info.productInfo.price * info.quantity;
+    }, 0);
+  const totalSalePrice =
+    cartInfo &&
+    cartInfo.reduce((acc, info) => {
+      return info.productInfo.salePrice
+        ? acc +
+            (info.productInfo.price - info.productInfo.salePrice) *
+              info.quantity
+        : acc;
+    }, 0);
 
   const handleRemoveClick = (e: React.MouseEvent) => {
     e.preventDefault();
