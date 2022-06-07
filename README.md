@@ -17,7 +17,7 @@
 
 ## DB ERD
 
-- [https://www.erdcloud.com/d/8xeRRYsdnRGrXGuHc](https://www.erdcloud.com/d/8xeRRYsdnRGrXGuHc) (마우스 스크롤을 통해서 줌 인/아웃 가능합니다, 클릭 앤 드래그로 이동 가능합니다.)
+- [https://www.erdcloud.com/d/8xeRRYsdnRGrXGuHc](https://www.erdcloud.com/d/8xeRRYsdnRGrXGuHc)
 
 ## Web Service Architecture
 
