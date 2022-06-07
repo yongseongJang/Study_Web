@@ -2,14 +2,6 @@
 
 - [https://dm3z2i9vp8bc9.cloudfront.net/](https://dm3z2i9vp8bc9.cloudfront.net/)
 
- #### 개발 완료
-- 회원가입, 로그인, 로그아웃
-- 상품 리스트 페이지, 상품 상세 페이지
-- 장바구니
-
- #### 개발 진행 중
-- 구매 관련 페이지
-
 ## 사용 기술
 - Node.js(Express), MySQL, TypeORM
 - React, Redux, Redux-Saga
