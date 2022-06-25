@@ -2,7 +2,7 @@
 
 - [https://dm3z2i9vp8bc9.cloudfront.net/](https://dm3z2i9vp8bc9.cloudfront.net/)
 
-## 사용 기술
+## Languages, Libraries and Frameworks
 - Node.js(Express), MySQL, TypeORM
 - React, Redux, Redux-Saga
 - TypeScript, HTML, CSS
