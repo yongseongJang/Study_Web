@@ -289,7 +289,7 @@ function OrderForm(props: OrderProps) {
       <div className="orderForm__submitBtn">
         <button onClick={handleSubmitClick}>
           KRW
-          <span className="">140,000</span>
+          <span className="">{` ${totalPrice - totalSalePrice}`}</span>
           <span className="">결제하기</span>
         </button>
       </div>
