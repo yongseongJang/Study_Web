@@ -2,7 +2,8 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { productActions, cartActions } from "../actions";
+import { cartActions } from "../reducers/cartReducer";
+import { productActions } from "../reducers/productReducer";
 import { IOption, ICartInfo } from "../interfaces";
 import { history } from "../utils/history";
 import { productSelectors, cartSelectors } from "../selectors";
@@ -48,10 +49,10 @@ const useProductInfo = (category: string, productId: number) => {
   useEffect(() => {
     window.addEventListener("resize", handleResize);
 
-    dispatch(productActions.requestProductDetail(category, productId));
+    dispatch(productActions.requestProductDetail({ category, productId }));
 
     if (!token) {
-      dispatch(cartActions.setCartProduct(cookies.cartInfo));
+      dispatch(cartActions.setCartProduct({ cartInfo: cookies.cartInfo }));
     }
 
     return () => {
@@ -109,7 +110,7 @@ const useProductInfo = (category: string, productId: number) => {
     });
 
     setCookie("cartInfo", JSON.stringify([...cartInfo, ...tmp]), { path: "/" });
-    dispatch(cartActions.add(tmp, token));
+    dispatch(cartActions.add({ cartInfo: tmp, token }));
   };
 
   return {

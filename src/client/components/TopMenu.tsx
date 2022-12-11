@@ -1,7 +1,9 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
-import { loginActions, cartActions, orderActions } from "../actions";
+import { orderActions } from "../reducers/orderReducer";
+import { cartActions } from "../reducers/cartReducer";
+import { loginActions } from "../reducers/loginReducer";
 
 function TopMenu() {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ function TopMenu() {
 
     dispatch(loginActions.logout());
 
-    dispatch(cartActions.removeAll(""));
+    dispatch(cartActions.removeAll({ token: "" }));
 
     dispatch(orderActions.reset());
   };

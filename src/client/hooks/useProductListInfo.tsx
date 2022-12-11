@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { productActions } from "../actions";
+import { productActions } from "../reducers/productReducer";
 import { productSelectors } from "../selectors";
 
 const useProductListInfo = (page: number | null, category: string) => {
@@ -12,11 +12,7 @@ const useProductListInfo = (page: number | null, category: string) => {
   const productList = useSelector(productSelectors.selectProductList);
 
   useEffect(() => {
-    if (page) {
-      dispatch(productActions.requestProducts(category, page));
-    } else {
-      dispatch(productActions.requestProducts(category));
-    }
+    dispatch(productActions.requestProducts({ category, page: page || 1 }));
   }, []);
 
   return {

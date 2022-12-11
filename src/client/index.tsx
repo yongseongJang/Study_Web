@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers";
 import rootSaga from "./sagas";
@@ -12,7 +12,12 @@ import App from "./App";
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: [sagaMiddleware] as const,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 sagaMiddleware.run(rootSaga);
 

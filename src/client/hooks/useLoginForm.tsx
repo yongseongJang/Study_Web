@@ -1,17 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { loginActions } from "../actions";
+import { loginActions } from "../reducers/loginReducer";
 import { loginSelectors } from "../selectors";
 import { ILoginInfo } from "../interfaces";
 import { IFields } from "../utils/fields/types";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 const useLoginForm = (
   submit: (
-    action: (loginInfo: ILoginInfo) => {
-      type: string;
-      payload: {
-        loginInfo: ILoginInfo;
-      };
-    },
+    action: ActionCreatorWithPayload<{ loginInfo: ILoginInfo }, "login/login">,
+    key: string,
   ) => () => void,
   renderElements: () => [],
 ) => {
@@ -33,7 +30,7 @@ const useLoginForm = (
     if (errorMessages.length) {
       alert(errorMessages[0]);
     } else {
-      submit(loginActions.login)();
+      submit(loginActions.login, "loginInfo")();
     }
   };
 

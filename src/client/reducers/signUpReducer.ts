@@ -1,7 +1,8 @@
 import { Record } from "immutable";
 import type { RecordOf } from "immutable";
-import { signUpConstants } from "../actions";
-
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { IUserInfo } from "../interfaces";
 interface State {
   isRequesting: boolean;
   error: string;
@@ -18,22 +19,26 @@ export type SignUpState = RecordOf<State>;
 
 const initialState: SignUpState = makeSignUpState();
 
-export const signUpReducer = (
-  state = initialState,
-  action: { type: string; payload: { [key: string]: any } },
-) => {
-  switch (action.type) {
-    case signUpConstants.SIGNUP_REQUEST:
+export const signUpSlice = createSlice({
+  name: "singUp",
+  initialState,
+  reducers: {
+    signUp: (state, action: PayloadAction<{ userInfo: IUserInfo }>) => {
       return state.update("isRequesting", () => true);
-    case signUpConstants.SIGNUP_SUCCESS:
+    },
+    signUpSuccess: (state) => {
       return state.update("isRequesting", () => false);
-    case signUpConstants.SIGNUP_FAILURE:
+    },
+    signUpFailure: (state, action: PayloadAction<{ err: unknown }>) => {
       const { err } = action.payload;
 
       return state
         .update("isRequesting", () => false)
         .update("error", () => err);
-    default:
-      return state;
-  }
-};
+    },
+  },
+});
+
+export const signUpActions = signUpSlice.actions;
+
+export default signUpSlice.reducer;

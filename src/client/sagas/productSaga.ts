@@ -1,12 +1,10 @@
 import { take, call, put, fork } from "redux-saga/effects";
 import { productServices } from "../services";
-import { productConstants, productActions } from "../actions";
+import { productActions } from "../reducers/productReducer";
 
 export function* requestProduct(payload: { category: string; page: number }) {
   try {
     const { category, page } = payload;
-
-    let _pagination, _productList;
 
     if (category === "all_product") {
       const { pagination, productList } = yield call(
@@ -14,8 +12,9 @@ export function* requestProduct(payload: { category: string; page: number }) {
         page,
       );
 
-      _pagination = pagination;
-      _productList = productList;
+      yield put(
+        productActions.requestProductsSuccess({ pagination, productList }),
+      );
     } else {
       const { pagination, productList } = yield call(
         productServices.getProductsByCategory,
@@ -23,13 +22,12 @@ export function* requestProduct(payload: { category: string; page: number }) {
         page,
       );
 
-      _pagination = pagination;
-      _productList = productList;
+      yield put(
+        productActions.requestProductsSuccess({ pagination, productList }),
+      );
     }
-
-    yield put(productActions.requestProductsSuccess(_pagination, _productList));
   } catch (err) {
-    yield put(productActions.requestProductsFailure(err));
+    yield put(productActions.requestProductsFailure({ err }));
   }
 }
 
@@ -46,22 +44,22 @@ export function* requestProductDetail(payload: {
       productId,
     );
 
-    yield put(productActions.requestProductDetailSuccess(product));
+    yield put(productActions.requestProductDetailSuccess({ product }));
   } catch (err) {
-    yield put(productActions.requestProductDetailFailure(err));
+    yield put(productActions.requestProductDetailFailure({ err }));
   }
 }
 
 export function* watchRequestProduct() {
   while (true) {
-    const { payload } = yield take(productConstants.REQUEST_PRODUCTS);
+    const { payload } = yield take(productActions.requestProducts);
     yield call(requestProduct, payload);
   }
 }
 
 export function* watchRequestProductDetail() {
   while (true) {
-    const { payload } = yield take(productConstants.REQUEST_PRODUCT_DETAIL);
+    const { payload } = yield take(productActions.requestProductDetail);
     yield call(requestProductDetail, payload);
   }
 }

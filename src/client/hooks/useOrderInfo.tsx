@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { orderActions } from "../actions";
+import { orderActions } from "../reducers/orderReducer";
 import { orderSelectors } from "../selectors";
 
 const useOrderInfo = () => {
@@ -23,7 +23,7 @@ const useOrderInfo = () => {
 
   useEffect(() => {
     if (token) {
-      dispatch(orderActions.requestMemberOrderInfo(token));
+      dispatch(orderActions.requestMemberOrderInfo({ token }));
     }
   }, []);
 

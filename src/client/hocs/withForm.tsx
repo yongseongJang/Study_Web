@@ -112,9 +112,15 @@ const withForm =
       };
 
       const submit =
-        (action: (payload: any) => { type: string; payload: any }) => () => {
+        (
+          action: (payload: any) => { type: string; payload: any },
+          key: string,
+        ) =>
+        () => {
           const formValues = getFormValues();
-          dispatch(action(formValues));
+          const argument: { [key: string]: any } = {};
+          argument[key] = formValues;
+          dispatch(action(argument));
         };
 
       return (

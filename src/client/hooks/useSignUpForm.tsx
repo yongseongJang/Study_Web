@@ -1,18 +1,15 @@
 import * as React from "react";
 import { useState } from "react";
-import { signUpActions } from "../actions";
+import { signUpActions } from "../reducers/signUpReducer";
 import { IUserInfo } from "../interfaces";
 import signUpTermsField from "../utils/fields/signUpTermsField";
 import { IFields } from "../utils/fields/types";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 const useSignUpForm = (
   submit: (
-    action: (userInfo: IUserInfo) => {
-      type: string;
-      payload: {
-        userInfo: IUserInfo;
-      };
-    },
+    action: ActionCreatorWithPayload<{ userInfo: IUserInfo }, "singUp/signUp">,
+    key: string,
   ) => () => void,
   renderElements: () => [],
 ) => {
@@ -61,7 +58,7 @@ const useSignUpForm = (
       }
     }
 
-    submit(signUpActions.signUp)();
+    submit(signUpActions.signUp, "userInfo")();
   };
 
   const handleAgreeAll = () => {

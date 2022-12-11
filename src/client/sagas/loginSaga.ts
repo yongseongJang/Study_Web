@@ -1,7 +1,7 @@
 import { take, call, put, fork, delay, cancel } from "redux-saga/effects";
 import { Task } from "redux-saga";
 import { loginServices } from "../services";
-import { loginConstants, loginActions } from "../actions";
+import { loginActions } from "../reducers/loginReducer";
 import { history } from "../utils/history";
 import { ILoginInfo } from "../interfaces";
 
@@ -20,13 +20,13 @@ export function* login(payload: { loginInfo: ILoginInfo }) {
       loginInfo,
     );
 
-    yield put(loginActions.loginSuccess(token, expirationTime, userName));
+    yield put(loginActions.loginSuccess({ token, expirationTime, userName }));
 
     history.replace("/");
 
     forkCheckAuthTimeout = yield fork(checkAuthTimeout, expirationTime);
   } catch (err) {
-    yield put(loginActions.loginFailure(err));
+    yield put(loginActions.loginFailure({ err }));
   }
 }
 
@@ -38,14 +38,14 @@ export function* logout() {
 
 export function* watchLoginRequest() {
   while (true) {
-    const { payload } = yield take(loginConstants.LOGIN_REQUEST);
+    const { payload } = yield take(loginActions.login);
     yield call(login, payload);
   }
 }
 
 export function* watchLogoutRequest() {
   while (true) {
-    yield take(loginConstants.LOGOUT_REQUEST);
+    yield take(loginActions.logout);
     yield call(logout);
   }
 }

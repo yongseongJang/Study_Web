@@ -1,4 +1,4 @@
-import { RootState } from "../reducers/types";
+import { RootState } from "../index";
 
 const selectToken = (state: RootState) => {
   return state.loginReducer.token;

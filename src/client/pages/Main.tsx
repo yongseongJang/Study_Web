@@ -3,7 +3,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { loginSelectors } from "../selectors";
-import { cartActions, loginActions, orderActions } from "../actions";
+import { orderActions } from "../reducers/orderReducer";
+import { cartActions } from "../reducers/cartReducer";
+import { loginActions } from "../reducers/loginReducer";
 import mainBanner from "../../public/img/mainbanner.jpg";
 import coat from "../../public/img/coat.jpg";
 import knit from "../../public/img/knit.jpg";
@@ -59,7 +61,7 @@ function Main() {
 
     dispatch(loginActions.logout());
 
-    dispatch(cartActions.removeAll(""));
+    dispatch(cartActions.removeAll({ token: "" }));
 
     dispatch(orderActions.reset());
   };

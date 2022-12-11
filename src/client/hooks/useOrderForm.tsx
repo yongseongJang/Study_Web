@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import orderTermsField from "../utils/fields/orderTermsField";
-import { orderActions } from "../actions";
+import { orderActions } from "../reducers/orderReducer";
 import { ICartInfo } from "../interfaces";
 import OrderTermsField from "../utils/fields/orderTermsField";
 import { IFields } from "../utils/fields/types";
@@ -126,21 +126,23 @@ const useOrderForm = (
       delete formValues.pw_check;
 
       dispatch(
-        orderActions.requestMemberPayment(
-          {
+        orderActions.requestMemberPayment({
+          paymentInfo: {
             ...formValues,
             price: totalPrice - totalSalePrice,
             orderDetail,
           },
           token,
-        ),
+        }),
       );
     } else {
       dispatch(
         orderActions.requestNonMemberPayment({
-          ...formValues,
-          price: totalPrice - totalSalePrice,
-          orderDetail,
+          paymentInfo: {
+            ...formValues,
+            price: totalPrice - totalSalePrice,
+            orderDetail,
+          },
         }),
       );
     }

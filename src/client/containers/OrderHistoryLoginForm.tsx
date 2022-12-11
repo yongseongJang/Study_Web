@@ -2,22 +2,22 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import withForm from "../hocs/withForm";
 import nonMemberLoginField from "../utils/fields/nonMemberLoginField";
-import { orderActions } from "../actions";
+import { orderActions } from "../reducers/orderReducer";
 import { IFields } from "../utils/fields/types";
 import { INonMemberInfo } from "../interfaces";
 import { orderSelectors } from "../selectors";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 interface OrderHistoryLoginFormProps {
   renderElements: () => [];
   isValidForm: boolean;
   onChange: () => void;
   submit: (
-    action: (nonMemberInfo: INonMemberInfo) => {
-      type: string;
-      payload: {
-        nonMemberInfo: INonMemberInfo;
-      };
-    },
+    action: ActionCreatorWithPayload<
+      { nonMemberInfo: INonMemberInfo },
+      "order/requestNonMemberOrderInfo"
+    >,
+    key: string,
   ) => () => void;
 }
 
@@ -35,7 +35,7 @@ function OrderHistoryLoginForm(props: OrderHistoryLoginFormProps) {
     if (errorMessage) {
       alert(errorMessage);
     } else {
-      props.submit(orderActions.requestNonMemberOrderInfo)();
+      props.submit(orderActions.requestNonMemberOrderInfo, "nonMemberInfo")();
     }
   };
 

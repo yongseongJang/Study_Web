@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions } from "../actions";
+import { cartActions } from "../reducers/cartReducer";
 import { ICartInfo } from "../interfaces";
 import { history } from "../utils/history";
 import { cartSelectors } from "../selectors";
@@ -35,9 +35,9 @@ const useCartInfo = () => {
 
   useEffect(() => {
     if (token) {
-      dispatch(cartActions.requestCartProduct(token));
+      dispatch(cartActions.requestCartProduct({ token }));
     } else {
-      dispatch(cartActions.setCartProduct(cookies.cartInfo));
+      dispatch(cartActions.setCartProduct({ cartInfo: cookies.cartInfo }));
     }
   }, []);
 
@@ -75,7 +75,9 @@ const useCartInfo = () => {
     const option = target.getAttribute("data-option");
 
     if (productId && option) {
-      dispatch(cartActions.remove(Number(productId), option, token));
+      dispatch(
+        cartActions.remove({ productId: Number(productId), option, token }),
+      );
     }
   };
 
@@ -90,7 +92,7 @@ const useCartInfo = () => {
       }
     });
 
-    dispatch(cartActions.selectRemove(selectInfo, token));
+    dispatch(cartActions.selectRemove({ cartInfo: selectInfo, token }));
 
     setCheckBoxState(Array(cartInfo.length - selectInfo.length).fill(false));
     setSelectAllState(false);
@@ -103,7 +105,7 @@ const useCartInfo = () => {
       setSelectAllState(false);
       setCheckBoxState([]);
     }
-    dispatch(cartActions.removeAll(token));
+    dispatch(cartActions.removeAll({ token }));
   };
 
   const handleIncreaseQuantityClick = (e: React.MouseEvent) => {
@@ -114,7 +116,12 @@ const useCartInfo = () => {
       const option = e.currentTarget.parentElement.getAttribute("data-option");
 
       if (productId && option) {
-        dispatch(cartActions.increaseQuantity(Number(productId), option));
+        dispatch(
+          cartActions.increaseQuantity({
+            productId: Number(productId),
+            option,
+          }),
+        );
       }
     }
   };
@@ -129,7 +136,12 @@ const useCartInfo = () => {
         e.currentTarget.parentElement.getAttribute("data-quantity");
 
       if (productId && option && quantity && Number(quantity) > 1) {
-        dispatch(cartActions.decreaseQuantity(Number(productId), option));
+        dispatch(
+          cartActions.decreaseQuantity({
+            productId: Number(productId),
+            option,
+          }),
+        );
       }
     }
   };
@@ -144,7 +156,11 @@ const useCartInfo = () => {
 
       if (productId && option) {
         dispatch(
-          cartActions.changeQuantity(Number(productId), option, inputValue),
+          cartActions.changeQuantity({
+            productId: Number(productId),
+            option,
+            quantity: inputValue,
+          }),
         );
       }
     }

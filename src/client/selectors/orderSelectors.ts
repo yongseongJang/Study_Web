@@ -1,4 +1,4 @@
-import { RootState } from "../reducers/types";
+import { RootState } from "../index";
 
 const selectIsRequesting = (state: RootState) => {
   return state.orderReducer.isRequesting;

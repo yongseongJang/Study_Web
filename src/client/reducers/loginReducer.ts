@@ -1,6 +1,8 @@
 import { Record } from "immutable";
 import type { RecordOf } from "immutable";
-import { loginConstants } from "../actions";
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { ILoginInfo } from "../interfaces";
 
 interface State {
   isRequesting: boolean;
@@ -26,14 +28,21 @@ export type LoginState = RecordOf<State>;
 
 const initialState: LoginState = makeLoginState();
 
-export const loginReducer = (
-  state = initialState,
-  action: { type: string; payload: { [key: string]: any } },
-) => {
-  switch (action.type) {
-    case loginConstants.LOGIN_REQUEST:
+const loginSlice = createSlice({
+  name: "login",
+  initialState,
+  reducers: {
+    login: (state, action: PayloadAction<{ loginInfo: ILoginInfo }>) => {
       return state.update("isRequesting", () => true);
-    case loginConstants.LOGIN_SUCCESS:
+    },
+    loginSuccess: (
+      state,
+      action: PayloadAction<{
+        token: string;
+        expirationTime: number;
+        userName: string;
+      }>,
+    ) => {
       const { token, expirationTime, userName } = action.payload;
 
       return state
@@ -41,23 +50,30 @@ export const loginReducer = (
         .update("token", () => token)
         .update("expirationTime", () => expirationTime)
         .update("userName", () => userName);
-    case loginConstants.LOGIN_FAILURE:
+    },
+    loginFailure: (state, action: PayloadAction<{ err: unknown }>) => {
       const { err } = action.payload;
 
       return state
         .update("isRequesting", () => false)
         .update("error", () => err);
-    case loginConstants.LOGOUT_REQUEST:
+    },
+    logout: (state) => {
       return state.update("isRequesting", () => true);
-    case loginConstants.LOGOUT_SUCCESS:
+    },
+    logoutSuccess: (state) => {
       return state
         .update("isRequesting", () => false)
         .update("token", () => "")
         .update("expirationTime", () => 0)
         .update("userName", () => "");
-    case loginConstants.RESET_ERROR:
+    },
+    resetError: (state) => {
       return state.update("error", () => "");
-    default:
-      return state;
-  }
-};
+    },
+  },
+});
+
+export const loginActions = loginSlice.actions;
+
+export default loginSlice.reducer;

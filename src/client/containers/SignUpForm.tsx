@@ -7,16 +7,14 @@ import { IUserInfo } from "../interfaces";
 import signUpTermsField from "../utils/fields/signUpTermsField";
 import ico_required_blue from "../../public/img/ico_required_blue.gif";
 import { useSignUpForm } from "../hooks";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 interface SignUpProps {
   renderElements: () => [];
   isValidForm: boolean;
   onChange: () => void;
   submit: (
-    action: (userInfo: IUserInfo) => {
-      type: string;
-      payload: { userInfo: IUserInfo };
-    },
+    action: ActionCreatorWithPayload<{ userInfo: IUserInfo }, "singUp/signUp">,
   ) => () => void;
 }
 

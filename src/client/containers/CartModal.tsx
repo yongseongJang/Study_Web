@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CartItem, CartPagination, Spinner } from "../components";
 import { paginate } from "../utils/pagination";
 import { IPagination } from "../interfaces";
-import { cartActions, orderActions } from "../actions";
+import { cartActions } from "../reducers/cartReducer";
 import { history } from "../utils/history";
 import { cartSelectors } from "../selectors";
 interface CartModalProps {
@@ -31,7 +31,7 @@ function CartModal(props: CartModalProps) {
 
   useEffect(() => {
     if (token) {
-      dispatch(cartActions.requestCartProduct(token));
+      dispatch(cartActions.requestCartProduct({ token }));
     }
   }, []);
 

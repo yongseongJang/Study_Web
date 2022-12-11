@@ -1,7 +1,8 @@
 import { List, Record } from "immutable";
 import type { RecordOf } from "immutable";
-import { orderConstants } from "../actions";
-import { IOrderInfo, IShippingInfo } from "../interfaces";
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { IOrderInfo, IShippingInfo, IPaymentInfo, INonMemberInfo } from "../interfaces";
 
 interface State {
   isRequesting: boolean;
@@ -29,84 +30,153 @@ export type OrderState = RecordOf<State>;
 
 const initialState: OrderState = makeOrderState();
 
-export const orderReducer = (
-  state = initialState,
-  action: { type: string; payload: { [key: string]: any } },
-) => {
-  const payload = action.payload;
-
-  switch (action.type) {
-    case orderConstants.REQUEST_ORDER_ADD:
+const orderSlice = createSlice({
+  name: "order",
+  initialState,
+  reducers: {
+    add: (
+      state,
+      action: PayloadAction<{ isAllProduct: boolean; cartList?: number[] }>,
+    ) => {
       return state.update("isRequesting", () => true);
-    case orderConstants.SUCCESS_ORDER_ADD:
+    },
+    addSuccess: (
+      state,
+      action: PayloadAction<{ isAllProduct: boolean; cartList?: number[] }>,
+    ) => {
+      const { isAllProduct, cartList } = action.payload;
       return state
         .update("isRequesting", () => false)
-        .update("isAllProduct", () => payload.isAllProduct)
-        .update("cartList", () => (payload.cartList ? payload.cartList : []));
-    case orderConstants.FAILURE_ORDER_ADD:
+        .update("isAllProduct", () => isAllProduct)
+        .update("cartList", () => cartList || []);
+    },
+    addFailure: (state, action: PayloadAction<{ err: unknown }>) => {
       return state.update("isRequesting", () => false);
-    case orderConstants.REQUEST_SHIPPING_INFO:
+    },
+    requestShippingInfo: (state, action: PayloadAction<{ token: string }>) => {
       return state.update("isRequesting", () => true).update("error", () => "");
-    case orderConstants.REQUEST_SHIPPING_INFO_SUCCESS:
+    },
+    requestShippingInfoSuccess: (
+      state,
+      action: PayloadAction<{ shippingInfo: IShippingInfo }>,
+    ) => {
+      const { shippingInfo } = action.payload;
       return state
         .update("isRequesting", () => false)
-        .update("shippingInfo", () => payload.shippingInfo)
+        .update("shippingInfo", () => shippingInfo)
         .update("error", () => "");
-    case orderConstants.REQUEST_SHIPPING_INFO_FAILURE:
+    },
+    requestShippingInfoFailure: (
+      state,
+      action: PayloadAction<{ err: unknown }>,
+    ) => {
       return state
         .update("isRequesting", () => false)
         .update("shippingInfo", () => null)
         .update("error", () => "");
-    case orderConstants.REQUEST_MEMBER_ORDER_INFO:
+    },
+    requestMemberOrderInfo: (
+      state,
+      action: PayloadAction<{ token: string }>,
+    ) => {
       return state.update("isRequesting", () => true).update("error", () => "");
-    case orderConstants.REQUEST_MEMBER_ORDER_INFO_SUCCESS:
+    },
+    requestMemberOrderInfoSuccess: (
+      state,
+      action: PayloadAction<{ orderInfo: IOrderInfo[] }>,
+    ) => {
+      const { orderInfo } = action.payload;
       return state
         .update("isRequesting", () => false)
-        .update("orderInfo", () => List(payload.orderInfo))
+        .update("orderInfo", () => List(orderInfo))
         .update("error", () => "");
-    case orderConstants.REQUEST_MEMBER_ORDER_INFO_FAILURE:
+    },
+    requestMemberOrderInfoFailure: (
+      state,
+      action: PayloadAction<{ err: unknown }>,
+    ) => {
+      const { err } = action.payload;
       return state
         .update("isRequesting", () => false)
         .update("orderInfo", () => List())
-        .update("error", () => payload.error);
-    case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO:
+        .update("error", () => err);
+    },
+    requestNonMemberOrderInfo: (
+      state,
+      action: PayloadAction<{ nonMemberInfo: INonMemberInfo }>,
+    ) => {
       return state
         .update("isRequesting", () => true)
         .update("nonMemberLogin", () => false)
         .update("error", () => "");
-    case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_SUCCESS:
+    },
+    requestNonMemberOrderInfoSuccess: (
+      state,
+      action: PayloadAction<{ orderInfo: IOrderInfo[] }>,
+    ) => {
+      const { orderInfo } = action.payload;
       return state
         .update("isRequesting", () => false)
-        .update("orderInfo", () => List(payload.orderInfo))
+        .update("orderInfo", () => List(orderInfo))
         .update("nonMemberLogin", () => true)
         .update("error", () => "");
-    case orderConstants.REQUEST_NON_MEMBER_ORDER_INFO_FAILURE:
+    },
+    requestNonMemberOrderInfoFailure: (
+      state,
+      action: PayloadAction<{ err: unknown }>,
+    ) => {
+      const { err } = action.payload;
       return state
         .update("isRequesting", () => false)
         .update("orderInfo", () => List())
         .update("nonMemberLogin", () => false)
-        .update("error", () => payload.error);
-    case orderConstants.REQUEST_MEMBER_PAYMENT:
+        .update("error", () => err);
+    },
+    requestMemberPayment: (
+      state,
+      action: PayloadAction<{ paymentInfo: IPaymentInfo; token: string }>,
+    ) => {
       return state.update("isRequesting", () => true);
-    case orderConstants.REQUEST_MEMBER_PAYMENT_SUCCESS:
-      return state.update("isRequesting", () => true);
-    case orderConstants.REQUEST_MEMBER_PAYMENT_FAILURE:
+    },
+    requestMemberPaymentSuccess: (state) => {
+      return state.update("isRequesting", () => false);
+    },
+    requestMemberPaymentFailure: (
+      state,
+      action: PayloadAction<{ err: unknown }>,
+    ) => {
+      const { err } = action.payload;
       return state
         .update("isRequesting", () => false)
-        .update("error", () => payload.error);
-    case orderConstants.REQUEST_NON_MEMBER_PAYMENT:
+        .update("error", () => err);
+    },
+    requestNonMemberPayment: (
+      state,
+      action: PayloadAction<{ paymentInfo: IPaymentInfo }>,
+    ) => {
       return state.update("isRequesting", () => true);
-    case orderConstants.REQUEST_NON_MEMBER_PAYMENT_SUCCESS:
-      return state.update("isRequesting", () => true);
-    case orderConstants.REQUEST_NON_MEMBER_PAYMENT_FAILURE:
+    },
+    requestNonMemberPaymentSuccess: (state) => {
+      return state.update("isRequesting", () => false);
+    },
+    requestNonMemberPaymentFailure: (
+      state,
+      action: PayloadAction<{ err: unknown }>,
+    ) => {
+      const { err } = action.payload;
       return state
         .update("isRequesting", () => false)
-        .update("error", () => payload.error);
-    case orderConstants.RESET_ERROR:
+        .update("error", () => err);
+    },
+    resetError: (state) => {
       return state.update("error", () => "");
-    case orderConstants.RESET:
+    },
+    reset: (state) => {
       return initialState;
-    default:
-      return state;
-  }
-};
+    },
+  },
+});
+
+export const orderActions = orderSlice.actions;
+
+export default orderSlice.reducer;

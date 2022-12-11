@@ -1,6 +1,7 @@
 import { List, Record } from "immutable";
 import type { RecordOf } from "immutable";
-import { productConstants } from "../actions";
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import {
   IPagination,
   IProduct,
@@ -81,25 +82,53 @@ export type ProductState = RecordOf<State>;
 
 const initialState: ProductState = makeProductState();
 
-export const productReducer = (
-  state = initialState,
-  action: { type: string; payload: { [key: string]: any } },
-) => {
-  switch (action.type) {
-    case productConstants.REQUEST_PRODUCTS:
+const productSlice = createSlice({
+  name: "product",
+  initialState,
+  reducers: {
+    requestProducts: (
+      state,
+      action: PayloadAction<{ category: string; page: number }>,
+    ) => {
       return state.update("isRequesting", () => true);
-    case productConstants.REQUEST_PRODUCTS_SUCCESS:
+    },
+    requestProductsSuccess: (
+      state,
+      action: PayloadAction<{
+        pagination: IPagination;
+        productList: Iterable<{
+          product: Omit<
+            IProduct,
+            "productDetail" | "productImage" | "productCaution" | "productSize"
+          >;
+        }>;
+      }>,
+    ) => {
       const { pagination, productList } = action.payload;
 
       return state
         .update("isRequesting", () => false)
         .update("pagination", () => makePaginationState(pagination))
         .update("productList", () => List(productList));
-    case productConstants.REQUEST_PRODUCTS_FAILURE:
+    },
+    requestProductsFailure: (
+      state,
+      action: PayloadAction<{ err: unknown }>,
+    ) => {
       return state.update("isRequesting", () => false);
-    case productConstants.REQUEST_PRODUCT_DETAIL:
+    },
+    requestProductDetail: (
+      state,
+      action: PayloadAction<{ category: string; productId: number }>,
+    ) => {
       return state.update("isRequesting", () => true);
-    case productConstants.REQUEST_PRODUCT_DETAIL_SUCCESS:
+    },
+    requestProductDetailSuccess: (
+      state,
+      action: PayloadAction<{
+        product: IProduct;
+      }>,
+    ) => {
       const { product } = action.payload;
 
       return state
@@ -113,9 +142,16 @@ export const productReducer = (
             productSize: List(product.productSize),
           }),
         );
-    case productConstants.REQUEST_PRODUCT_DETAIL_FAILURE:
+    },
+    requestProductDetailFailure: (
+      state,
+      action: PayloadAction<{ err: unknown }>,
+    ) => {
       return state.update("isRequesting", () => false);
-    default:
-      return state;
-  }
-};
+    },
+  },
+});
+
+export const productActions = productSlice.actions;
+
+export default productSlice.reducer;
