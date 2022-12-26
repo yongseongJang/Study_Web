@@ -1,6 +1,5 @@
 # Web Application Study
 
-- [https://dm3z2i9vp8bc9.cloudfront.net/](https://dm3z2i9vp8bc9.cloudfront.net/)
 
 ## Languages, Libraries and Frameworks
 - Node.js(Express), MySQL, TypeORM
